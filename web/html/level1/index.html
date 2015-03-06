@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+  	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DDCoder</title>
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif:400" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="../../styles/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../styles/semanticUI/dist/semantic.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../styles/level.css" />
+    <link rel="stylesheet" type="text/css" href="../../styles/level1.css" />
+    <script src="http://www.parsecdn.com/js/parse-1.3.4.min.js"></script>
+  </head>
+ 
+  <body>
+    <div id="game-title">EYE MONSTER :目</div>
+    <div id="game-window">
+      <div id="display-window"></div>
+      <div id="action-window">
+        <div id="action-list"></div>
+        <div id="apply"></div>
+        <div id="option-list">
+          <div class="option">Go Left</div>
+          <div class="option">Go Right</div>
+          <div class="option">Go Top</div>
+          <div class="option">Go Down</div>
+          <div class="option">Use Bomb</div>
+          <div class="option">Don't Move</div>
+          <div class="option">Do Dance</div>
+        </div>
+      </div>
+    </div>
+    <script type="application/dart" src="../../dart/level1.dart"></script>
+    <!-- for this next line to work, your pubspec.yaml file must have a dependency on 'browser' -->
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>
