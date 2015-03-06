@@ -4,11 +4,57 @@
   <head>
   	<meta charset="utf-8">
   	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../../styles/bootstrap/bootstrap.css">
     <title>index</title>
   </head>
  
   <body>   
-    <p id="text"></p>
+    <nav></nav>
+    <div class = "inner-page padd">
+    <div class = "about-vedio padd">
+      <div class = "container-fluid" style="width:60%">
+    <form>
+      <div class="form-group">
+        <label for="receiverName">收件人/Reciver</label>
+        <input type="text" class="form-control" id="receiverName" placeholder="Enter Receiver's Name">
+      </div>
+      <br/>
+      <div class="form-group">
+        <label for="receiverEmail">收件人信箱/Reciver's Email Address</label>
+        <input type="password" class="form-control" id="receiverEmail" placeholder="Enter Receiver's Email Address">
+      </div>
+      <br/>
+      <div class="form-group">
+        <label for="userName">你想顯示的名字/The Name You Want to Dispaly</label>
+        <input type="text" class="form-control" id="userName" placeholder="Enter Your Name">
+      </div>
+      <br/>
+
+      <div class="form-group">
+        <label for="userName">訊息/Message</label>
+        <p>你可以傳送一段文字訊息或是一個檔案。</p>
+        <p>You can send a peice of test message or a file.</p>
+        <ul class="nav nav-tabs">
+          <li role="presentation" class="active"><a href="#textMessage">Text Message</a></li>
+          <li role="presentation"><a href="#fileUpload">File</a></li>
+        </ul>
+        <div id="my-tab-content" class="tab-content">
+          <div class="tab-pane active" id="textMessage">
+              <input type="text" class="form-control" id="message" placeholder="Enter Your Message" style="height:200px;">
+          </div>
+          <div class="tab-pane" id="fileUpload">
+              <input type="file" id="exampleInputFile">
+          </div>
+        </div>
+      </div>
+      <br/>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+    </div>
+    </div>
+    </div>
+
+
     <script type="application/dart" src="../../dart/authen.dart"></script>
     <!-- for this next line to work, your pubspec.yaml file must have a dependency on 'browser' -->
     <script src="packages/browser/dart.js"></script>
