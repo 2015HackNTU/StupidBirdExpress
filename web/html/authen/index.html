@@ -5,7 +5,9 @@
   	<meta charset="utf-8">
   	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../styles/bootstrap/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../styles/main_style.cdd">
     <script src="../../js/jquery-1.11.2.min.js"></script>
+    <script src="../../js/bootstrap/bootstrap.js"></script>
     <title>index</title>
   </head>
  
@@ -36,23 +38,7 @@
             <div class="form-group">
               <label for="userName">訊息/Message</label>
               <p>你可以傳送一段文字訊息或是一個檔案。</p>
-              <p>You can send a peice of test message or a file.</p>
-              <ul class="nav nav-tabs" id="msgTab">
-                <li role="presentation" class="active"><a href="#textMessage">Text Message</a></li>
-                <li role="presentation"><a href="#fileUpload">File</a></li>
-              </ul>
-              <div id="my-tab-content" class="tab-content">
-                <div class="tab-pane active" id="textMessage">
-                    <input type="text" class="form-control" id="message" placeholder="Enter Your Message" style="height:200px;">
-                </div>
-                <div class="tab-pane" id="fileUpload">
-                    <input type="file" id="exampleInputFile">
-                </div>
-              </div>
-              <br/>
-
               <div role="tabpanel">
-
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                   <li role="presentation" class="active"><a href="#textMessage" aria-controls="home" role="tab" data-toggle="tab">Text Message</a></li>
@@ -68,7 +54,6 @@
                     <input type="file" id="inputFile">
                   </div>
                 </div>
-
               </div>
             </div>
             <br/>
@@ -77,20 +62,13 @@
         </div>
       </div>
     </div>
-    <script type="text/javascript"> 
-    $(function () {
-      $('#msgTab a eq:1').tab('show')
-    })
-
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-      var target = $(e.target).attr("href");
-      if ((target == '#messages')) {
-        alert('ok');
-      }else{
-        alert('not ok');
-      }
-    });
+    <!-- tab script -->
+    <script>
+      $(function () {
+        $('#myTab a:last').tab('show')
+      })
     </script>
+    <!-- tab script end-->
 
 
     <!-- <script type="application/dart" src="../../dart/authen.dart"></script> -->
