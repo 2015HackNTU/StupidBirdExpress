@@ -7,8 +7,6 @@ import "field_name.dart";
 class ActionDropper {
   DivElement parent;
   List<DivElement> actionDraggers;
-  //List<List<int>> applyActions;
-
   
   int _actionsCount;
   int _insertPos;

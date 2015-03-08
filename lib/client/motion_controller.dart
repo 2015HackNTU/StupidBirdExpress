@@ -59,7 +59,7 @@ class MotionController {
     return actionsPos;
   }
   
-  List<List<int>> generateAnimate(List<List<int>> actions) {
+  List<List<int>> generateAnimation(List<List<int>> actions) {
     List<List<int>> actionsAnimate = new List();
     
     actions.forEach((action) {
@@ -87,6 +87,29 @@ class MotionController {
       }
     });
     return actionsAnimate;
+  }
+  
+  List<int> generateHighlight(List<List<int>> actions) {
+    List<int> actionsHighlighted = new List();
+    
+    for (int i = 0; i < actions.length; i++) {
+      switch (actions[i][TYPE]) {
+        case TURN:
+          for (int i = 0; i < actions[i][TIMES]; i++)
+            actionsHighlighted.add(i);
+          break;
+        case WALK:
+        case PADDLE:
+          for (int i = 0; i < actions[i][STEPS]; i++)
+            actionsHighlighted.add(i);
+          break;
+        case FLY:
+        case HATCH:
+          actionsHighlighted.add(i);
+          break;
+      }
+    }
+    return actionsHighlighted;
   }
 
   String _px(int n) => '${n}px';
