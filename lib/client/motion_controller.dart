@@ -7,8 +7,6 @@ import "field_name.dart";
 
 class MotionController {
   DivElement mainActor;
-  ImageElement img;
-  List<String> imgSrcs;
   
   int get _windowW => window.innerWidth;
   
@@ -18,58 +16,78 @@ class MotionController {
 
   int get _curT => int.parse(mainActor.style.top.substring(0, mainActor.style.top.length - 2));
   
-  int get _projectW => sin(_stepL).toInt();
+  int get _projectW => (_stepL * sin(_degree)).toInt();
   
-  int get _projectH => -cos(_stepL).toInt();
+  int get _projectH => -(_stepL * cos(_degree)).toInt();
   
   int _stepL;
+  int _degree;
   
   MotionController() {
-    _stepL = (_windowW * 0.09).toInt();
-  }
-  
-  void turn(double degree) {}
-  
-  void walk(int steps) {
+    mainActor = querySelector('')
+      ..style.left = _px(MAINACTOR_POS_LEFT)
+      ..style.top = _px(MAINACTOR_POS_TOP);
     
+    _stepL = (_windowW * 0.09).toInt();
+    _degree = 0;
   }
   
-  void goLeft() {
-    mainActor.style.left = _px(_curL - _stepL);
-    _replaceImg(LEFT_M_IMG);
+  List<List<int>> generatePos(List<List<int>> actions) {
+    List<List<int>> actionsPos = new List();
+    
+    actions.forEach((action) {
+      switch (action[TYPE]) {
+        case TURN: 
+          actionsPos.add([_curL, _curT]);
+          break;
+        case WALK:
+          for (int i = 0; i < action[STEPS]; i++)
+            actionsPos.add([_curL + _projectW, _curT + _projectH]);
+          break;
+        case FLY:
+          actionsPos.add([_curL + _projectW, _curT + _projectH]);
+          break;
+        case PADDLE:
+          for (int i = 0; i < action[STEPS]; i++)
+            actionsPos.add([_curL + _projectW, _curT + _projectH]);
+          break;
+        case HATCH:
+          actionsPos.add([_curL, _curT]);
+          break;
+      }
+    });
+    return actionsPos;
   }
   
-  void goRight() {
-    mainActor.style.left = _px(_curL + _stepL);
-    _replaceImg(RIGHT_M_IMG);
+  List<List<int>> generateAnimate(List<List<int>> actions) {
+    List<List<int>> actionsAnimate = new List();
+    
+    actions.forEach((action) {
+      switch (action[TYPE]) {
+        case TURN:
+          for (int i = 0; i < action[TIMES]; i++)
+            actionsAnimate.add([TURN, action[DIRECTION]]);
+
+          _degree = (_degree + action[DIRECTION] * action[TIMES] * DEGREE_UNIT) % 360;
+          break;
+        case WALK:
+          for (int i = 0; i < action[STEPS]; i++)
+            actionsAnimate.add([WALK]);
+          break;
+        case FLY:
+          actionsAnimate.add([FLY]);
+          break;
+        case PADDLE:
+          for (int i = 0; i < action[STEPS]; i++)
+            actionsAnimate.add([PADDLE]);
+          break;
+        case HATCH:
+          actionsAnimate.add([HATCH]);
+          break;
+      }
+    });
+    return actionsAnimate;
   }
-  
-  void goTop() {
-    mainActor.style.top = _px(_curT - _stepL);
-    _replaceImg(TOP_M_IMG);
-  }
-  
-  void goDown() {
-    mainActor.style.top = _px(_curT + _stepL);
-    _replaceImg(DOWN_M_IMG);
-  }
-  
-  void useBomb() {
-    _replaceImg(BOMB_M_IMG);
-  }
-  
-  void wait() {
-    _replaceImg(WAIT_M_IMG);
-  }
-  
-  void dance() {
-    _replaceImg(DANCE_M_IMG);
-  }
-  
-  void _replaceImgs(List<String> srcs) {
-    imgSrcs = [];
-    //TODO: add image field names
-  }
-  
+
   String _px(int n) => '${n}px';
 }
