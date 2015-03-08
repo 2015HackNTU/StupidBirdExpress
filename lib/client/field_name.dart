@@ -2,28 +2,43 @@ library client.field_name;
 
 import 'dart:html';
 
-const String LEFT_M_IMG = "";
-const String RIGHT_M_IMG = "";
-const String TOP_M_IMG = "";
-const String DOWN_M_IMG = "";
-const String BOMB_M_IMG = "";
-const String WAIT_M_IMG = "";
-const String DANCE_M_IMG = "";
+const int TURN = 0,
+          WALK = 1,
+          FLY = 2,
+          PADDLE = 3,
+          HATCH = 4;
 
+const int TYPE = 0,
+          TIMES = 1,
+          DIRECTION = 2,
+          STEPS = 1;
 
-final List<DivElement> Actions = [GoLeft, GoRight, GoTop, GoDown, UseBomb, Wait, Dance];
-final List<String> ActionsText = ['Go Left', 'Go Right', 'Go Top', 'Go Down', 'Use Bomb', 'Wait', 'Dance'];
+const int ANIMATION_UNIT = 5;
 
-final DivElement GoLeft = querySelector('').clone(true);
+const int DRAGGER_PARENT_LEFT = 0;
+const int DRAGGER_PARENT_RIGHT = 0;
+const int DRAGGER_PARENT_TOP = 0;
+const int DRAGGER_PARENT_BOTTOM = 0;
+const int DRAGGER_CHILD_HEIGHT = 0;
 
-final DivElement GoRight = querySelector('').clone(true);
+const int MAINACTOR_POS_LEFT = 0;
+const int MAINACTOR_POS_TOP = 0;
 
-final DivElement GoTop = querySelector('').clone(true);
+const int DEGREE_UNIT = 45;
 
-final DivElement GoDown = querySelector('').clone(true);
+//Map id to dragger type
+final Map<String, int> Draggers = {"0" : 0, "1" : 1, "2" : 2, "3" : 3, "4" : 4};
 
-final DivElement UseBomb = querySelector('').clone(true);
-
-final DivElement Wait = querySelector('').clone(true);
-
-final DivElement Dance = querySelector('').clone(true);
+//final List<DivElement> ValidAnimations= querySelectorAll('');
+//
+//final List<DivElement> ValidActions = [Turn, Walk, Fly, Paddle, Hatch];
+//
+//final DivElement Turn = querySelector('');
+//
+//final DivElement Walk = querySelector('');
+//
+//final DivElement Fly = querySelector('');
+//
+//final DivElement Paddle = querySelector('');
+//
+//final DivElement Hatch = querySelector('');
