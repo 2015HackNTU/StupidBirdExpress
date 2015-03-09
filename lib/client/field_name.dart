@@ -1,19 +1,20 @@
 library client.field_name;
 
-import 'dart:html';
+const int ACTION_TURN = 0;
+const int ACTION_WALK = 1;
+const int ACTION_FLY = 2;
+const int ACTION_PADDLE = 3;
+const int ACTION_HATCH = 4;
 
-const int TURN = 0,
-          WALK = 1,
-          FLY = 2,
-          PADDLE = 3,
-          HATCH = 4;
+const int ACTION_TYPE = 0;
+const int ACTION_TIMES = 1;
+const int ACTION_DIRECTION = 2;
+const int ACTION_STEPS = 1;
 
-const int TYPE = 0,
-          TIMES = 1,
-          DIRECTION = 2,
-          STEPS = 1;
-
-const int ANIMATION_UNIT = 5;
+const int TIME_UNIT_PER_IMG = 1;
+const int TIME_UNIT_PER_POS = 4;
+const int TIME_UNIT_PER_HIGHLIGHT = 4;
+const int DEGREE_UNIT = 45;
 
 const int DRAGGER_PARENT_LEFT = 0;
 const int DRAGGER_PARENT_RIGHT = 0;
@@ -24,21 +25,18 @@ const int DRAGGER_CHILD_HEIGHT = 0;
 const int MAINACTOR_POS_LEFT = 0;
 const int MAINACTOR_POS_TOP = 0;
 
-const int DEGREE_UNIT = 45;
-
 //Map id to dragger type
 final Map<String, int> Draggers = {"0" : 0, "1" : 1, "2" : 2, "3" : 3, "4" : 4};
 
-//final List<DivElement> ValidAnimations= querySelectorAll('');
-//
-//final List<DivElement> ValidActions = [Turn, Walk, Fly, Paddle, Hatch];
-//
-//final DivElement Turn = querySelector('');
-//
-//final DivElement Walk = querySelector('');
-//
-//final DivElement Fly = querySelector('');
-//
-//final DivElement Paddle = querySelector('');
-//
-//final DivElement Hatch = querySelector('');
+
+///map attributes
+
+const int MAP_WIDTH = 0;
+const int MAP_HEIGHT = 0;
+
+const int OBSTICLE_NONE = 0;
+const int OBSTICLE_BORDER = 1;
+const int OBSTICLE_ROCK = 2;
+const int OBSTICLE_RIVER = 3;
+const int OBSTICLE_EGG = 4;
+

@@ -2,33 +2,19 @@ library client.motion_cotroller;
 
 import 'dart:html';
 import 'dart:math';
+import 'dart:async';
 
 import "field_name.dart";
 
-class MotionController {
-  DivElement mainActor;
+class MotionGenerator {
   
-  int get _windowW => window.innerWidth;
+  int get _projectW => sin(_degree).ceil();
   
-  int get _iwndowH => window.innerHeight;
+  int get _projectH => -cos(_degree).ceil();
   
-  int get _curL => int.parse(mainActor.style.left.substring(0, mainActor.style.left.length - 2));
-
-  int get _curT => int.parse(mainActor.style.top.substring(0, mainActor.style.top.length - 2));
-  
-  int get _projectW => (_stepL * sin(_degree)).toInt();
-  
-  int get _projectH => -(_stepL * cos(_degree)).toInt();
-  
-  int _stepL;
   int _degree;
   
-  MotionController() {
-    mainActor = querySelector('')
-      ..style.left = _px(MAINACTOR_POS_LEFT)
-      ..style.top = _px(MAINACTOR_POS_TOP);
-    
-    _stepL = (_windowW * 0.09).toInt();
+  MotionGenerator() {
     _degree = 0;
   }
   
@@ -36,23 +22,24 @@ class MotionController {
     List<List<int>> actionsPos = new List();
     
     actions.forEach((action) {
-      switch (action[TYPE]) {
-        case TURN: 
-          actionsPos.add([_curL, _curT]);
+      switch (action[ACTION_TYPE]) {
+        case ACTION_TURN: 
+          for (int i = 0; i < action[ACTION_TIMES]; i++)
+            actionsPos.add([0, 0]);
           break;
-        case WALK:
-          for (int i = 0; i < action[STEPS]; i++)
-            actionsPos.add([_curL + _projectW, _curT + _projectH]);
+        case ACTION_WALK:
+          for (int i = 0; i < action[ACTION_STEPS]; i++)
+            actionsPos.add([_projectW, _projectH]);
           break;
-        case FLY:
-          actionsPos.add([_curL + _projectW, _curT + _projectH]);
+        case ACTION_FLY:
+          actionsPos.add([_projectW, _projectH]);
           break;
-        case PADDLE:
-          for (int i = 0; i < action[STEPS]; i++)
-            actionsPos.add([_curL + _projectW, _curT + _projectH]);
+        case ACTION_PADDLE:
+          for (int i = 0; i < action[ACTION_STEPS]; i++)
+            actionsPos.add([_projectW, _projectH]);
           break;
-        case HATCH:
-          actionsPos.add([_curL, _curT]);
+        case ACTION_HATCH:
+          actionsPos.add([0, 0]);
           break;
       }
     });
@@ -63,26 +50,26 @@ class MotionController {
     List<List<int>> actionsAnimate = new List();
     
     actions.forEach((action) {
-      switch (action[TYPE]) {
-        case TURN:
-          for (int i = 0; i < action[TIMES]; i++)
-            actionsAnimate.add([TURN, action[DIRECTION]]);
+      switch (action[ACTION_TYPE]) {
+        case ACTION_TURN:
+          for (int i = 0; i < action[ACTION_TIMES]; i++)
+            actionsAnimate.add([ACTION_TURN, action[ACTION_DIRECTION]]);
 
-          _degree = (_degree + action[DIRECTION] * action[TIMES] * DEGREE_UNIT) % 360;
+          _degree = (_degree + action[ACTION_DIRECTION] * action[ACTION_TIMES] * DEGREE_UNIT) % 360;
           break;
-        case WALK:
-          for (int i = 0; i < action[STEPS]; i++)
-            actionsAnimate.add([WALK]);
+        case ACTION_WALK:
+          for (int i = 0; i < action[ACTION_STEPS]; i++)
+            actionsAnimate.add([ACTION_WALK]);
           break;
-        case FLY:
-          actionsAnimate.add([FLY]);
+        case ACTION_FLY:
+          actionsAnimate.add([ACTION_FLY]);
           break;
-        case PADDLE:
-          for (int i = 0; i < action[STEPS]; i++)
-            actionsAnimate.add([PADDLE]);
+        case ACTION_PADDLE:
+          for (int i = 0; i < action[ACTION_STEPS]; i++)
+            actionsAnimate.add([ACTION_PADDLE]);
           break;
-        case HATCH:
-          actionsAnimate.add([HATCH]);
+        case ACTION_HATCH:
+          actionsAnimate.add([ACTION_HATCH]);
           break;
       }
     });
@@ -93,18 +80,18 @@ class MotionController {
     List<int> actionsHighlighted = new List();
     
     for (int i = 0; i < actions.length; i++) {
-      switch (actions[i][TYPE]) {
-        case TURN:
-          for (int i = 0; i < actions[i][TIMES]; i++)
+      switch (actions[i][ACTION_TYPE]) {
+        case ACTION_TURN:
+          for (int i = 0; i < actions[i][ACTION_TIMES]; i++)
             actionsHighlighted.add(i);
           break;
-        case WALK:
-        case PADDLE:
-          for (int i = 0; i < actions[i][STEPS]; i++)
+        case ACTION_WALK:
+        case ACTION_PADDLE:
+          for (int i = 0; i < actions[i][ACTION_STEPS]; i++)
             actionsHighlighted.add(i);
           break;
-        case FLY:
-        case HATCH:
+        case ACTION_FLY:
+        case ACTION_HATCH:
           actionsHighlighted.add(i);
           break;
       }
@@ -113,4 +100,63 @@ class MotionController {
   }
 
   String _px(int n) => '${n}px';
+}
+
+
+class MotionDisplayer {
+  DivElement mainActor;
+  
+  int get _windowW => window.innerWidth;
+  
+  int get _iwndowH => window.innerHeight;
+  
+  int get _curL => int.parse(mainActor.style.left.substring(0, mainActor.style.left.length - 2));
+
+  int get _curT => int.parse(mainActor.style.top.substring(0, mainActor.style.top.length - 2));
+  
+  int _stepL;
+  int _state;
+  
+  MotionDisplayer() {
+    mainActor = querySelector('')
+      ..style.left = _px(MAINACTOR_POS_LEFT)
+      ..style.top = _px(MAINACTOR_POS_TOP);
+    
+    _stepL = (_windowW * 0.09).toInt();
+    _state = 0;
+  }
+  
+  void startMotionDisplayer(List<List<int>> pos, List<List<int>> imgs, List<int> highlight) {
+    Timer timer;
+    int i = 0, j = 0;
+    
+    timer = new Timer.periodic(new Duration(milliseconds: 250), (_) {
+      if (_isInChangeImgState) {
+        j = (++j) % 2;
+//        if (_isDone) {
+//          
+//          timer.cancel();
+//        }
+      }
+      
+      if (_isInChangePosState) {
+        
+      }
+      
+      if (_isInChangeBoxState) {
+        i++;
+      }
+      
+      _state++;
+    });
+  }
+  
+  bool get _isInChangePosState => _state.remainder(TIME_UNIT_PER_POS) == 0;
+  
+  bool get _isInChangeImgState => _state.remainder(TIME_UNIT_PER_IMG) == 0;
+  
+  bool get _isInChangeBoxState => _state.remainder(TIME_UNIT_PER_HIGHLIGHT) == 0;
+  
+  String _px(int n) => '${n}px';
+  
 }

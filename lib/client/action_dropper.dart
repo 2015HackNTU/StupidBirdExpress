@@ -28,21 +28,21 @@ class ActionDropper {
           int degree = child.querySelector('select selected').value;
           int times = degree.abs() ~/ DEGREE_UNIT;
           int direction = degree > 0 ? 1 : -1;
-          actions.add([TURN, times, direction]);
+          actions.add([ACTION_TURN, times, direction]);
           break;
         case 'Walk':
           int steps = int.parse(child.querySelector('input').value.toString());
-          actions.add([WALK, steps]);
+          actions.add([ACTION_WALK, steps]);
           break;
         case 'Fly':
-          actions.add([FLY]);
+          actions.add([ACTION_FLY]);
           break;
         case 'Paddle':
           int steps = int.parse(child.querySelector('input').value.toString());
-          actions.add([PADDLE, steps]);
+          actions.add([ACTION_PADDLE, steps]);
           break;
         case 'Hatch':
-          actions.add([HATCH]);
+          actions.add([ACTION_HATCH]);
           break;
         default:
           print('unknown action type: $type');
