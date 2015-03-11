@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+  	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../../styles/bootstrap/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../styles/main_style.css">
+    <link rel="stylesheet" href="../../font-awesome-4.3.0/css/font-awesome.min.css">
+    <script src="../../js/jquery-1.11.2.min.js"></script>
+    <script src="../../js/bootstrap/bootstrap.js"></script>
+    <title>index</title>
+  </head>
+ 
+  <body>   
+    <div class="page-header" style="margin-bottom:2%;">
+      <h1>笨鳥快遞<small>Stupid Bird Express</small></h1>
+    </div>
+    <div class = "inner-page padd game-page">
+      <div class = "about-vedio padd">
+        <div class = "container-fluid" style="width:90%">
+          <div class="row">
+            <div class="panel panel-default col-md-2 code-list code-sample">
+              <div class="panel-heading">Sample Codes</div>
+              <div class="panel-body"> 
+                <ul class="list-group">
+                    <fieldset disabled>
+                    <li class="list-group-item category">Stupid Bird's action</li>
+                    <li class="list-group-item">
+                      <span class="move-tag"><i class="fa fa-bars"></i></span>stupidBird.step
+                      <input type="text" name="stepnum" class="parameter-input text-input">
+                    </li>
+                    <li class="list-group-item">
+                      <span class="move-tag"><i class="fa fa-bars"></i></span>stubirBird.turn
+                      <select class="form-control parameter-input select-input">
+                        <option>45&#176</option>
+                        <option>90&#176</option>
+                        <option>135&#176</option>
+                        <option>180&#176</option>
+                        <option>225&#176</option>
+                      </select>
+                    </li>
+                    <li class="list-group-item">
+                      <span class="move-tag"><i class="fa fa-bars"></i></span>stubirBird.fly
+                    </li>
+                    <li class="list-group-item">
+                      <span class="move-tag"><i class="fa fa-bars"></i></span>stubirBird.swing
+                      <input type="text" name="stepnum" class="parameter-input text-input">
+                    </li>
+                  </fieldest>
+                </ul>
+              </div>
+            </div>
+            <div class="panel panel-default col-md-2 code-list your-code">
+              <div class="panel-heading">Your Codes</div>
+              <div class="panel-body"> 
+                <ul class="list-group">
+                </ul>
+              </div>
+            </div>
+
+            
+            <div class="panel panel-default col-md-7 game-panel">
+              <div class="panel-body"> 
+                <div class="game-canvas"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- <script type="application/dart" src="../../dart/authen.dart"></script> -->
+    <!-- for this next line to work, your pubspec.yaml file must have a dependency on 'browser' -->
+    <!-- <script src="packages/browser/dart.js"></script> -->
+  </body>
+</html>
