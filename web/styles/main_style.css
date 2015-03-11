@@ -9,6 +9,10 @@ body {
 	margin-bottom: 50px;
 }
 
+.page-header .en-title {
+	color: #7a4f2d;
+}
+
 .nav-tabs li a{
 	background-color: white;
 	border: 1px solid #ddd;
