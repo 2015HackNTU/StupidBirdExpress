@@ -1,3 +1,21 @@
+var init = false;
+
+/**
+ * Parse SDK initializaiton. You must call this before any function below is called.
+ * Remember to add the <script> of Parse SDK to your html file.
+ */
+function initParse() {
+  if (isNullOrUndef(Parse)) {
+    console.error("'Parse' is undefined. Please check if you've added PARSE SDK into your html file.");
+  }
+
+  var appId = "ppfEmWTXVnkhZFfJI7ciVAF7LktBxzUqVT9OB2vI";
+  var jsKey = "l72d8xkku9s0JCfPkHRHsjrrVlIvzLum9Lb7cwIc";
+  Parse.initialize(appId, jsKey);
+  init = true;
+}
+
+
 /**
  * upload your message, text or file
  * @param  {Boolean} isFile   text->false; file->true
@@ -9,6 +27,10 @@
  * @return {void}
  */
 function uploadMsg(isFile, content, filename, onSuccess, onFailure) {
+  if (!init) {
+    initParse();
+  }
+
   var promise = Parse.Promise.as();
   var Message = Parse.Object.extend("Message");
   var msg = new Message();
@@ -51,15 +73,10 @@ function uploadMsg(isFile, content, filename, onSuccess, onFailure) {
  * @return {void  }
  */
 function isDone(msgId, onSuccess, onFailure) {
-  /*
-  var Message = Parse.Object.extend("Message");
-  var query = new Parse.Query(Message);
-  query.get(msgId).then(function(msg) {
-    onSuccess(msg.get("isDone"));
-  }, function(error) {
-    onFailure("query failed:" + error.message);
-  });
-*/
+  if (!init) {
+    initParse();
+  }
+
   Parse.Cloud.run("isFinished", {
     "msgId":msgId
   }).then(function(response) {
@@ -79,6 +96,9 @@ function isDone(msgId, onSuccess, onFailure) {
  * @param {func}     onFailure function(string errmsg)
  */
 function setStatus(msgId, isDone, onSuccess, onFailure) {
+  if (!init) {
+    initParse();
+  }
 
   var Message = Parse.Object.extend("Message");
   var query = new Parse.Query(Message);
@@ -112,6 +132,9 @@ function setStatus(msgId, isDone, onSuccess, onFailure) {
  * @return {void}
  */
 function downloadMsg(msgId, onSuccess, onFailure) {
+  if (!init) {
+    initParse();
+  }
 
   var Message = Parse.Object.extend("Message");
   var query = new Parse.Query(Message);
@@ -131,4 +154,9 @@ function downloadMsg(msgId, onSuccess, onFailure) {
     onFailure(error.message);
   });
 
+}
+
+
+function isNullOrUndef(obj) {
+  return (typeof obj === 'undefined' || obj == null);
 }
