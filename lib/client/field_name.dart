@@ -16,18 +16,8 @@ const int TIME_UNIT_PER_POS = 4;
 const int TIME_UNIT_PER_HIGHLIGHT = 4;
 const int DEGREE_UNIT = 45;
 
-const int DRAGGER_PARENT_LEFT = 0;
-const int DRAGGER_PARENT_RIGHT = 0;
-const int DRAGGER_PARENT_TOP = 0;
-const int DRAGGER_PARENT_BOTTOM = 0;
-const int DRAGGER_CHILD_HEIGHT = 0;
-
 const int MAINACTOR_POS_LEFT = 0;
 const int MAINACTOR_POS_TOP = 0;
-
-//Map id to dragger type
-final Map<String, int> Draggers = {"0" : 0, "1" : 1, "2" : 2, "3" : 3, "4" : 4};
-
 
 ///map attributes
 

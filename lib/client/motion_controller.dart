@@ -4,6 +4,7 @@ import 'dart:html';
 import 'dart:math';
 import 'dart:async';
 
+import "util.dart";
 import "field_name.dart";
 
 class MotionGenerator {
@@ -99,7 +100,6 @@ class MotionGenerator {
     return actionsHighlighted;
   }
 
-  String _px(int n) => '${n}px';
 }
 
 
@@ -108,7 +108,7 @@ class MotionDisplayer {
   
   int get _windowW => window.innerWidth;
   
-  int get _iwndowH => window.innerHeight;
+  int get _windowH => window.innerHeight;
   
   int get _curL => int.parse(mainActor.style.left.substring(0, mainActor.style.left.length - 2));
 
@@ -119,8 +119,8 @@ class MotionDisplayer {
   
   MotionDisplayer() {
     mainActor = querySelector('')
-      ..style.left = _px(MAINACTOR_POS_LEFT)
-      ..style.top = _px(MAINACTOR_POS_TOP);
+      ..style.left = px(MAINACTOR_POS_LEFT)
+      ..style.top = px(MAINACTOR_POS_TOP);
     
     _stepL = (_windowW * 0.09).toInt();
     _state = 0;
@@ -156,7 +156,5 @@ class MotionDisplayer {
   bool get _isInChangeImgState => _state.remainder(TIME_UNIT_PER_IMG) == 0;
   
   bool get _isInChangeBoxState => _state.remainder(TIME_UNIT_PER_HIGHLIGHT) == 0;
-  
-  String _px(int n) => '${n}px';
   
 }
