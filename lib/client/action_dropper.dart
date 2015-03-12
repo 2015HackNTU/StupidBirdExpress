@@ -61,26 +61,45 @@ class ActionDropper {
   }
   
   void _startDragListener() {
+    int type, offset_x, offset_y;
+    bool isOnDrag;
+    
     actionDraggers.forEach((DivElement dragger) {
-      int type = Draggers[dragger.id];
-      dragger
-        ..onDrag.listen((evt) {
-          if (_isInDropbox(evt.screen.x, evt.screen.y)) {
-            _insertPos =  _getValidPos(evt.screen.y);
-            _removeBlankDragger();
-            _insertBlankDragger();
-          }
-        })
-        ..onDragEnd.listen((e) {
-          if (_insertPos != -1)
-            _appendAction(dragger);
-        });
+      type = Draggers[dragger.id];
+      isOnDrag = false;
+      dragger.onMouseDown.listen((evt) {
+        offset_x = evt.client.x;
+        offset_y = evt.client.y;
+        
+        _insertBlankDragger();
+        isOnDrag = true;
+      });
     });
+    
+    document
+      ..onMouseUp.listen((evt) {
+        _removeBlankDragger();
+        if (_isInDropbox(evt.client.x, evt.client.y)) {
+          _insertPos = _getValidPos(evt.client.y);
+          _insertBlankDragger();
+        }
+        isOnDrag = false;
+      })
+      ..onMouseMove.listen((evt) {
+        if (isOnDrag) 
+          _renderBlankDragger(evt.client.x - offset_x, evt.client.y - offset_y);
+        });
   }
   
   void _removeBlankDragger() {
     if (parent.querySelector('.blank-dragger') != null)
       parent.querySelector('.blank-dragger').remove();
+  }
+  
+  void _renderBlankDragger(int left, int top) {
+    parent.querySelector('.blank-dragger')
+    .style..left = _px(left)
+          ..top = _px(top);
   }
   
   void _insertBlankDragger() {
@@ -113,4 +132,5 @@ class ActionDropper {
     });
   }
 
+  String _px(int n) => '${n}px';
 }
