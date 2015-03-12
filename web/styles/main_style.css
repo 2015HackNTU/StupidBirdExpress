@@ -98,8 +98,11 @@ body {
 	align-items: center;
 }
 
-.game-page .code-sample .parameter-input {
+.game-page .code-list .parameter-input {
 	width: 40px;
+}
+
+.game-page .code-sample .parameter-input {
 	cursor: not-allowed;
 }
 
