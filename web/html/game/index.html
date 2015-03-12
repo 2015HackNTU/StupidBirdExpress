@@ -27,11 +27,11 @@
                 <ul class="list-group">
                     <fieldset disabled>
                     <li class="list-group-item category">Stupid Bird's action</li>
-                    <li class="list-group-item">
+                    <li class="list-group-item b-step">
                       <span class="move-tag"><i class="fa fa-bars"></i></span>stupidBird.step
                       <input type="text" name="stepnum" class="parameter-input text-input">
                     </li>
-                    <li class="list-group-item">
+                    <li class="list-group-item b-turn">
                       <span class="move-tag"><i class="fa fa-bars"></i></span>stubirBird.turn
                       <select class="form-control parameter-input select-input">
                         <option>45&#176</option>
@@ -41,10 +41,10 @@
                         <option>225&#176</option>
                       </select>
                     </li>
-                    <li class="list-group-item">
+                    <li class="list-group-item b-fly">
                       <span class="move-tag"><i class="fa fa-bars"></i></span>stubirBird.fly
                     </li>
-                    <li class="list-group-item">
+                    <li class="list-group-item b-paddle">
                       <span class="move-tag"><i class="fa fa-bars"></i></span>stubirBird.paddle
                       <input type="text" name="stepnum" class="parameter-input text-input">
                     </li>
@@ -72,9 +72,8 @@
     </div>
     <footer style="margin-top:0;">copyright &copy 2015HackNTU</footer>
 
-
-    <!-- <script type="application/dart" src="../../dart/authen.dart"></script> -->
-    <!-- for this next line to work, your pubspec.yaml file must have a dependency on 'browser' -->
-    <!-- <script src="packages/browser/dart.js"></script> -->
+    <!-- dart file -->
+    <script type="application/dart" src="../../dart/authen.dart"></script>
+    <script src="packages/browser/dart.js"></script>
   </body>
 </html>
