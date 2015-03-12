@@ -104,6 +104,7 @@ body {
 }
 
 .game-page .code-list .select-input {
+	padding: 0;
 	width: 58px;
 	display: inline;
 }
@@ -133,4 +134,24 @@ footer {
 	font-size: 8px;
 	float: right;
 	margin-top: 15px;
+}
+
+.input-group .input-group-addon {
+	background-color: white;
+	border-color: #ddd; 
+	border-right: none;
+}
+
+.well {
+	background-color: white;
+	padding: 10px;
+	height: 120px;
+}
+
+.well p {
+	margin-top: 22px;
+}
+
+.well img {
+	float: left;
 }
