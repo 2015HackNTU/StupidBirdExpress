@@ -1,5 +1,9 @@
+.complete-page .modal-header {
+	border-color: #ffe530;
+}
 .complete-page h1 {
 	text-align: center;
+	font-family: 'Coming Soon', cursive;
 }
 
 .complete-page .modal-body {
@@ -50,6 +54,7 @@
 }
 
 .modal-footer{
+	border-color: #ffe530;
 	padding: 5px 15px;
 }
 

@@ -11,6 +11,7 @@ body {
 
 .page-header .en-title {
 	color: #7a4f2d;
+	font-family: 'Coming Soon', cursive;
 }
 
 .page-header i {
@@ -69,10 +70,12 @@ body {
 	background-color: #cc0000;
 	color: white;
 	border: none;
+	font-family: 'Coming Soon', cursive;
 }
 
 .game-page .code-list .panel-body {
 	overflow: scroll;
+	/*font-family: 'Coming Soon', cursive;*/
 }
 .game-page .code-list .list-group .list-group-item {
 	height: 40px;
@@ -89,6 +92,7 @@ body {
 	padding-top: 10px;
 	padding-left: 15px;
 	background-color: #ddd;
+	font-family: 'Coming Soon', cursive;
 }
 
 .game-page .code-list .list-group .move-tag {
