@@ -6,13 +6,16 @@ import "util.dart";
 import "field_name.dart";
 
 class ActionDropper {
+  bool allowDragging;
   UListElement parent;
   List<LIElement> actionDraggers;
   
   int _actionsCount;
   int _lastPos;
-  bool _isApplying;
+  bool _isOnDrag;
   LIElement _blankDragger;
+  LIElement _dragged;
+  LIElement _inserted;
   
   int _ParentLeft;
   int _ParentRight;
@@ -24,32 +27,33 @@ class ActionDropper {
   
   int get _windowH => window.innerHeight;
   
+  List<LIElement> get _children => parent.querySelectorAll('.b-action');
+  
   ActionDropper.start() {
     _initValues();
     _startDragListener();
-    
-    test();
+    //test();
   }
   
-  List<List<int>> getActionValues() {
+  List<List<int>> _getActionValues() {
     List<List<int>> actions = new List();
     List<DivElement> children = parent.children;
     
     children.forEach((child) {
-      if (child.classes.contains('turn')) {
+      if (child.classes.contains('b-turn')) {
         int degree = child.querySelector('select selected').value;
         int times = degree.abs() ~/ DEGREE_UNIT;
         int direction = degree > 0 ? 1 : -1;
         actions.add([ACTION_TURN, times, direction]); 
-      } else if (child.classes.contains('walk')) {
+      } else if (child.classes.contains('b-walk')) {
         int steps = int.parse(child.querySelector('input').value.toString());
         actions.add([ACTION_WALK, steps]);
-      } else if (child.classes.contains('fly')) {
+      } else if (child.classes.contains('b-fly')) {
         actions.add([ACTION_FLY]);
-      } else if (child.classes.contains('paddle')) {
+      } else if (child.classes.contains('b-paddle')) {
         int steps = int.parse(child.querySelector('input').value.toString());
         actions.add([ACTION_PADDLE, steps]);
-      } else if (child.classes.contains('hatch')) {
+      } else if (child.classes.contains('b-hatch')) {
         actions.add([ACTION_HATCH]);
       } else
         print('unknown action type');
@@ -65,7 +69,8 @@ class ActionDropper {
     _blankDragger = actionDraggers[0].clone(false);
     _blankDragger.id = BLANK_DRAGGER_ID;
     _actionsCount = 0;
-    _isApplying = false;
+    allowDragging = true;
+    _isOnDrag = false;
     
     DivElement pad = querySelector('.your-code');
     _ParentLeft = (_windowW * 0.05 + _windowW * 0.9 * (1/6 + 0.03)).ceil();
@@ -75,74 +80,77 @@ class ActionDropper {
   }
   
   void _startDragListener() {
-    int type, offset_x, offset_y, left, top, pos;
-    bool isOnDrag = false, isFirst = true;
-    LIElement dragged;
+    int offset_x, offset_y, left, top, pos;
+    bool isFirst = true;
     
-    for (int i = 0; i < actionDraggers.length; i++) {
-      actionDraggers[i].onMouseDown.listen((evt) {
-        if (!_isApplying) {
-          type = i;
+    void startMouseDownListener(Element elem, bool isSample) {
+      elem.querySelector('.move-tag').onMouseDown.listen((evt) {
+        if (allowDragging) {
           offset_x = evt.offset.x;
           offset_y = evt.offset.y;
           left = evt.page.x - offset_x;
           top = evt.page.y - offset_y;
           
-          dragged = actionDraggers[i].clone(true);
-          dragged.style..position = 'absolute'
+          _dragged = elem.clone(true);
+          _inserted = elem.clone(true);
+          _dragged.style..position = 'absolute'
                        ..zIndex = 1000.toString();
-          querySelector('body').children.insert(0, dragged);
-          _renderDraggedItem(dragged, left, top);
+          querySelector('body').children.insert(0, _dragged);
+          _renderDraggedItem(_dragged, left, top);
           
-          isOnDrag = true;
+          if (!isSample)
+            elem.remove();
+          
+          _isOnDrag = true;
         }
       });
     }
     
+    for (int i = 0; i < actionDraggers.length; i++)
+      startMouseDownListener(actionDraggers[i], true);
+    
     document
       ..onMouseUp.listen((evt) {
-        if (isOnDrag) {
-          _removeBlankDragger();
-          dragged.remove();
+        if (_isOnDrag) {
+          _dragged.remove();
           
-          if (_isInDropbox(evt.client.x, evt.client.y))
-            _appendAction(_getValidPos(evt.client.y), actionDraggers[type]);
-          isOnDrag = false;
+          if (_isInDropbox(evt.client.x, evt.client.y)) {
+            LIElement test = _appendAction(_getValidPos(evt.client.y), _inserted);
+            startMouseDownListener(test, false);
+          }
+          _isOnDrag = false;
+          isFirst = true;
+          _clearBorder();
         }
       })
       ..onMouseMove.listen((evt) {
-      
-        if (isOnDrag) {
+      _clearBorder();
+        if (_isOnDrag) {
           left = evt.page.x - offset_x;
           top = evt.page.y - offset_y;
-          _renderDraggedItem(dragged, left, top);
-          //_renderDraggedItem(dragged, evt.page.x, evt.page.y);
+          _renderDraggedItem(_dragged, left, top);
+          
+          if (_isInDropbox(evt.client.x, evt.client.y)) {
+            if (_actionsCount >= 1) {
+              if (_getValidPos(evt.client.y) == 0)
+                _children[0].style.borderTop = '2px solid black';
+              else {
+                for (int i = 0; i < _children.length; i++) {
+                  if (_getValidPos(evt.client.y) == i + 1)
+                    _children[i].style.borderBottom = '2px solid black';
+                }
+              }
+            }
+          }
         }
-//        if (_isInDropbox(evt.client.x, evt.client.y)) {
-//          if (isFirst) {
-//            _lastPos = _getValidPos(evt.client.y);
-//            _insertBlankDragger(_lastPos);
-//            }
-//          else
-//            _renderBlankDragger(_getValidPos(evt.client.y));
-//        }
       });
   }
   
-  void _removeBlankDragger() {
-    if (parent.querySelector('#$BLANK_DRAGGER_ID') != null)
-      parent.querySelector('#$BLANK_DRAGGER_ID').remove();
-  }
-  
-  void _renderBlankDragger(int pos) {
-    if (_lastPos == pos)
-      return;
-    _removeBlankDragger();
-    _insertBlankDragger(pos);
-  }
-  
-  void _insertBlankDragger(int pos) {
-    parent.children.insert(pos, _blankDragger);
+  void _clearBorder() {
+    for (int i = 0; i < _children.length; i++) {
+      _children[i].style..borderTop = '0'
+                        ..borderBottom = '1px dashed #cc0000';
+    }
   }
   
   void _renderDraggedItem(LIElement dragged, int left, int top) {
@@ -155,15 +163,16 @@ class ActionDropper {
        y >= _ParentTop && y <= _ParentBottom;
   
   int _getValidPos(int y) {
-    int tempPos = (y - _ParentTop) ~/ _ChildHeight;
+    int tempPos = ((y - _ParentTop) / _ChildHeight).round();
     return tempPos <= _actionsCount ? tempPos : _actionsCount;
   }
   
-  void _appendAction(int pos, LIElement elem) {
+  LIElement _appendAction(int pos, LIElement elem) {
     LIElement newElement = elem.clone(true);
     parent.children.insert(pos, newElement);
     _startDeleteActionListener(newElement);
     _actionsCount++;
+    return newElement;
   }
   
   void _startDeleteActionListener(LIElement newElement) {
@@ -172,6 +181,7 @@ class ActionDropper {
     listener = newElement.querySelector('.del-icon').onClick.listen((_) {
       newElement.remove();
       listener.cancel();
+      _actionsCount--;
     });
   }
 
