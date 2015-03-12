@@ -87,7 +87,7 @@ body {
 
 .game-page .code-list .list-group .category {
 	padding-top: 10px;
-	font-size: 16px;
+	padding-left: 15px;
 	background-color: #ddd;
 }
 
@@ -107,6 +107,11 @@ body {
 	padding: 0;
 	width: 58px;
 	display: inline;
+}
+
+.game-page .your-code .panel-heading .run-btn {
+	float: right;
+	font-size: 20px;
 }
 
 footer {
