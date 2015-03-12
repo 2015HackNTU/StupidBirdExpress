@@ -1,12 +1,12 @@
 body {
 	background-color: #ffe530;
-	padding-bottom: 50px;
 }
 
 .page-header {
 	border-style: none;
-	padding-left: 10%;
-	margin-bottom: 50px;
+	padding: 0 10%;
+	margin-top: 1%;
+	margin-bottom: 1%;
 }
 
 .page-header .en-title {
@@ -80,6 +80,7 @@ body {
 }
 
 .game-page .code-list .list-group .category {
+	padding-top: 10px;
 	font-size: 16px;
 	background-color: #ddd;
 }
@@ -99,4 +100,8 @@ body {
 .game-page .code-list .select-input {
 	width: 60px;
 	display: inline;
+}
+
+footer {
+	text-align: center;
 }
