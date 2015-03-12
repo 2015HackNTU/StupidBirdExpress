@@ -76,7 +76,7 @@ body {
 
 .game-page .code-list .panel-body {
 	overflow: scroll;
-	/*font-family: 'Coming Soon', cursive;*/
+	font-family: 'Coming Soon', cursive;
 }
 .game-page .code-list .list-group .list-group-item {
 	height: 40px;
@@ -93,7 +93,6 @@ body {
 	padding-top: 10px;
 	padding-left: 15px;
 	background-color: #ddd;
-	font-family: 'Coming Soon', cursive;
 	font-size: 16px;
 }
 
