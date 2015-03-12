@@ -6,6 +6,7 @@
   	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../styles/bootstrap/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../../styles/main_style.css">
+    <link rel="stylesheet" href="../../font-awesome-4.3.0/css/font-awesome.min.css">
     <script src="../../js/jquery-1.11.2.min.js"></script>
     <script src="../../js/bootstrap/bootstrap.js"></script>
     <title>Stupid Bird Express</title>
@@ -33,12 +34,19 @@
             <br/>
             <div class="form-group">
               <label for="receiverEmail">收件人信箱/Receiver's Email Address</label>
-              <input type="password" class="form-control" id="receiverEmail" placeholder="Enter Receiver's Email Address">
+              <input type="text" class="form-control" id="receiverEmail" placeholder="Enter Receiver's Email Address">
             </div>
             <br/>
             <div class="form-group">
               <label for="userName">你想顯示的名字/Your Name to Show on the Message</label>
               <input type="text" class="form-control" id="userName" placeholder="Enter Your Name">
+            </div>
+            <br/>
+            <div class="form-group">
+              <label for="receiverEmail">你的信箱/Your Email Address</label>
+              <p>不會讓對方知道。我們會幫忙回信。</p>
+              <p>Receiver is not allowed to knon your email address, but they can still reply.</p>
+              <input type="text" class="form-control" id="receiverEmail" placeholder="Enter Receiver's Email Address">
             </div>
             <br/>
 

@@ -6,6 +6,7 @@
   	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../styles/bootstrap/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../../styles/main_style.css">
+    <link rel="stylesheet" type="text/css" href="../../styles/complete.css">
     <link rel="stylesheet" href="../../font-awesome-4.3.0/css/font-awesome.min.css">
     <script src="../../js/jquery-1.11.2.min.js"></script>
     <script src="../../js/bootstrap/bootstrap.js"></script>
@@ -27,6 +28,10 @@
     <div class = "inner-page padd game-page">
       <div class = "about-vedio padd">
         <div class = "container-fluid" style="width:90%">
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+            Launch demo modal
+          </button>
           <div class="row">
             <div class="panel panel-default col-md-2 code-list code-sample">
               <div class="panel-heading">Sample Code</div>
@@ -85,6 +90,36 @@
         </div>
       </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade complete-page" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h1 class="modal-title" id="myModalLabel">Complete!</h1>
+          </div>
+          <div class="modal-body">
+            <div class="users-msg"></div>
+            <div class="whole-btn">
+              <div class="completepage-btn"><i class="fa fa-download"></i></div>
+              <div class="btn-info">download</div>
+            </div>
+            <div class="whole-btn">
+              <div class="completepage-btn"><i class="fa fa-reply"></i></div>
+              <div class="btn-info">reply</div>
+            </div>
+            <div class="whole-btn">
+              <div class="completepage-btn"><i class="fa fa-envelope-o"></i></div>
+              <div class="btn-info">send</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+          <img src="../../source/logo_fat.png" width="100px">
+           <p>HackNTU致力於提倡動手解決問題的黑客精神！此款遊戲將協助你/妳初步瞭解寫程式的基本概念，有興趣的話歡迎持續關注<a href="https://www.facebook.com/hackNTU?fref=ts">HackNTU粉絲專頁</a>！</p>
+          <p>記住次序號<span class"numbers-insert" style="color:#ca0000;"></span>，到攤位抽獎吧！college bike 等著你喔！</p>
+          </div>
+        </div>
+      </div>
     <footer style="margin-top:0;">copyright &copy 2015HackNTU</footer>
     <!-- show alert -->
     <script>
