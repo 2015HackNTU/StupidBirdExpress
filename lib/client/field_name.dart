@@ -40,3 +40,5 @@ const int OBSTICLE_ROCK = 2;
 const int OBSTICLE_RIVER = 3;
 const int OBSTICLE_EGG = 4;
 
+const String BLANK_DRAGGER_ID = "blank-dragger";
+
