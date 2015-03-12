@@ -14,7 +14,7 @@ body {
 }
 
 .page-header i {
-	color: black;
+	color: #7a4f2d;
 	font-size: 14px;
 	margin: 0 5px;
 }
@@ -104,11 +104,33 @@ body {
 }
 
 .game-page .code-list .select-input {
-	width: 60px;
+	width: 58px;
 	display: inline;
 }
 
 footer {
 	text-align: center;
 	margin: 1%;
+}
+
+.my-alert {
+	border-color: #fff550;
+	background-color: #fff550;
+	color: #555;
+}
+
+.my-alert .alert-link{
+	color: #cc0000;
+}
+
+.my-alert .alert-link:hover{
+	text-decoration:none;
+	color: #ee2020;
+	transition: color 0.1s linear 0s;
+}
+
+.list-group-item .del-icon{
+	font-size: 8px;
+	float: right;
+	margin-top: 15px;
 }
