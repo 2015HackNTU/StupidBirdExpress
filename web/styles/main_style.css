@@ -70,6 +70,7 @@ body {
 	background-color: #cc0000;
 	color: white;
 	border: none;
+	font-size: 16px;
 	font-family: 'Coming Soon', cursive;
 }
 
@@ -93,6 +94,7 @@ body {
 	padding-left: 15px;
 	background-color: #ddd;
 	font-family: 'Coming Soon', cursive;
+	font-size: 16px;
 }
 
 .game-page .code-list .list-group .move-tag {
