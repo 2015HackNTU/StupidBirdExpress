@@ -11,6 +11,7 @@ class LevelMap {
   
   LevelMap(this.mainActorLeft, this.mainActorTop, this.map) {
     _createBlocks();
+    print('done!');
     _genImgs();
   }
   
@@ -48,6 +49,17 @@ class LevelMap {
       }
     }
     
+  }
+  
+  void _genImgs() {
+    for (int i = 0; i < MAP_HEIGHT; i++) {
+      for (int j = 0; j < MAP_WIDTH; j++) {
+        if (map[i][j] <= MAP_ITEMS_COUNT) {
+          mapBlock[i][j].style..background = BlockImgs[map[i][j]]
+                              ..backgroundSize = '45px';
+        }
+      }
+    }
   }
   
   void _move(int hor, int ver) {

@@ -1,16 +1,5 @@
 library client.field_name;
 
-///img url
-
-const String  ARBOR = '../../source/arbor.png';
-const String   BOAT = '../../source/boat.png';
-const String   BUSH = '../../source/bush.png';
-const String  STRAW = '../../source/straw.png';
-const String TREE_1 = '../../source/tree1.png';
-const String TREE_2 = '../../source/tree2.png';
-const String TREE_3 = '../../source/tree3.png';
-const String TREE_4 = '../../source/tree4.png';
-
 
 ///actions list attributes
 
@@ -43,18 +32,20 @@ const int         MAP_HEIGHT = 12;
 const int MAINACTOR_POS_LEFT = 0;
 const int  MAINACTOR_POS_TOP = 0;
 
-const int          MAP_GROUND = 0;
-const int           MAP_RIVER = 1;
-const int            MAP_BOAT = 2;
-const int    MAP_FLIPPED_BUSH = 3;
-const int   MAP_FLIPPED_STRAW = 4;
-const int   MAP_FLIPPED_ARBOR = 5;
-const int MAP_UNFLIPPED_ARBOR = 6;
-const int  MAP_UNFLIPPED_TREE = 7;
+const int            MAP_BOAT = 0;
+const int   MAP_FLIPPED_ARBOR = 1;
+const int    MAP_FLIPPED_BUSH = 2;
+const int   MAP_FLIPPED_STRAW = 3;
+const int  MAP_UNFLIPPED_TREE = 4;
+const int MAP_UNFLIPPED_ARBOR = 5;
+const int          MAP_GROUND = 6;
+const int           MAP_RIVER = 7;
 const int  MAP_UNFLIPPED_WALL = 8;
 const int             MAP_EGG = 9;
 
 const int MAP_POS_ACTION_TYPE = 2;
+const int MAP_ITEMS_COUNT = 4;
+
 
 const int ERROR_OUT_OF_BORDER = 0;
 const int         ERROR_DRAWN = 1;
@@ -62,6 +53,18 @@ const int      ERROR_HIT_WALL = 2;
 const int     ERROR_BREAK_EGG = 3;
 const int        ERROR_NO_EGG = 4;
 
+///img url
+
+const String   BOAT = 'url(../../source/boat.png)';
+const String  ARBOR = 'url(../../source/arbor.png)';
+const String   BUSH = 'url(../../source/bush.png)';
+const String  STRAW = 'url(../../source/straw.png)';
+const String TREE_1 = 'url(../../source/tree1.png)';
+const String TREE_2 = 'url(../../source/tree2.png)';
+const String TREE_3 = 'url(../../source/tree3.png)';
+const String TREE_4 = 'url(../../source/tree4.png)';
+
+final List<String> BlockImgs = [BOAT, ARBOR, BUSH, STRAW, TREE_1, TREE_2, TREE_3, TREE_4];
 
 ///static map
 
