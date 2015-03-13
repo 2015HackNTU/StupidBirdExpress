@@ -41,21 +41,21 @@ class MotionGenerator {
           _degree = (_degree + action[ACTION_DIRECTION] * action[ACTION_TIMES] * DEGREE_UNIT) % 360;
           print('degree: $_degree');
           for (int i = 0; i < action[ACTION_TIMES]; i++)
-            actionsPos.add([0, 0]);
+            actionsPos.add([0, 0, ACTION_TURN]);
           break;
         case ACTION_WALK:
           for (int i = 0; i < action[ACTION_STEPS]; i++)
-            actionsPos.add([_projectW, _projectH]);
+            actionsPos.add([_projectW, _projectH, ACTION_WALK]);
           break;
         case ACTION_FLY:
-          actionsPos.add([_projectW * 2, _projectH * 2]);
+          actionsPos.add([_projectW, _projectH, ACTION_FLY]);
           break;
         case ACTION_PADDLE:
           for (int i = 0; i < action[ACTION_STEPS]; i++)
-            actionsPos.add([_projectW, _projectH]);
+            actionsPos.add([_projectW, _projectH, ACTION_PADDLE]);
           break;
         case ACTION_HATCH:
-          actionsPos.add([0, 0]);
+          actionsPos.add([0, 0, ACTION_HATCH]);
           break;
       }
     });
@@ -76,7 +76,6 @@ class MotionGenerator {
             actionsAnimate.add([ACTION_WALK]);
           break;
         case ACTION_FLY:
-          actionsAnimate.add([ACTION_FLY]);
           actionsAnimate.add([ACTION_FLY]);
           break;
         case ACTION_PADDLE:
@@ -106,7 +105,6 @@ class MotionGenerator {
             actionsHighlighted.add(i);
           break;
         case ACTION_FLY:
-          actionsHighlighted.add(i);
           actionsHighlighted.add(i);
           break;
         case ACTION_HATCH:
@@ -184,6 +182,16 @@ class MotionDisplayer {
       _state++;
     });
   }
+  
+//  List<bool> _startMapEmulator(List<List<int>> pos) {
+//    List<bool> validActions = [];
+//    
+//    for (int i = 0; i < pos.length; i++) { 
+//      
+//    }
+//    
+//    return validActions;
+//  }
   
   void _setMainActorPos(double left, double top) {
     mainActor.style..left = pxD(left)
