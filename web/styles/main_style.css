@@ -86,6 +86,14 @@ body {
 	position: absolute;
 }
 
+.block {
+	width: 45px;
+	height: 45px;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+}
+
 .game-page .code-list .panel-heading {
 	background-color: #cc0000;
 	color: white;
