@@ -1,5 +1,7 @@
 library client.field_name;
 
+///actions list attributes
+
 const int ACTION_TURN = 0;
 const int ACTION_WALK = 1;
 const int ACTION_FLY = 2;
@@ -11,24 +13,27 @@ const int ACTION_TIMES = 1;
 const int ACTION_DIRECTION = 2;
 const int ACTION_STEPS = 1;
 
+const int DEGREE_UNIT = 45;
+
+
+///game timer attributes
+
 const int TIME_UNIT_PER_IMG = 1;
 const int TIME_UNIT_PER_POS = 4;
 const int TIME_UNIT_PER_HIGHLIGHT = 4;
-const int DEGREE_UNIT = 45;
+const double STEP_UNIT = 47.5;
 
 const int MAINACTOR_POS_LEFT = 0;
 const int MAINACTOR_POS_TOP = 0;
 
+
 ///map attributes
 
-const int MAP_WIDTH = 0;
-const int MAP_HEIGHT = 0;
+const int MAP_WIDTH = 14;
+const int MAP_HEIGHT = 12;
 
-const int OBSTICLE_NONE = 0;
-const int OBSTICLE_BORDER = 1;
-const int OBSTICLE_ROCK = 2;
-const int OBSTICLE_RIVER = 3;
-const int OBSTICLE_EGG = 4;
-
-const String BLANK_DRAGGER_ID = "blank-dragger";
+const int MAP_GROUND = 0;
+const int MAP_RIVER = 1;
+const int MAP_BLOCKED = 2;
+const int MAP_EGG = 3;
 

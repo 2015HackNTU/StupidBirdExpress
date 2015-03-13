@@ -1,7 +1,6 @@
 library client.motion_cotroller;
 
 import 'dart:html';
-import 'dart:math';
 import 'dart:async';
 
 import "util.dart";
@@ -9,9 +8,23 @@ import "field_name.dart";
 
 class MotionGenerator {
   
-  int get _projectW => sin(_degree).ceil();
+  int get _projectW {
+    if (_degree == 45 || _degree == 90 || _degree == 135)
+      return 1;
+    else if (_degree == 0 || _degree == 180)
+      return 0;
+    else
+      return -1;
+  }
   
-  int get _projectH => -cos(_degree).ceil();
+  int get _projectH {
+    if (_degree == 135 || _degree == 180 || _degree == 225)
+      return 1;
+    else if (_degree == 90 || _degree == 270)
+      return 0;
+    else
+      return -1;
+  }
   
   int _degree;
   
@@ -24,7 +37,9 @@ class MotionGenerator {
     
     actions.forEach((action) {
       switch (action[ACTION_TYPE]) {
-        case ACTION_TURN: 
+        case ACTION_TURN:
+          _degree = (_degree + action[ACTION_DIRECTION] * action[ACTION_TIMES] * DEGREE_UNIT) % 360;
+          print('degree: $_degree');
           for (int i = 0; i < action[ACTION_TIMES]; i++)
             actionsPos.add([0, 0]);
           break;
@@ -33,7 +48,7 @@ class MotionGenerator {
             actionsPos.add([_projectW, _projectH]);
           break;
         case ACTION_FLY:
-          actionsPos.add([_projectW, _projectH]);
+          actionsPos.add([_projectW * 2, _projectH * 2]);
           break;
         case ACTION_PADDLE:
           for (int i = 0; i < action[ACTION_STEPS]; i++)
@@ -55,14 +70,13 @@ class MotionGenerator {
         case ACTION_TURN:
           for (int i = 0; i < action[ACTION_TIMES]; i++)
             actionsAnimate.add([ACTION_TURN, action[ACTION_DIRECTION]]);
-
-          _degree = (_degree + action[ACTION_DIRECTION] * action[ACTION_TIMES] * DEGREE_UNIT) % 360;
           break;
         case ACTION_WALK:
           for (int i = 0; i < action[ACTION_STEPS]; i++)
             actionsAnimate.add([ACTION_WALK]);
           break;
         case ACTION_FLY:
+          actionsAnimate.add([ACTION_FLY]);
           actionsAnimate.add([ACTION_FLY]);
           break;
         case ACTION_PADDLE:
@@ -83,15 +97,18 @@ class MotionGenerator {
     for (int i = 0; i < actions.length; i++) {
       switch (actions[i][ACTION_TYPE]) {
         case ACTION_TURN:
-          for (int i = 0; i < actions[i][ACTION_TIMES]; i++)
+          for (int j = 0; j < actions[i][ACTION_TIMES]; j++)
             actionsHighlighted.add(i);
           break;
         case ACTION_WALK:
         case ACTION_PADDLE:
-          for (int i = 0; i < actions[i][ACTION_STEPS]; i++)
+          for (int j = 0; j < actions[i][ACTION_STEPS]; j++)
             actionsHighlighted.add(i);
           break;
         case ACTION_FLY:
+          actionsHighlighted.add(i);
+          actionsHighlighted.add(i);
+          break;
         case ACTION_HATCH:
           actionsHighlighted.add(i);
           break;
@@ -114,7 +131,6 @@ class MotionDisplayer {
 
   int get _curT => int.parse(mainActor.style.top.substring(0, mainActor.style.top.length - 2));
   
-  int _stepL;
   int _state;
   
   MotionDisplayer() {
@@ -122,7 +138,6 @@ class MotionDisplayer {
       ..style.left = px(MAINACTOR_POS_LEFT)
       ..style.top = px(MAINACTOR_POS_TOP);
     
-    _stepL = (_windowW * 0.09).toInt();
     _state = 0;
   }
   

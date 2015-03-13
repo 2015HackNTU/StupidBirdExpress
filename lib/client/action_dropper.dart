@@ -13,7 +13,6 @@ class ActionDropper {
   int _actionsCount;
   int _lastPos;
   bool _isOnDrag;
-  LIElement _blankDragger;
   LIElement _dragged;
   LIElement _inserted;
   
@@ -35,23 +34,22 @@ class ActionDropper {
     //test();
   }
   
-  List<List<int>> _getActionValues() {
+  List<List<int>> getActionValues() {
     List<List<int>> actions = new List();
-    List<DivElement> children = parent.children;
     
-    children.forEach((child) {
+    _children.forEach((child) {
       if (child.classes.contains('b-turn')) {
-        int degree = child.querySelector('select selected').value;
+        int degree = numParser(child.querySelector('select').value, 1);
         int times = degree.abs() ~/ DEGREE_UNIT;
         int direction = degree > 0 ? 1 : -1;
-        actions.add([ACTION_TURN, times, direction]); 
+        actions.add([ACTION_TURN, times, direction]);
       } else if (child.classes.contains('b-walk')) {
-        int steps = int.parse(child.querySelector('input').value.toString());
+        int steps = int.parse(child.querySelector('input').value);
         actions.add([ACTION_WALK, steps]);
       } else if (child.classes.contains('b-fly')) {
         actions.add([ACTION_FLY]);
       } else if (child.classes.contains('b-paddle')) {
-        int steps = int.parse(child.querySelector('input').value.toString());
+        int steps = int.parse(child.querySelector('input').value);
         actions.add([ACTION_PADDLE, steps]);
       } else if (child.classes.contains('b-hatch')) {
         actions.add([ACTION_HATCH]);
@@ -65,18 +63,15 @@ class ActionDropper {
   void _initValues() {
     parent = querySelector('.your-code .list-group');
     actionDraggers = querySelectorAll('.code-sample .b-action');
-    
-    _blankDragger = actionDraggers[0].clone(false);
-    _blankDragger.id = BLANK_DRAGGER_ID;
     _actionsCount = 0;
     allowDragging = true;
     _isOnDrag = false;
     
     DivElement pad = querySelector('.your-code');
-    _ParentLeft = (_windowW * 0.05 + _windowW * 0.9 * (1/6 + 0.03)).ceil();
-    _ParentRight = _ParentLeft + ((_windowW * 0.9) / 6 - 8).floor();
-    _ParentTop = (_windowH * 0.03).ceil() + 170;
-    _ParentBottom = _ParentTop + 560;
+    _ParentLeft = (_windowW * 0.05 + _windowW * 0.9 * (1/6 + 0.03)).ceil() - 10;
+    _ParentRight = _ParentLeft + ((_windowW * 0.9) / 6 - 8).floor() + 20;
+    _ParentTop = (_windowH * 0.03).ceil() + 160;
+    _ParentBottom = _ParentTop + 580;
   }
   
   void _startDragListener() {
@@ -115,8 +110,8 @@ class ActionDropper {
           _dragged.remove();
           
           if (_isInDropbox(evt.client.x, evt.client.y)) {
-            LIElement test = _appendAction(_getValidPos(evt.client.y), _inserted);
-            startMouseDownListener(test, false);
+            LIElement newElem = _appendAction(_getValidPos(evt.client.y), _inserted);
+            startMouseDownListener(newElem, false);
           }
           _isOnDrag = false;
           isFirst = true;
@@ -159,11 +154,10 @@ class ActionDropper {
   }
   
   bool _isInDropbox(int x, int y)
-    => x >= _ParentLeft && x <= _ParentRight && 
-       y >= _ParentTop && y <= _ParentBottom;
+    => x >= _ParentLeft && x <= _ParentRight && y >= _ParentTop && y <= _ParentBottom;
   
   int _getValidPos(int y) {
-    int tempPos = ((y - _ParentTop) / _ChildHeight).round();
+    int tempPos = ((y - _ParentTop - 10) / _ChildHeight).round();
     return tempPos <= _actionsCount ? tempPos : _actionsCount;
   }
   
