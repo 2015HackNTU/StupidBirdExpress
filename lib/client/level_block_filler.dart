@@ -11,35 +11,24 @@ class BlockFiller {
       map[i] = new List(MAP_HEIGHT);
   }
   
-  void fillBlank() {
+  void fillGround() {
     for (int i = 0; i < MAP_WIDTH; i++)
       for (int j = 0; j < MAP_HEIGHT; i++)
-        map[i][j] = OBSTICLE_NONE;
-  }
-  
-  void fillBorder() {
-    for (int i = 0; i < MAP_WIDTH; i++) {
-      map[i][0] = OBSTICLE_BORDER;
-      map[i][MAP_HEIGHT - 1] = OBSTICLE_BORDER;
-    }
-    for (int i = 0; i < MAP_HEIGHT; i++) {
-      map[0][i] = OBSTICLE_BORDER;
-      map[MAP_WIDTH][i] = OBSTICLE_BORDER;
-    }
-  }
-  
-  void fillRock(List<List<int>> rocks) {
-    for (int i = 0; i < rocks.length; i++)
-      map[rocks[i][0]][rocks[i][1]] = OBSTICLE_ROCK;
+        map[i][j] = MAP_GROUND;
   }
   
   void fillRiver(List<List<int>> river) {
     for (int i = 0; i < river.length; i++)
-      map[river[i][0]][river[i][1]] = OBSTICLE_RIVER;
+      map[river[i][0]][river[i][1]] = MAP_RIVER;
+  }
+  
+  void fillBlocked(List<List<int>> blockeds) {
+    for (int i = 0; i < blockeds.length; i++)
+      map[blockeds[i][0]][blockeds[i][1]] = MAP_BLOCKED;
   }
 
   void fillEgg(int x, int y) {
-    map[x][y] = OBSTICLE_EGG;
+    map[x][y] = MAP_EGG;
   }
   
 }
