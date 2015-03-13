@@ -111,6 +111,10 @@ body {
 	cursor: not-allowed;
 }
 
+.game-page .your-code .parameter-input {
+	cursor: text;
+}
+
 .game-page .code-list .select-input {
 	padding: 0;
 	width: 58px;
