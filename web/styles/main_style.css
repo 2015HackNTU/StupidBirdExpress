@@ -63,7 +63,13 @@ body {
 
 .game-page .game-panel {
 	margin-left: 2%;
-	padding: 1%;
+	padding: 0;
+}
+.game-page .game-panel .game-canvas {
+	width: 665px;
+	height: 570px;
+	margin: auto;
+	overflow: hidden;
 }
 
 .game-page .code-list .panel-heading {
@@ -75,7 +81,6 @@ body {
 }
 
 .game-page .code-list .panel-body {
-	overflow: scroll;
 	font-family: 'Coming Soon', cursive;
 }
 .game-page .code-list .list-group .list-group-item {
