@@ -1,7 +1,6 @@
 library client.motion_cotroller;
 
 import 'dart:html';
-import 'dart:math';
 import 'dart:async';
 
 import "util.dart";
@@ -9,9 +8,23 @@ import "field_name.dart";
 
 class MotionGenerator {
   
-  int get _projectW => sin(_degree).ceil();
+  int get _projectW {
+    if (_degree == 45 || _degree == 90 || _degree == 135)
+      return 1;
+    else if (_degree == 0 || _degree == 180)
+      return 0;
+    else
+      return -1;
+  }
   
-  int get _projectH => -cos(_degree).ceil();
+  int get _projectH {
+    if (_degree == 135 || _degree == 180 || _degree == 225)
+      return 1;
+    else if (_degree == 90 || _degree == 270)
+      return 0;
+    else
+      return -1;
+  }
   
   int _degree;
   
@@ -24,23 +37,25 @@ class MotionGenerator {
     
     actions.forEach((action) {
       switch (action[ACTION_TYPE]) {
-        case ACTION_TURN: 
+        case ACTION_TURN:
+          _degree = (_degree + action[ACTION_DIRECTION] * action[ACTION_TIMES] * DEGREE_UNIT) % 360;
+          print('degree: $_degree');
           for (int i = 0; i < action[ACTION_TIMES]; i++)
-            actionsPos.add([0, 0]);
+            actionsPos.add([0, 0, ACTION_TURN]);
           break;
         case ACTION_WALK:
           for (int i = 0; i < action[ACTION_STEPS]; i++)
-            actionsPos.add([_projectW, _projectH]);
+            actionsPos.add([_projectW, _projectH, ACTION_WALK]);
           break;
         case ACTION_FLY:
-          actionsPos.add([_projectW, _projectH]);
+          actionsPos.add([_projectW, _projectH, ACTION_FLY]);
           break;
         case ACTION_PADDLE:
           for (int i = 0; i < action[ACTION_STEPS]; i++)
-            actionsPos.add([_projectW, _projectH]);
+            actionsPos.add([_projectW, _projectH, ACTION_PADDLE]);
           break;
         case ACTION_HATCH:
-          actionsPos.add([0, 0]);
+          actionsPos.add([0, 0, ACTION_HATCH]);
           break;
       }
     });
@@ -55,8 +70,6 @@ class MotionGenerator {
         case ACTION_TURN:
           for (int i = 0; i < action[ACTION_TIMES]; i++)
             actionsAnimate.add([ACTION_TURN, action[ACTION_DIRECTION]]);
-
-          _degree = (_degree + action[ACTION_DIRECTION] * action[ACTION_TIMES] * DEGREE_UNIT) % 360;
           break;
         case ACTION_WALK:
           for (int i = 0; i < action[ACTION_STEPS]; i++)
@@ -83,15 +96,17 @@ class MotionGenerator {
     for (int i = 0; i < actions.length; i++) {
       switch (actions[i][ACTION_TYPE]) {
         case ACTION_TURN:
-          for (int i = 0; i < actions[i][ACTION_TIMES]; i++)
+          for (int j = 0; j < actions[i][ACTION_TIMES]; j++)
             actionsHighlighted.add(i);
           break;
         case ACTION_WALK:
         case ACTION_PADDLE:
-          for (int i = 0; i < actions[i][ACTION_STEPS]; i++)
+          for (int j = 0; j < actions[i][ACTION_STEPS]; j++)
             actionsHighlighted.add(i);
           break;
         case ACTION_FLY:
+          actionsHighlighted.add(i);
+          break;
         case ACTION_HATCH:
           actionsHighlighted.add(i);
           break;
@@ -110,46 +125,82 @@ class MotionDisplayer {
   
   int get _windowH => window.innerHeight;
   
-  int get _curL => int.parse(mainActor.style.left.substring(0, mainActor.style.left.length - 2));
+  double get _curL => doubleParser(mainActor.style.left, 2);
 
-  int get _curT => int.parse(mainActor.style.top.substring(0, mainActor.style.top.length - 2));
+  double get _curT => doubleParser(mainActor.style.top, 2);
   
-  int _stepL;
+  List<LIElement> get _children => querySelectorAll('.your-code .list-group .b-action');
+  
   int _state;
   
   MotionDisplayer() {
-    mainActor = querySelector('')
-      ..style.left = px(MAINACTOR_POS_LEFT)
-      ..style.top = px(MAINACTOR_POS_TOP);
-    
-    _stepL = (_windowW * 0.09).toInt();
-    _state = 0;
+    //TODO: assign selector
+    mainActor = querySelector('');
+    _setMainActorPos(MAINACTOR_POS_LEFT.toDouble(), MAINACTOR_POS_TOP.toDouble());
   }
   
   void startMotionDisplayer(List<List<int>> pos, List<List<int>> imgs, List<int> highlight) {
     Timer timer;
-    int i = 0, j = 0;
+    int imgState = 0;
     
-    timer = new Timer.periodic(new Duration(milliseconds: 250), (_) {
-      if (_isInChangeImgState) {
-        j = (++j) % 2;
-//        if (_isDone) {
-//          
-//          timer.cancel();
-//        }
+    _state = 0;
+    
+    timer = new Timer.periodic(new Duration(milliseconds: 100), (_) {
+      if (_isInChangeImgState) { 
+        switch (imgs[_state][ACTION_TYPE]) {
+          case ACTION_TURN:
+            break;
+          case ACTION_WALK:
+            break;
+          case ACTION_FLY:
+            break;
+          case ACTION_PADDLE:
+            break;
+          case ACTION_HATCH:
+            break;
+        }
+        
+        imgState = (++imgState) % 4;
       }
       
       if (_isInChangePosState) {
-        
+        double left = _curL + pos[_state][0] * STEP_UNIT;
+        double top = _curT + pos[_state][1] * STEP_UNIT;
+        _setMainActorPos(left, top);
       }
       
       if (_isInChangeBoxState) {
-        i++;
+        if (highlight[_state] != highlight[_state - 1]) {
+          _removeRunningStatus(_children[_state - 1]);
+          _addRunningStatus(_children[_state]);
+        }
       }
+      
+      if (imgState == imgs.length)
+        timer.cancel();
       
       _state++;
     });
   }
+  
+//  List<bool> _startMapEmulator(List<List<int>> pos) {
+//    List<bool> validActions = [];
+//    
+//    for (int i = 0; i < pos.length; i++) { 
+//      
+//    }
+//    
+//    return validActions;
+//  }
+  
+  void _setMainActorPos(double left, double top) {
+    mainActor.style..left = pxD(left)
+                   ..top = pxD(top);
+  }
+  
+  void _addRunningStatus(Element elem) {}
+
+  void _removeRunningStatus(Element elem) {}
   
   bool get _isInChangePosState => _state.remainder(TIME_UNIT_PER_POS) == 0;
   
