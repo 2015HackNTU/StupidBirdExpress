@@ -86,12 +86,18 @@ body {
 	position: absolute;
 }
 
-.block {
+.block, .stupid-bird {
 	width: 45px;
 	height: 45px;
 	margin: 0;
 	padding: 0;
 	position: absolute;
+}
+
+.stupid-bird img {
+	height: 45px;
+	margin: auto;
+	position: relative;
 }
 
 .game-page .code-list .panel-heading {
@@ -199,4 +205,8 @@ footer {
 
 .well img {
 	float: left;
+}
+
+.disappear {
+	display: none;
 }
