@@ -108,7 +108,7 @@ body {
 	align-items: center;
 }
 
-.game-page .code-list .parameter-input {
+.game-page .parameter-input {
 	width: 40px;
 }
 
@@ -120,7 +120,7 @@ body {
 	cursor: text;
 }
 
-.game-page .code-list .select-input {
+.game-page .select-input {
 	padding: 0;
 	width: 58px;
 	display: inline;
