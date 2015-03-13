@@ -1,37 +1,18 @@
 library client.level_map;
 
+import 'dart:html';
 import "field_name.dart";
 
 class LevelMap {
   List<List<int>> map;
+  List<List<DivElement>> mapBlock;
   int mainActorLeft;
   int mainActorTop;
   
-  
-  LevelMap(this.mainActorLeft, this.mainActorTop) {
-    map = new List(MAP_WIDTH);
-    for (int i = 0; i < MAP_WIDTH; i++)
-      map[i] = new List(MAP_HEIGHT);
-  }
-  
-  void fillGround() {
-    for (int i = 0; i < MAP_WIDTH; i++)
-      for (int j = 0; j < MAP_HEIGHT; i++)
-        map[i][j] = MAP_GROUND;
-  }
-  
-  void fillRiver(List<List<int>> river) {
-    for (int i = 0; i < river.length; i++)
-      map[river[i][0]][river[i][1]] = MAP_RIVER;
-  }
-  
-  void fillBlocked(List<List<int>> blockeds) {
-    for (int i = 0; i < blockeds.length; i++)
-      map[blockeds[i][0]][blockeds[i][1]] = MAP_BLOCKED;
-  }
-
-  void fillEgg(int x, int y) {
-    map[x][y] = MAP_EGG;
+  LevelMap(this.mainActorLeft, this.mainActorTop, this.map) {
+    _createBlocks();
+    print('done!');
+    _genImgs();
   }
   
   List generateMockMove(List<List<int>> pos) {
@@ -51,6 +32,36 @@ class LevelMap {
     return mockMove;
   }
   
+  void _createBlocks() {
+    DivElement gameBlocks = querySelector('.game-blocks');
+    
+    mapBlock = new List(MAP_HEIGHT);
+    for (int i = 0; i < MAP_HEIGHT; i++) {
+      mapBlock[i] = new List(MAP_WIDTH);
+      for (int j = 0; j < MAP_WIDTH; j++) {
+        mapBlock[i][j] = new DivElement();
+        mapBlock[i][j]
+          ..style.left = '${j * STEP_UNIT}px'
+          ..style.top = '${i * STEP_UNIT}px'
+          ..classes.add('block');
+               
+       gameBlocks.children.insert(0, mapBlock[i][j]);
+      }
+    }
+    
+  }
+  
+  void _genImgs() {
+    for (int i = 0; i < MAP_HEIGHT; i++) {
+      for (int j = 0; j < MAP_WIDTH; j++) {
+        if (map[i][j] <= MAP_ITEMS_COUNT) {
+          mapBlock[i][j].style..background = BlockImgs[map[i][j]]
+                              ..backgroundSize = '45px';
+        }
+      }
+    }
+  }
+  
   void _move(int hor, int ver) {
     mainActorLeft += hor;
     mainActorTop += ver;
@@ -68,7 +79,7 @@ class LevelMap {
       case ACTION_WALK:
         if (map[x][y] == MAP_RIVER)
           return [false, ERROR_DRAWN, "Help me brabrabra......!"];
-        else if (map[x][y] == MAP_BLOCKED)
+        else if (map[x][y] == MAP_BOAT)
           return [false, ERROR_HIT_WALL, "I hurt my face Q_q(#"];
         else if (map[x][y] == MAP_EGG)
           return [false, ERROR_BREAK_EGG, "Oops my egg!!!"];
@@ -77,7 +88,7 @@ class LevelMap {
       case ACTION_FLY:
         if (map[x][y] == MAP_RIVER)
           return [false, ERROR_DRAWN, "Help me brabrabra......!"];
-        else if (map[x][y] == MAP_BLOCKED)
+        else if (map[x][y] == MAP_BOAT)
           return [false, ERROR_HIT_WALL, "I can see so far ~~~"];
         else if (map[x][y] == MAP_EGG)
           return [false, ERROR_BREAK_EGG, "Oops my egg!!!"];
@@ -86,7 +97,7 @@ class LevelMap {
       case ACTION_PADDLE:
         if (map[x][y] == MAP_GROUND)
           return [false, ERROR_DRAWN, "My wings get dirty QAQ"];
-        else if (map[x][y] == MAP_BLOCKED)
+        else if (map[x][y] == MAP_BOAT)
           return [false, ERROR_HIT_WALL, "I hurt my face Q_q(#"];
         else if (map[x][y] == MAP_EGG)
           return [false, ERROR_BREAK_EGG, "Oops my egg!!!"];
