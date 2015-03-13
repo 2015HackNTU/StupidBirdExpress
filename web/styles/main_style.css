@@ -62,14 +62,28 @@ body {
 }
 
 .game-page .game-panel {
+	width: 690px;
 	margin-left: 2%;
+	padding: 30px;
+}
+
+.game-page .game-panel .panel-body {
+	width: 100%
+	height: 100%;
 	padding: 0;
 }
+
 .game-page .game-panel .game-canvas {
-	width: 665px;
-	height: 570px;
-	margin: auto;
+	width: 630px;
+	height: 540px;
+	margin: 
 	overflow: hidden;
+}
+
+.game-page .game-panel .game-blocks {
+	width: 630px;
+	height: 540px;
+	position: absolute;
 }
 
 .game-page .code-list .panel-heading {
