@@ -127,44 +127,72 @@ class MotionDisplayer {
   
   int get _windowH => window.innerHeight;
   
-  int get _curL => int.parse(mainActor.style.left.substring(0, mainActor.style.left.length - 2));
+  double get _curL => doubleParser(mainActor.style.left, 2);
 
-  int get _curT => int.parse(mainActor.style.top.substring(0, mainActor.style.top.length - 2));
+  double get _curT => doubleParser(mainActor.style.top, 2);
+  
+  List<LIElement> get _children => querySelectorAll('.your-code .list-group .b-action');
   
   int _state;
   
   MotionDisplayer() {
-    mainActor = querySelector('')
-      ..style.left = px(MAINACTOR_POS_LEFT)
-      ..style.top = px(MAINACTOR_POS_TOP);
-    
-    _state = 0;
+    //TODO: assign selector
+    mainActor = querySelector('');
+    _setMainActorPos(MAINACTOR_POS_LEFT.toDouble(), MAINACTOR_POS_TOP.toDouble());
   }
   
   void startMotionDisplayer(List<List<int>> pos, List<List<int>> imgs, List<int> highlight) {
     Timer timer;
-    int i = 0, j = 0;
+    int imgState = 0;
     
-    timer = new Timer.periodic(new Duration(milliseconds: 250), (_) {
-      if (_isInChangeImgState) {
-        j = (++j) % 2;
-//        if (_isDone) {
-//          
-//          timer.cancel();
-//        }
+    _state = 0;
+    
+    timer = new Timer.periodic(new Duration(milliseconds: 100), (_) {
+      if (_isInChangeImgState) { 
+        switch (imgs[_state][ACTION_TYPE]) {
+          case ACTION_TURN:
+            break;
+          case ACTION_WALK:
+            break;
+          case ACTION_FLY:
+            break;
+          case ACTION_PADDLE:
+            break;
+          case ACTION_HATCH:
+            break;
+        }
+        
+        imgState = (++imgState) % 4;
       }
       
       if (_isInChangePosState) {
-        
+        double left = _curL + pos[_state][0] * STEP_UNIT;
+        double top = _curT + pos[_state][1] * STEP_UNIT;
+        _setMainActorPos(left, top);
       }
       
       if (_isInChangeBoxState) {
-        i++;
+        if (highlight[_state] != highlight[_state - 1]) {
+          _removeRunningStatus(_children[_state - 1]);
+          _addRunningStatus(_children[_state]);
+        }
       }
+      
+      if (imgState == imgs.length)
+        timer.cancel();
       
       _state++;
     });
   }
+  
+  void _setMainActorPos(double left, double top) {
+    mainActor.style..left = pxD(left)
+                   ..top = pxD(top);
+  }
+  
+  void _addRunningStatus(Element elem) {}
+
+  void _removeRunningStatus(Element elem) {}
   
   bool get _isInChangePosState => _state.remainder(TIME_UNIT_PER_POS) == 0;
   
