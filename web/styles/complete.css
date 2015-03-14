@@ -34,6 +34,15 @@
   	box-sizing: border-box;
 }
 
+.complete-page .modal-body a {
+	color: #333;
+}
+
+.complete-page .completepage-btn:hover {
+	border-color: #ffe530;
+	color: #ffe530;
+}
+
 .complete-page .btn-info {
 	top: 60px;
 	left: 0px;
