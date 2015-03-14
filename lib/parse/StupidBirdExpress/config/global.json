@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "StupidBirdExpress": {
+            "applicationId": "ppfEmWTXVnkhZFfJI7ciVAF7LktBxzUqVT9OB2vI", 
+            "masterKey": "z8QsOsIHUb33OKPa66CvBo7V7W5LiCYAtqHs45Kn"
+        }, 
+        "_default": {
+            "link": "StupidBirdExpress"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.3.5"
+    }
+}
