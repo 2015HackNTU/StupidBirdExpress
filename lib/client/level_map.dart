@@ -2,6 +2,7 @@ library client.level_map;
 
 import 'dart:html';
 import 'dart:math';
+import 'dart:async';
 import "field_name.dart";
 
 class LevelMap {
@@ -17,50 +18,163 @@ class LevelMap {
   bool isMap2;
 
   DivElement _boat;
-  int _boatLeft = 7;
-  int _boatTop = 6;
+  int _boatLeft;
+  int _boatTop;
+  bool _isOnBoat;
   
+  List _actorInfo;
+  //int _lastImg;
   
-  LevelMap(List actorInfo, this.map, this.isMap2) {
-    this.mainActorTop = actorInfo[0];
-    this.mainActorLeft = actorInfo[1];
-    this.degree = actorInfo[2];
+  List<LIElement> get _children => querySelectorAll('.your-code .list-group .b-action');
+    
+  
+  LevelMap(this._actorInfo, this.map, this.isMap2) {
+    mainActor = querySelector('.stupid-bird');
+    mainActorImgs = querySelectorAll('.game-blocks .stupid-bird img');
+    _boat = querySelector('.boat');
     
     _createBlocks();
     _genImgs();
-    if (isMap2) {
-      DivElement boat = querySelector('.boat');
-      boat.querySelector('img').classes.remove('disappear');
-      boat.style..left = '${_boatLeft * STEP_UNIT}px'
-                ..top = '${_boatTop * STEP_UNIT}px';
-    }
-  }
 
-  void setMainActorPos() {
-    mainActorImgs = querySelectorAll('.game-blocks .stupid-bird img');
+    resetPos();
+  }
+  
+  void resetPos() {
+    mainActorTop = _actorInfo[0];
+    mainActorLeft = _actorInfo[1];
+    degree = _actorInfo[2];
+    
+    _hideImgs();
+    _showImg(IMG_ORIGIN);
+    
     mainActorImgs[IMG_ORIGIN].classes.remove('disappear');
     
-    mainActor = querySelector('.stupid-bird');
     mainActor.style..left = '${mainActorLeft * STEP_UNIT}px'
                    ..top = '${mainActorTop * STEP_UNIT}px'
                    ..transform = 'rotate(${degree}deg)';
+    
+    if (isMap2) {
+      _boatLeft = BoatPos[0];
+      _boatTop = BoatPos[1];
+      _isOnBoat = false;
+      
+      _boat.querySelector('img').classes.remove('disappear');
+      _boat.style..left = '${_boatLeft * STEP_UNIT}px'
+                 ..top = '${_boatTop * STEP_UNIT}px';
+    }   
   }
   
-  List generateMockMove(List<List<int>> pos) {
-    List mockMove = new List();
+  void startMove(List<List<int>> pos, List<List<int>> imgs, List<int> highlight) {
+    Timer timer;
+    int state = 0;
+    List response;
     
-    for (int i = 0; i < pos.length; i++) {
-      int left = pos[i][0];
-      int top = pos[i][1];
-      int type = pos[i][2];
-      List response = _isValidMove(left, top, type);
+    timer = new Timer.periodic(new Duration(milliseconds: 150), (_) {
+      int posState = state ~/ TIME_UNIT_PER_POS;
+      int imgState = state % TIME_UNIT_PER_POS;
+      bool isValid = true;
       
-      if (response[0])
-        _move(left, top);
-      mockMove.add(response);
-    }
-    
-    return mockMove;
+      if (imgState == 0) {   
+        //add highlight
+        if (highlight[posState] == 0)
+          _addRunningStatus(_children[highlight[posState]]);
+        else if (highlight[posState] != highlight[posState - 1]) {
+          _removeRunningStatus(_children[highlight[posState - 1]]);
+          _addRunningStatus(_children[highlight[posState]]);
+        }
+        
+        //setPos        
+        response = _isValidMove(pos[posState][0], pos[posState][1], pos[posState][2]);
+        //isValid = response[0];
+        print(response);
+        
+//        if (!isValid) {
+//          //TODO:STOP
+//          timer.cancel();
+//        }    
+      }
+      
+      if (isValid) {
+
+        _setPos(pos[posState][0], pos[posState][1], imgState);
+        
+        switch (imgs[posState][ACTION_TYPE]) {
+          case ACTION_TURN:
+            _hideImgs();
+            _showImg(IMG_ORIGIN);
+            
+            if (imgState == 0) {
+              degree += imgs[posState][1] * 12;
+              mainActor.style.transform = 'rotate(${degree}deg)';
+            } else {
+              degree += imgs[posState][1] * 11;
+              mainActor.style.transform = 'rotate(${degree}deg)';
+            }
+            break;
+            
+          case ACTION_WALK:
+            _hideImgs();
+            _showImg(state % 2 == 0 ? IMG_ORIGIN : IMG_WALK);
+            break;
+            
+          case ACTION_FLY:
+            _hideImgs();
+            if (imgState == 0)
+              _showImg(IMG_ORIGIN);
+            else if (imgState == 1)
+              _showImg(IMG_FLY_1);
+            else if (imgState == 2)
+              _showImg(IMG_FLY_2);
+            else if (imgState == 3)
+              _showImg(IMG_FLY_3);
+            break;
+            
+          case ACTION_LAND:
+            _hideImgs();
+            if (imgState == 0)
+              _showImg(IMG_FLY_3);
+            else if (imgState == 1)
+              _showImg(IMG_FLY_2);
+            else if (imgState == 2)
+              _showImg(IMG_FLY_1);
+            else if (imgState == 3)
+              _showImg(IMG_ORIGIN);
+            break;
+            
+          case ACTION_PADDLE:
+            _hideImgs();
+            if (imgState == 0)
+              _showImg(IMG_PADDLE_1);
+            else if (imgState == 1)
+              _showImg(IMG_PADDLE_2);
+            else if (imgState == 2)
+              _showImg(IMG_PADDLE_3);
+            else if (imgState == 3)
+              _showImg(IMG_PADDLE_2);
+            break;
+            
+          case ACTION_HATCH:
+            _hideImgs();
+            _showImg(IMG_ORIGIN);
+            break;
+        }
+        
+        if (state == imgs.length * TIME_UNIT_PER_POS - 1) {
+          _removeRunningStatus(_children[highlight[posState]]);
+          timer.cancel();
+        }
+        
+        state++;
+      }
+    }); 
+  }
+  
+  void _addRunningStatus(Element elem) {
+    elem.style.backgroundColor = 'gray';
+  }
+
+  void _removeRunningStatus(Element elem) {
+    elem.style.backgroundColor = 'white';
   }
   
   void _createBlocks() {
@@ -108,14 +222,39 @@ class LevelMap {
     }
   }
   
-  void _move(int hor, int ver) {
-    mainActorLeft += hor;
-    mainActorTop += ver;
+  void _setPos(int hor, int ver, int state) {
+    if (state == 0) {
+      mainActor.style..left = '${mainActorLeft * STEP_UNIT + hor * 11}px'
+                     ..top = '${mainActorTop * STEP_UNIT + ver * 11}px';
+    } else if (state == 1) {
+      mainActor.style..left = '${mainActorLeft * STEP_UNIT + hor * 22}px'
+                     ..top = '${mainActorTop * STEP_UNIT + ver * 22}px';
+    } else if (state == 2) {
+      mainActor.style..left = '${mainActorLeft * STEP_UNIT + hor * 33}px'
+                     ..top = '${mainActorTop * STEP_UNIT + ver * 33}px';
+    } else {
+      mainActorLeft += hor;
+      mainActorTop += ver;
+      
+      mainActor.style..left = '${mainActorLeft * STEP_UNIT}px'
+                     ..top = '${mainActorTop * STEP_UNIT}px';
+    }
+    
+  }
+  
+  void _hideImgs() {
+    for (int i = 0; i < mainActorImgs.length; i++)
+      mainActorImgs[i].classes.add('disappear');
+  }
+  
+  void _showImg(int target) {
+    mainActorImgs[target].classes.remove('disappear');
   }
   
   List _isValidMove(int hor, int ver, int type) {
     int x = mainActorLeft + hor;
     int y = mainActorTop + ver;
+    
     if (x < 0 || x >= MAP_WIDTH || y < 0 || y >= MAP_HEIGHT)
       return [false, ERROR_OUT_OF_BORDER, "I can't go out of the map!"];
     
@@ -127,9 +266,12 @@ class LevelMap {
       case ACTION_LAND:
         if (map[y][x] == MAP_RIVER) {
           if (isMap2) {
-            //TODO: boat
-          } else
-            return [false, ERROR_DRAWN, "Help me brabrabra......!"];
+            if (x == _boatLeft && y == _boatTop) {
+              _isOnBoat = true;
+              return [true];
+            }
+          }
+          return [false, ERROR_DRAWN, "Help me brabrabra......!"];
         } else if (map[y][x] == MAP_EGG || map[y][x] == MAP_FLIPPED_ARBOR_3)
           return [false, ERROR_BREAK_EGG, "Oops my egg!!!"];
         else if (map[y][x] == MAP_FLIPPED_BUSH || map[y][x] == MAP_FLIPPED_STRAW)
@@ -155,27 +297,21 @@ class LevelMap {
         
       case ACTION_PADDLE:
         if (isMap2) {
-          //TODO:
-          return([false]);
+          if (_isOnBoat && map[y][x] == MAP_RIVER)
+            return [true];
         }
-        else {
-          if (map[y][x] == MAP_GROUND)
-            return [false, ERROR_DRAWN, "My wings get dirty QAQ"];
-          else if (map[y][x] == MAP_RIVER)
-            return [false, ERROR_DRAWN, "Help me brabrabra......!"];
-          else if (map[y][x] == MAP_EGG || map[y][x] == MAP_FLIPPED_ARBOR_3)
-            return [false, ERROR_BREAK_EGG, "Oops my egg!!!"];
-          else if (map[y][x] == MAP_FLIPPED_BUSH || map[y][x] == MAP_FLIPPED_STRAW)
-            return [false, ERROR_NOT_FLY, "I should fly through it!!!"];
-          else if (map[y][x] == MAP_UNFLIPPED_ARBOR_1 ||
-                   map[y][x] == MAP_UNFLIPPED_ARBOR_2 ||
-                   map[y][x] == MAP_UNFLIPPED_ARBOR_4 ||
-                   map[y][x] == MAP_UNFLIPPED_TREE ||
-                   map[y][x] == MAP_BACKGROUND_TREE ||
-                   map[y][x] == MAP_UNFLIPPED_WALL)
+        if (map[y][x] == MAP_GROUND)
+          return [false, ERROR_DRAWN, "My wings get dirty QAQ"];
+        else if (map[y][x] == MAP_RIVER)
+          return [false, ERROR_DRAWN, "Help me brabrabra......!"];
+        else if (map[y][x] == MAP_EGG || map[y][x] == MAP_FLIPPED_ARBOR_3)
+          return [false, ERROR_BREAK_EGG, "Oops my egg!!!"];
+        else if (map[y][x] == MAP_FLIPPED_BUSH || map[y][x] == MAP_FLIPPED_STRAW)
+          return [false, ERROR_NOT_FLY, "I should fly through it!!!"];
+        else
           return [false, ERROR_HIT_WALL, "I hurt my face Q_q(#"];
-        }
-        return([false]);        
+        return [false];
+        
       case ACTION_HATCH:
         if (map[y][x] != MAP_EGG && map[y][x] != MAP_FLIPPED_ARBOR_3)
           return [false, ERROR_NO_EGG, "Oops my bun bun!"];

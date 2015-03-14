@@ -40,24 +40,24 @@ const int IMG_PADDLE_3 = 7;
 
 ///map attributes
 
-final List<List<int>> MAINACTOR_POS = [[11, 6, 0], [9, 13, -90], [2, 0, 90]];
+final List<List<int>> MainActorPos = [[11, 6, 0], [9, 13, 270], [2, 0, 90]];
+final List<int> BoatPos = [7, 6];
 
 const int          MAP_WIDTH = 14;
 const int         MAP_HEIGHT = 12;
 
-const int              MAP_BOAT = 0;
-const int MAP_UNFLIPPED_ARBOR_1 = 1;
-const int MAP_UNFLIPPED_ARBOR_2 = 2;
-const int   MAP_FLIPPED_ARBOR_3 = 3;
-const int MAP_UNFLIPPED_ARBOR_4 = 4;
-const int      MAP_FLIPPED_BUSH = 5;
-const int     MAP_FLIPPED_STRAW = 6;
-const int               MAP_EGG = 7;
-const int    MAP_UNFLIPPED_TREE = 8;
-const int   MAP_BACKGROUND_TREE = 9;
-const int            MAP_GROUND = 10;
-const int             MAP_RIVER = 11;
-const int    MAP_UNFLIPPED_WALL = 12;
+const int MAP_UNFLIPPED_ARBOR_1 = 0;
+const int MAP_UNFLIPPED_ARBOR_2 = 1;
+const int   MAP_FLIPPED_ARBOR_3 = 2;
+const int MAP_UNFLIPPED_ARBOR_4 = 3;
+const int      MAP_FLIPPED_BUSH = 4;
+const int     MAP_FLIPPED_STRAW = 5;
+const int               MAP_EGG = 6;
+const int    MAP_UNFLIPPED_TREE = 7;
+const int   MAP_BACKGROUND_TREE = 8;
+const int            MAP_GROUND = 9;
+const int             MAP_RIVER = 10;
+const int    MAP_UNFLIPPED_WALL = 11;
 
 const int MAP_POS_ACTION_TYPE = 2;
 const int MAP_ITEMS_COUNT = 8;
@@ -91,7 +91,7 @@ const String    MAPBG_1 = '../../source/map1.png';
 const String    MAPBG_2 = '../../source/map2.png';
 const String    MAPBG_3 = '../../source/map3.png';
 
-final List<String> BlockImgs = [BOAT, U_ARBOR_1, U_ARBOR_2, ARBOR_3, U_ARBOR_4, BUSH, STRAW, EGG, TREE_1, TREE_2, TREE_3, TREE_4];
+final List<String> BlockImgs = [U_ARBOR_1, U_ARBOR_2, ARBOR_3, U_ARBOR_4, BUSH, STRAW, EGG, TREE_1, TREE_2, TREE_3, TREE_4];
 
 ///static map
 

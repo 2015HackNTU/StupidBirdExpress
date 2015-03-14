@@ -31,6 +31,7 @@ class ActionDropper {
   ActionDropper.start() {
     _initValues();
     _startDragListener();
+    
     //test();
   }
   
@@ -109,8 +110,8 @@ class ActionDropper {
         if (_isOnDrag) {
           _dragged.remove();
           
-          if (_isInDropbox(evt.client.x, evt.client.y)) {
-            LIElement newElem = _appendAction(_getValidPos(evt.client.y), _inserted);
+          if (_isInDropbox(evt.page.x, evt.page.y)) {
+            LIElement newElem = _appendAction(_getValidPos(evt.page.y), _inserted);
             startMouseDownListener(newElem, false);
           }
           _isOnDrag = false;
@@ -125,14 +126,14 @@ class ActionDropper {
           top = evt.page.y - offset_y;
           _renderDraggedItem(_dragged, left, top);
           
-          if (_isInDropbox(evt.client.x, evt.client.y)) {
+          if (_isInDropbox(evt.page.x, evt.page.y)) {
             if (_actionsCount >= 1) {
-              if (_getValidPos(evt.client.y) == 0)
-                _children[0].style.borderTop = '2px solid black';
+              if (_getValidPos(evt.page.y) == 0)
+                _children[0].style.borderTop = '2px solid #cc0000';
               else {
                 for (int i = 0; i < _children.length; i++) {
-                  if (_getValidPos(evt.client.y) == i + 1)
-                    _children[i].style.borderBottom = '2px solid black';
+                  if (_getValidPos(evt.page.y) == i + 1)
+                    _children[i].style.borderBottom = '2px solid #cc0000';
                 }
               }
             }
