@@ -86,7 +86,7 @@ body {
 	position: absolute;
 }
 
-.block, .stupid-bird {
+.block, .stupid-bird, .boat {
 	width: 45px;
 	height: 45px;
 	margin: 0;
@@ -98,6 +98,12 @@ body {
 	height: 45px;
 	margin: auto;
 	position: relative;
+}
+
+.boat img {
+  width: 45px;
+  margin-top: 15px;
+  position: relative;
 }
 
 .game-page .code-list .panel-heading {
