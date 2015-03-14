@@ -17,9 +17,14 @@ MotionDisplayer mDisplayer = new MotionDisplayer();
 void main() {
   rand = new Random().nextInt(Maps.length);
   map = new LevelMap(MAINACTOR_POS[rand][0], MAINACTOR_POS[rand][1], Maps[rand]);
+  setMapBackground();
   
   ActionDropper dropper = new ActionDropper.start();
   startRunBtnListener(dropper);
+}
+
+void setMapBackground() {
+  
 }
 
 void startRunBtnListener(ActionDropper dropper) {
