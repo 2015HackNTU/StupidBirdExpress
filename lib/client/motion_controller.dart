@@ -49,6 +49,7 @@ class MotionGenerator {
           break;
         case ACTION_FLY:
           actionsPos.add([_projectW, _projectH, ACTION_FLY]);
+          actionsPos.add([_projectW, _projectH, ACTION_LAND]);
           break;
         case ACTION_PADDLE:
           for (int i = 0; i < action[ACTION_STEPS]; i++)
@@ -77,6 +78,7 @@ class MotionGenerator {
           break;
         case ACTION_FLY:
           actionsAnimate.add([ACTION_FLY]);
+          actionsAnimate.add([ACTION_LAND]);
           break;
         case ACTION_PADDLE:
           for (int i = 0; i < action[ACTION_STEPS]; i++)
@@ -105,6 +107,7 @@ class MotionGenerator {
             actionsHighlighted.add(i);
           break;
         case ACTION_FLY:
+          actionsHighlighted.add(i);
           actionsHighlighted.add(i);
           break;
         case ACTION_HATCH:

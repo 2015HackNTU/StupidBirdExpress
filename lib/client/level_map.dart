@@ -8,14 +8,42 @@ class LevelMap {
   List<List<int>> map;
   List<List<DivElement>> mapBlock;
 
+  List<ImageElement> mainActorImgs;
   DivElement mainActor;
   int mainActorLeft;
   int mainActorTop;
+  int degree;
+
+  bool isMap2;
+
+  DivElement _boat;
+  int _boatLeft = 7;
+  int _boatTop = 6;
   
-  LevelMap(this.mainActorTop, this.mainActorLeft, this.map) {
+  
+  LevelMap(List actorInfo, this.map, this.isMap2) {
+    this.mainActorTop = actorInfo[0];
+    this.mainActorLeft = actorInfo[1];
+    this.degree = actorInfo[2];
+    
     _createBlocks();
     _genImgs();
-    _setMainActorPos();
+    if (isMap2) {
+      DivElement boat = querySelector('.boat');
+      boat.querySelector('img').classes.remove('disappear');
+      boat.style..left = '${_boatLeft * STEP_UNIT}px'
+                ..top = '${_boatTop * STEP_UNIT}px';
+    }
+  }
+
+  void setMainActorPos() {
+    mainActorImgs = querySelectorAll('.game-blocks .stupid-bird img');
+    mainActorImgs[IMG_ORIGIN].classes.remove('disappear');
+    
+    mainActor = querySelector('.stupid-bird');
+    mainActor.style..left = '${mainActorLeft * STEP_UNIT}px'
+                   ..top = '${mainActorTop * STEP_UNIT}px'
+                   ..transform = 'rotate(${degree}deg)';
   }
   
   List generateMockMove(List<List<int>> pos) {
@@ -62,18 +90,22 @@ class LevelMap {
           img.src = map[i][j] != MAP_UNFLIPPED_TREE ? BlockImgs[map[i][j]] 
                                                     : BlockImgs[map[i][j] + new Random().nextInt(4)];
           img.style..width = '45px'
-                   ..height = map[i][j] == MAP_BOAT ? 'auto 45px' : '45px 45px';
+                   ..height = '45px';
           
           mapBlock[i][j].children.insert(0, img);
+          
+          if (map[i][j] == MAP_FLIPPED_ARBOR_3) {
+            ImageElement img = new ImageElement();
+            img.src = BlockImgs[MAP_EGG];
+            img.style..width = '45px'
+                     ..height = '45px'
+                     ..position = 'absolute';
+            
+            mapBlock[i][j].children.insert(0, img);
+          }
         }
       }
     }
-  }
-  
-  void _setMainActorPos() {
-    mainActor = querySelector('.stupid-bird');
-    mainActor.style..left = '${mainActorLeft * STEP_UNIT}px'
-                   ..top = '${mainActorTop * STEP_UNIT}px';
   }
   
   void _move(int hor, int ver) {
@@ -84,42 +116,69 @@ class LevelMap {
   List _isValidMove(int hor, int ver, int type) {
     int x = mainActorLeft + hor;
     int y = mainActorTop + ver;
-    if (x >= 0 && x < MAP_WIDTH && y >= 0 && y < MAP_HEIGHT)
+    if (x < 0 || x >= MAP_WIDTH || y < 0 || y >= MAP_HEIGHT)
       return [false, ERROR_OUT_OF_BORDER, "I can't go out of the map!"];
     
     switch (type) {
       case ACTION_TURN:
         return [true];
+        
       case ACTION_WALK:
-        if (map[x][y] == MAP_RIVER)
-          return [false, ERROR_DRAWN, "Help me brabrabra......!"];
-        else if (map[x][y] == MAP_BOAT)
-          return [false, ERROR_HIT_WALL, "I hurt my face Q_q(#"];
-        else if (map[x][y] == MAP_EGG)
+      case ACTION_LAND:
+        if (map[y][x] == MAP_RIVER) {
+          if (isMap2) {
+            //TODO: boat
+          } else
+            return [false, ERROR_DRAWN, "Help me brabrabra......!"];
+        } else if (map[y][x] == MAP_EGG || map[y][x] == MAP_FLIPPED_ARBOR_3)
           return [false, ERROR_BREAK_EGG, "Oops my egg!!!"];
+        else if (map[y][x] == MAP_FLIPPED_BUSH || map[y][x] == MAP_FLIPPED_STRAW)
+          return [false, ERROR_NOT_FLY, "I should fly through it!!!"];
+        else if (map[y][x] == MAP_UNFLIPPED_ARBOR_1 ||
+                 map[y][x] == MAP_UNFLIPPED_ARBOR_2 ||
+                 map[y][x] == MAP_UNFLIPPED_ARBOR_4 ||
+                 map[y][x] == MAP_UNFLIPPED_TREE ||
+                 map[y][x] == MAP_BACKGROUND_TREE ||
+                 map[y][x] == MAP_UNFLIPPED_WALL)
+          return [false, ERROR_HIT_WALL, "I hurt my face Q_q(#"];
         return [true];
         
       case ACTION_FLY:
-        if (map[x][y] == MAP_RIVER)
-          return [false, ERROR_DRAWN, "Help me brabrabra......!"];
-        else if (map[x][y] == MAP_BOAT)
-          return [false, ERROR_HIT_WALL, "I can see so far ~~~"];
-        else if (map[x][y] == MAP_EGG)
-          return [false, ERROR_BREAK_EGG, "Oops my egg!!!"];
+        if (map[y][x] == MAP_UNFLIPPED_ARBOR_1 ||
+            map[y][x] == MAP_UNFLIPPED_ARBOR_2 ||
+            map[y][x] == MAP_UNFLIPPED_ARBOR_4 ||
+            map[y][x] == MAP_UNFLIPPED_TREE ||
+            map[y][x] == MAP_BACKGROUND_TREE ||
+            map[y][x] == MAP_UNFLIPPED_WALL)
+          return [false, ERROR_HIT_WALL, "I hurt my face Q_q(#"];
         return [true];
         
       case ACTION_PADDLE:
-        if (map[x][y] == MAP_GROUND)
-          return [false, ERROR_DRAWN, "My wings get dirty QAQ"];
-        else if (map[x][y] == MAP_BOAT)
+        if (isMap2) {
+          //TODO:
+          return([false]);
+        }
+        else {
+          if (map[y][x] == MAP_GROUND)
+            return [false, ERROR_DRAWN, "My wings get dirty QAQ"];
+          else if (map[y][x] == MAP_RIVER)
+            return [false, ERROR_DRAWN, "Help me brabrabra......!"];
+          else if (map[y][x] == MAP_EGG || map[y][x] == MAP_FLIPPED_ARBOR_3)
+            return [false, ERROR_BREAK_EGG, "Oops my egg!!!"];
+          else if (map[y][x] == MAP_FLIPPED_BUSH || map[y][x] == MAP_FLIPPED_STRAW)
+            return [false, ERROR_NOT_FLY, "I should fly through it!!!"];
+          else if (map[y][x] == MAP_UNFLIPPED_ARBOR_1 ||
+                   map[y][x] == MAP_UNFLIPPED_ARBOR_2 ||
+                   map[y][x] == MAP_UNFLIPPED_ARBOR_4 ||
+                   map[y][x] == MAP_UNFLIPPED_TREE ||
+                   map[y][x] == MAP_BACKGROUND_TREE ||
+                   map[y][x] == MAP_UNFLIPPED_WALL)
           return [false, ERROR_HIT_WALL, "I hurt my face Q_q(#"];
-        else if (map[x][y] == MAP_EGG)
-          return [false, ERROR_BREAK_EGG, "Oops my egg!!!"];
-        return [true];
-        
+        }
+        return([false]);        
       case ACTION_HATCH:
-        if (map[x][y] != MAP_EGG)
-          return [false, ERROR_NO_EGG, "Sexy squat >.0"];
+        if (map[y][x] != MAP_EGG && map[y][x] != MAP_FLIPPED_ARBOR_3)
+          return [false, ERROR_NO_EGG, "Oops my bun bun!"];
         return [true];
         
       default:

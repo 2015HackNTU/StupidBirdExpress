@@ -16,15 +16,17 @@ MotionDisplayer mDisplayer = new MotionDisplayer();
 
 void main() {
   rand = new Random().nextInt(Maps.length);
-  map = new LevelMap(MAINACTOR_POS[rand][0], MAINACTOR_POS[rand][1], Maps[rand]);
+  map = new LevelMap(MAINACTOR_POS[rand], Maps[rand], rand == 1);
   setMapBackground();
+  map.setMainActorPos();
   
   ActionDropper dropper = new ActionDropper.start();
   startRunBtnListener(dropper);
 }
 
 void setMapBackground() {
-  
+  ImageElement img = querySelector('.map-image');
+  img.src = MapBackground[rand];
 }
 
 void startRunBtnListener(ActionDropper dropper) {
