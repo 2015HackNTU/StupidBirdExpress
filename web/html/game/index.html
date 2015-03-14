@@ -49,6 +49,7 @@
                         <option>180&#176</option>
                         <option>225&#176</option>
                         <option>270&#176</option>
+                        <option>315&#176</option>
                       </select>
                       <i class="fa fa-times del-icon hidden"></i>
                     </li>
@@ -70,6 +71,7 @@
               </div>
             </div>
             <div class="panel panel-default col-md-2 code-list your-code">
+              <div class="invalid disappear">Invalid code input!</div>
               <div class="panel-heading">Your Code<i class="fa fa-play-circle-o run-btn"></i></div>
               <div class="panel-body"> 
                 <ul class="list-group">
@@ -81,9 +83,15 @@
             <div class="panel panel-default col-md-7 game-panel">
               <div class="panel-body"> 
                 <div class="game-canvas">
-                  <div class="game-blocks">
+                  <div class="game-blocks">  
+                    <div class="boat">
+                      <img src="../../source/boat.png" class="disappear">
+                    </div>
+                    <div class="flower">
+                      <img src="../../source/flower_1.png" class="disappear">
+                    </div>
                     <div class="stupid-bird">
-                      <img src="../../source/animation/oringin.png">
+                      <img src="../../source/animation/oringin.png" class="disappear">
                       <img src="../../source/animation/walk1.png" class="disappear">
                       <img src="../../source/animation/fly1.png" class="disappear">
                       <img src="../../source/animation/fly2.png" class="disappear">
@@ -91,12 +99,8 @@
                       <img src="../../source/animation/swing1.png" class="disappear">
                       <img src="../../source/animation/swing2.png" class="disappear">
                       <img src="../../source/animation/swing3.png" class="disappear">
-                      <img src="../../source/animation/flower.png" class="disappear">
                     </div>
-                    <div class="boat">
-                      <img src="../../source/boat.png" class="disappear">
-                    </div>
-                  </div>
+                    <div class="message disappear"></div>
                   <img src="../../source/map1.png" height="540px" class="map-image">
                 </div>
               </div>

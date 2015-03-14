@@ -57,7 +57,7 @@ body {
 	padding: 0px;
 }
 
-.game-page .code-list .panel-body{
+.game-page .code-list .panel-body {
 	padding: 0px;
 }
 
@@ -86,12 +86,39 @@ body {
 	position: absolute;
 }
 
-.block, .stupid-bird, .boat {
+.block, .stupid-bird, .boat, .flower {
 	width: 45px;
 	height: 45px;
 	margin: 0;
 	padding: 0;
 	position: absolute;
+}
+
+.invalid {
+  width: 250px;
+  height: 20px;
+  
+  position: absolute;
+  left: 38px;
+  top: -25px;
+  
+  font-size: 16px;
+  font-family: 'Coming Soon', cursive;
+}
+
+.message {
+  width: 250px;
+  height: 30px;
+  margin: 0;
+  padding: 8px;
+  position: absolute;
+  
+  background-color: #fff;
+  color: black;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'Coming Soon', cursive;
 }
 
 .stupid-bird img {
@@ -103,6 +130,12 @@ body {
 .boat img {
   width: 45px;
   margin-top: 15px;
+  position: relative;
+}
+
+.flower img {
+  width: 45px;
+  margin-top: 10px;
   position: relative;
 }
 
@@ -163,6 +196,10 @@ body {
 .game-page .your-code .panel-heading .run-btn {
 	float: right;
 	font-size: 20px;
+}
+
+.run-btn {
+  cursor: pointer;
 }
 
 footer {

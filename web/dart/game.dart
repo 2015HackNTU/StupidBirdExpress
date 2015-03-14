@@ -34,17 +34,19 @@ void startRunBtnListener(ActionDropper dropper) {
     
     dropper.allowDragging = false;
     
-    List<List<int>> actions = dropper.getActionValues();
-    
-    List<List<int>> pos = mGenerator.generatePos(actions);
-    List<List<int>> animate = mGenerator.generateAnimation(actions);
-    List<int> highlight = mGenerator.generateHighlight(actions);
-    
-    print(pos);
-    print(animate);
-    print(highlight);
-    
-    map.startMove(pos, animate, highlight);
+    try {
+      List<List<int>> actions = dropper.getActionValues();
+      
+      if (actions.isNotEmpty) {
+        List<List<int>> pos = mGenerator.generatePos(actions);
+        List<List<int>> animate = mGenerator.generateAnimation(actions);
+        List<int> highlight = mGenerator.generateHighlight(actions);
+        
+        map.startMove(pos, animate, highlight);
+      }
+    } catch (e) {
+      querySelector('.invalid').classes.remove('disappear');
+    }
 
     dropper.allowDragging = true;
   });
@@ -53,4 +55,5 @@ void startRunBtnListener(ActionDropper dropper) {
 void reset() {
   map.resetPos();
   mGenerator.degree = MainActorPos[rand][2];
+  querySelector('.invalid').classes.add('disappear');
 }

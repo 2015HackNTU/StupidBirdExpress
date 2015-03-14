@@ -36,7 +36,6 @@ const int IMG_FLY_3 = 4;
 const int IMG_PADDLE_1 = 5;
 const int IMG_PADDLE_2 = 6;
 const int IMG_PADDLE_3 = 7;
-const int IMG_FLOWER = 8;
 
 
 ///map attributes
@@ -68,8 +67,7 @@ const int ERROR_OUT_OF_BORDER = 0;
 const int         ERROR_DRAWN = 1;
 const int      ERROR_HIT_WALL = 2;
 const int       ERROR_NOT_FLY = 3;
-const int     ERROR_BREAK_EGG = 4;
-const int        ERROR_NO_EGG = 5;
+const int        ERROR_NO_EGG = 4;
 
 ///img url
 
@@ -87,12 +85,13 @@ const String     TREE_1 = '../../source/tree1.png';
 const String     TREE_2 = '../../source/tree2.png';
 const String     TREE_3 = '../../source/tree3.png';
 const String     TREE_4 = '../../source/tree4.png';
+const String     FLOWER = '../../source/flower.png';
 
 const String    MAPBG_1 = '../../source/map1.png';
 const String    MAPBG_2 = '../../source/map2.png';
 const String    MAPBG_3 = '../../source/map3.png';
 
-final List<String> BlockImgs = [U_ARBOR_1, U_ARBOR_2, ARBOR_3, U_ARBOR_4, BUSH, STRAW, EGG, TREE_1, TREE_2, TREE_3, TREE_4];
+final List<String> BlockImgs = [U_ARBOR_1, U_ARBOR_2, ARBOR_3, U_ARBOR_4, BUSH, STRAW, EGG, TREE_1, TREE_2, TREE_3, TREE_4, FLOWER];
 
 ///static map
 
