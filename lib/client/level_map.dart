@@ -1,18 +1,21 @@
 library client.level_map;
 
 import 'dart:html';
+import 'dart:math';
 import "field_name.dart";
 
 class LevelMap {
   List<List<int>> map;
   List<List<DivElement>> mapBlock;
+
+  DivElement mainActor;
   int mainActorLeft;
   int mainActorTop;
   
-  LevelMap(this.mainActorLeft, this.mainActorTop, this.map) {
+  LevelMap(this.mainActorTop, this.mainActorLeft, this.map) {
     _createBlocks();
-    print('done!');
     _genImgs();
+    _setMainActorPos();
   }
   
   List generateMockMove(List<List<int>> pos) {
@@ -55,11 +58,22 @@ class LevelMap {
     for (int i = 0; i < MAP_HEIGHT; i++) {
       for (int j = 0; j < MAP_WIDTH; j++) {
         if (map[i][j] <= MAP_ITEMS_COUNT) {
-          mapBlock[i][j].style..background = BlockImgs[map[i][j]]
-                              ..backgroundSize = '45px';
+          ImageElement img = new ImageElement();
+          img.src = map[i][j] != MAP_UNFLIPPED_TREE ? BlockImgs[map[i][j]] 
+                                                    : BlockImgs[map[i][j] + new Random().nextInt(4)];
+          img.style..width = '45px'
+                   ..height = map[i][j] == MAP_BOAT ? 'auto 45px' : '45px 45px';
+          
+          mapBlock[i][j].children.insert(0, img);
         }
       }
     }
+  }
+  
+  void _setMainActorPos() {
+    mainActor = querySelector('.stupid-bird');
+    mainActor.style..left = '${mainActorLeft * STEP_UNIT}px'
+                   ..top = '${mainActorTop * STEP_UNIT}px';
   }
   
   void _move(int hor, int ver) {
