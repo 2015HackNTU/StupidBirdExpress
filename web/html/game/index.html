@@ -81,18 +81,19 @@
             <div class="panel panel-default col-md-7 game-panel">
               <div class="panel-body"> 
                 <div class="game-canvas">
-                  <div class="game-blocks"></div>
-                  <div class="stupid-bird">
-                    <img src="../../source/animation/oringin.png">
-                    <img src="../../source/animation/walk1.png" class="disappear">
-                    <img src="../../source/animation/fly1.png" class="disappear">
-                    <img src="../../source/animation/fly2.png" class="disappear">
-                    <img src="../../source/animation/fly3.png" class="disappear">
-                    <img src="../../source/animation/swing1.png" class="disappear">
-                    <img src="../../source/animation/swing2.png" class="disappear">
-                    <img src="../../source/animation/swing3.png" class="disappear">
+                  <div class="game-blocks">
+                    <div class="stupid-bird">
+                      <img src="../../source/animation/oringin.png">
+                      <img src="../../source/animation/walk1.png" class="disappear">
+                      <img src="../../source/animation/fly1.png" class="disappear">
+                      <img src="../../source/animation/fly2.png" class="disappear">
+                      <img src="../../source/animation/fly3.png" class="disappear">
+                      <img src="../../source/animation/swing1.png" class="disappear">
+                      <img src="../../source/animation/swing2.png" class="disappear">
+                      <img src="../../source/animation/swing3.png" class="disappear">
+                    </div>
                   </div>
-                  <img src="../../source/map1.png" height="540px" class="map-immage">
+                  <img src="../../source/map1.png" height="540px" class="map-image">
                 </div>
               </div>
             </div>
@@ -113,7 +114,7 @@
           <div class="modal-body">
             <div class="users-msg"></div>
             <div class="whole-btn">
-              <div class="completepage-btn"><i class="fa fa-download"></i></div>
+              <a download><div class="completepage-btn"><i class="fa fa-download"></i></div></a>
               <div class="btn-info">download</div>
             </div>
             <div class="whole-btn">
@@ -121,7 +122,7 @@
               <div class="btn-info">reply</div>
             </div>
             <div class="whole-btn">
-              <div class="completepage-btn"><i class="fa fa-envelope-o"></i></div>
+              <a href="../authen/index.html"><div class="completepage-btn"><i class="fa fa-envelope-o"></i></div></a>
               <div class="btn-info">send</div>
             </div>
           </div>
@@ -135,7 +136,7 @@
     </div>
 
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary btn-lg complete-btn" style="visibility:hidden;" data-toggle="modal" data-target="#myModal"></button>
+    <button type="button" class="btn btn-primary btn-lg complete-btn" data-toggle="modal" data-target="#myModal"></button>
     <footer style="margin-top:0;">copyright &copy 2015HackNTU</footer>
     <!-- show alert -->
     <script>
