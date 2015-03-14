@@ -83,7 +83,7 @@ class LevelMap {
           _addRunningStatus(_children[highlight[posState]]);
         }
         
-        //setPos        
+        //checkPos        
         response = _isValidMove(pos[posState][0], pos[posState][1], pos[posState][2]);
         //isValid = response[0];
         print(response);
@@ -95,7 +95,6 @@ class LevelMap {
       }
       
       if (isValid) {
-
         _setPos(pos[posState][0], pos[posState][1], imgState);
         
         switch (imgs[posState][ACTION_TYPE]) {
@@ -158,14 +157,15 @@ class LevelMap {
             _showImg(IMG_ORIGIN);
             break;
         }
+      } else {
         
-        if (state == imgs.length * TIME_UNIT_PER_POS - 1) {
-          _removeRunningStatus(_children[highlight[posState]]);
-          timer.cancel();
-        }
-        
-        state++;
       }
+      
+      if ((imgState == 0 && !isValid) || (state == imgs.length * TIME_UNIT_PER_POS - 1)) {
+        _removeRunningStatus(_children[highlight[posState]]);
+        timer.cancel();
+      }
+      state++;
     }); 
   }
   
@@ -188,6 +188,8 @@ class LevelMap {
         mapBlock[i][j]
           ..style.left = '${j * STEP_UNIT}px'
           ..style.top = '${i * STEP_UNIT}px'
+          ..style.boxSizing = 'border-box'
+          ..style.border = '1px solid black'
           ..classes.add('block');
                
        gameBlocks.children.insert(0, mapBlock[i][j]);

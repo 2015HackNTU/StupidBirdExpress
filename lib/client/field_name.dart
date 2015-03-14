@@ -36,6 +36,7 @@ const int IMG_FLY_3 = 4;
 const int IMG_PADDLE_1 = 5;
 const int IMG_PADDLE_2 = 6;
 const int IMG_PADDLE_3 = 7;
+const int IMG_FLOWER = 8;
 
 
 ///map attributes
