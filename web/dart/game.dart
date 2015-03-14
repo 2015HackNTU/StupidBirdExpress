@@ -1,19 +1,24 @@
 library client.game;
 
 import 'dart:html';
+import 'dart:math';
 
 import 'package:StupidBirdExpress/client/field_name.dart';
 import 'package:StupidBirdExpress/client/level_map.dart';
 import 'package:StupidBirdExpress/client/action_dropper.dart';
 import 'package:StupidBirdExpress/client/motion_controller.dart';
 
+int rand;
+LevelMap map;
+
 MotionGenerator mGenerator = new MotionGenerator();
 MotionDisplayer mDisplayer = new MotionDisplayer();
-    
+
 void main() {
-  ActionDropper dropper = new ActionDropper.start();
-  LevelMap map = new LevelMap(MAINACTOR_POS_LEFT, MAINACTOR_POS_TOP, Map_1);
+  rand = new Random().nextInt(Maps.length);
+  map = new LevelMap(MAINACTOR_POS[rand][0], MAINACTOR_POS[rand][1], Maps[rand]);
   
+  ActionDropper dropper = new ActionDropper.start();
   startRunBtnListener(dropper);
 }
 

@@ -135,8 +135,8 @@ class MotionDisplayer {
   
   MotionDisplayer() {
     //TODO: assign selector
-    mainActor = querySelector('');
-    _setMainActorPos(MAINACTOR_POS_LEFT.toDouble(), MAINACTOR_POS_TOP.toDouble());
+    mainActor = querySelector('.stupid-bird');
+    //_setMainActorPos(MAINACTOR_POS_LEFT.toDouble(), MAINACTOR_POS_TOP.toDouble());
   }
   
   void startMotionDisplayer(List<List<int>> pos, List<List<int>> imgs, List<int> highlight) {

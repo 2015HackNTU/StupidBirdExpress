@@ -27,24 +27,27 @@ const int               STEP_UNIT = 45;
 
 ///map attributes
 
+final List<List<int>> MAINACTOR_POS = [[11, 6], [9, 13], [2, 0]];
+
 const int          MAP_WIDTH = 14;
 const int         MAP_HEIGHT = 12;
-const int MAINACTOR_POS_LEFT = 0;
-const int  MAINACTOR_POS_TOP = 0;
 
-const int            MAP_BOAT = 0;
-const int   MAP_FLIPPED_ARBOR = 1;
-const int    MAP_FLIPPED_BUSH = 2;
-const int   MAP_FLIPPED_STRAW = 3;
-const int  MAP_UNFLIPPED_TREE = 4;
-const int MAP_UNFLIPPED_ARBOR = 5;
-const int          MAP_GROUND = 6;
-const int           MAP_RIVER = 7;
-const int  MAP_UNFLIPPED_WALL = 8;
-const int             MAP_EGG = 9;
+const int              MAP_BOAT = 0;
+const int MAP_UNFLIPPED_ARBOR_1 = 1;
+const int MAP_UNFLIPPED_ARBOR_2 = 2;
+const int   MAP_FLIPPED_ARBOR_3 = 3;
+const int MAP_UNFLIPPED_ARBOR_4 = 4;
+const int      MAP_FLIPPED_BUSH = 5;
+const int     MAP_FLIPPED_STRAW = 6;
+const int    MAP_UNFLIPPED_TREE = 7;
+const int   MAP_BACKGROUND_TREE = 8;
+const int            MAP_GROUND = 9;
+const int             MAP_RIVER = 10;
+const int    MAP_UNFLIPPED_WALL = 11;
+const int               MAP_EGG = 12;
 
 const int MAP_POS_ACTION_TYPE = 2;
-const int MAP_ITEMS_COUNT = 4;
+const int MAP_ITEMS_COUNT = 7;
 
 
 const int ERROR_OUT_OF_BORDER = 0;
@@ -55,19 +58,23 @@ const int        ERROR_NO_EGG = 4;
 
 ///img url
 
-const String   BOAT = 'url(../../source/boat.png)';
-const String  ARBOR = 'url(../../source/arbor.png)';
-const String   BUSH = 'url(../../source/bush.png)';
-const String  STRAW = 'url(../../source/straw.png)';
-const String TREE_1 = 'url(../../source/tree1.png)';
-const String TREE_2 = 'url(../../source/tree2.png)';
-const String TREE_3 = 'url(../../source/tree3.png)';
-const String TREE_4 = 'url(../../source/tree4.png)';
+const String       BOAT = '../../source/boat.png';
+const String    ARBOR_3 = '../../source/arbor3.png';
+const String  U_ARBOR_1 = '../../source/arbor1.png';
+const String  U_ARBOR_2 = '../../source/arbor2.png';
+const String  U_ARBOR_4 = '../../source/arbor4.png';
+const String       BUSH = '../../source/bush.png';
+const String      STRAW = '../../source/straw.png';
+const String     TREE_1 = '../../source/tree1.png';
+const String     TREE_2 = '../../source/tree2.png';
+const String     TREE_3 = '../../source/tree3.png';
+const String     TREE_4 = '../../source/tree4.png';
 
-final List<String> BlockImgs = [BOAT, ARBOR, BUSH, STRAW, TREE_1, TREE_2, TREE_3, TREE_4];
+final List<String> BlockImgs = [BOAT, U_ARBOR_1, U_ARBOR_2, ARBOR_3, U_ARBOR_4, BUSH, STRAW, TREE_1, TREE_2, TREE_3, TREE_4];
 
 ///static map
 
+final List<List<List<int>>> Maps = [Map_1, Map_2, Map_3];
 final List<List<int>> Map_1 = 
 [[        MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND, 		  MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND],
  [        MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND, 		  MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND],
@@ -83,18 +90,18 @@ final List<List<int>> Map_1 =
  [        MAP_GROUND,         MAP_GROUND, MAP_UNFLIPPED_WALL,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND, MAP_UNFLIPPED_WALL,         MAP_GROUND,         MAP_GROUND]];
 
 final List<List<int>> Map_2 = 
-[[MAP_RIVER,           MAP_RIVER,           MAP_RIVER, MAP_RIVER, MAP_RIVER, MAP_RIVER, MAP_GROUND, MAP_GROUND, MAP_GROUND, MAP_GROUND, MAP_UNFLIPPED_TREE, MAP_UNFLIPPED_TREE, MAP_UNFLIPPED_TREE, MAP_UNFLIPPED_TREE],
- [MAP_RIVER, MAP_UNFLIPPED_ARBOR, MAP_UNFLIPPED_ARBOR, MAP_RIVER, MAP_RIVER, MAP_RIVER,  MAP_RIVER, MAP_GROUND, MAP_GROUND, MAP_GROUND,         MAP_GROUND, MAP_UNFLIPPED_TREE, MAP_UNFLIPPED_TREE, MAP_UNFLIPPED_TREE],
- [MAP_RIVER,   MAP_FLIPPED_ARBOR, MAP_UNFLIPPED_ARBOR, MAP_RIVER, MAP_RIVER, MAP_RIVER,  MAP_RIVER,  MAP_RIVER, MAP_GROUND, MAP_GROUND,         MAP_GROUND, MAP_UNFLIPPED_TREE, MAP_UNFLIPPED_TREE, MAP_UNFLIPPED_TREE],
- [MAP_RIVER,           MAP_RIVER,           MAP_RIVER, MAP_RIVER, MAP_RIVER, MAP_RIVER,  MAP_RIVER,  MAP_RIVER, MAP_GROUND, MAP_GROUND,         MAP_GROUND, MAP_UNFLIPPED_TREE, MAP_UNFLIPPED_TREE, MAP_UNFLIPPED_TREE],
- [MAP_RIVER,           MAP_RIVER,           MAP_RIVER, MAP_RIVER, MAP_RIVER, MAP_RIVER,  MAP_RIVER,  MAP_RIVER, MAP_GROUND, MAP_GROUND,         MAP_GROUND,         MAP_GROUND, MAP_UNFLIPPED_TREE, MAP_UNFLIPPED_TREE],
- [MAP_RIVER,           MAP_RIVER,           MAP_RIVER, MAP_RIVER, MAP_RIVER, MAP_RIVER,  MAP_RIVER,  MAP_RIVER, MAP_GROUND, MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND, MAP_UNFLIPPED_TREE],
- [MAP_RIVER,           MAP_RIVER,           MAP_RIVER, MAP_RIVER, MAP_RIVER, MAP_RIVER,  MAP_RIVER,   MAP_BOAT, MAP_GROUND, MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND],
- [MAP_RIVER,           MAP_RIVER,           MAP_RIVER, MAP_RIVER, MAP_RIVER, MAP_RIVER,  MAP_RIVER,  MAP_RIVER,  MAP_RIVER, MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND],
- [MAP_RIVER,           MAP_RIVER,           MAP_RIVER, MAP_RIVER, MAP_RIVER, MAP_RIVER,  MAP_RIVER,  MAP_RIVER,  MAP_RIVER,  MAP_RIVER,          MAP_RIVER,         MAP_GROUND,         MAP_GROUND,         MAP_GROUND],
- [MAP_RIVER,           MAP_RIVER,           MAP_RIVER, MAP_RIVER, MAP_RIVER, MAP_RIVER,  MAP_RIVER,  MAP_RIVER,  MAP_RIVER,  MAP_RIVER,          MAP_RIVER,          MAP_RIVER,         MAP_GROUND,         MAP_GROUND],
- [MAP_RIVER,           MAP_RIVER,           MAP_RIVER, MAP_RIVER, MAP_RIVER, MAP_RIVER,  MAP_RIVER,  MAP_RIVER,  MAP_RIVER,  MAP_RIVER,          MAP_RIVER,          MAP_RIVER,         MAP_GROUND,         MAP_GROUND],
- [MAP_RIVER,           MAP_RIVER,           MAP_RIVER, MAP_RIVER, MAP_RIVER, MAP_RIVER,  MAP_RIVER,  MAP_RIVER,  MAP_RIVER,  MAP_RIVER,          MAP_RIVER,          MAP_RIVER,         MAP_GROUND,         MAP_GROUND]];
+[[MAP_RIVER,             MAP_RIVER,             MAP_RIVER, MAP_RIVER, MAP_RIVER, MAP_RIVER, MAP_GROUND, MAP_GROUND, MAP_GROUND, MAP_GROUND, MAP_BACKGROUND_TREE, MAP_BACKGROUND_TREE, MAP_BACKGROUND_TREE, MAP_BACKGROUND_TREE],
+ [MAP_RIVER, MAP_UNFLIPPED_ARBOR_1, MAP_UNFLIPPED_ARBOR_2, MAP_RIVER, MAP_RIVER, MAP_RIVER,  MAP_RIVER, MAP_GROUND, MAP_GROUND, MAP_GROUND,          MAP_GROUND, MAP_BACKGROUND_TREE, MAP_BACKGROUND_TREE, MAP_BACKGROUND_TREE],
+ [MAP_RIVER,   MAP_FLIPPED_ARBOR_3, MAP_UNFLIPPED_ARBOR_4, MAP_RIVER, MAP_RIVER, MAP_RIVER,  MAP_RIVER,  MAP_RIVER, MAP_GROUND, MAP_GROUND,          MAP_GROUND, MAP_BACKGROUND_TREE, MAP_BACKGROUND_TREE, MAP_BACKGROUND_TREE],
+ [MAP_RIVER,             MAP_RIVER,             MAP_RIVER, MAP_RIVER, MAP_RIVER, MAP_RIVER,  MAP_RIVER,  MAP_RIVER, MAP_GROUND, MAP_GROUND,          MAP_GROUND, MAP_BACKGROUND_TREE, MAP_BACKGROUND_TREE, MAP_BACKGROUND_TREE],
+ [MAP_RIVER,             MAP_RIVER,             MAP_RIVER, MAP_RIVER, MAP_RIVER, MAP_RIVER,  MAP_RIVER,  MAP_RIVER, MAP_GROUND, MAP_GROUND,          MAP_GROUND,          MAP_GROUND, MAP_BACKGROUND_TREE, MAP_BACKGROUND_TREE],
+ [MAP_RIVER,             MAP_RIVER,             MAP_RIVER, MAP_RIVER, MAP_RIVER, MAP_RIVER,  MAP_RIVER,  MAP_RIVER, MAP_GROUND, MAP_GROUND,          MAP_GROUND,          MAP_GROUND,          MAP_GROUND, MAP_BACKGROUND_TREE],
+ [MAP_RIVER,             MAP_RIVER,             MAP_RIVER, MAP_RIVER, MAP_RIVER, MAP_RIVER,  MAP_RIVER,   MAP_BOAT, MAP_GROUND, MAP_GROUND,          MAP_GROUND,          MAP_GROUND,          MAP_GROUND,          MAP_GROUND],
+ [MAP_RIVER,             MAP_RIVER,             MAP_RIVER, MAP_RIVER, MAP_RIVER, MAP_RIVER,  MAP_RIVER,  MAP_RIVER,  MAP_RIVER, MAP_GROUND,          MAP_GROUND,          MAP_GROUND,          MAP_GROUND,          MAP_GROUND],
+ [MAP_RIVER,             MAP_RIVER,             MAP_RIVER, MAP_RIVER, MAP_RIVER, MAP_RIVER,  MAP_RIVER,  MAP_RIVER,  MAP_RIVER,  MAP_RIVER,           MAP_RIVER,          MAP_GROUND,          MAP_GROUND,          MAP_GROUND],
+ [MAP_RIVER,             MAP_RIVER,             MAP_RIVER, MAP_RIVER, MAP_RIVER, MAP_RIVER,  MAP_RIVER,  MAP_RIVER,  MAP_RIVER,  MAP_RIVER,           MAP_RIVER,           MAP_RIVER,          MAP_GROUND,          MAP_GROUND],
+ [MAP_RIVER,             MAP_RIVER,             MAP_RIVER, MAP_RIVER, MAP_RIVER, MAP_RIVER,  MAP_RIVER,  MAP_RIVER,  MAP_RIVER,  MAP_RIVER,           MAP_RIVER,           MAP_RIVER,          MAP_GROUND,          MAP_GROUND],
+ [MAP_RIVER,             MAP_RIVER,             MAP_RIVER, MAP_RIVER, MAP_RIVER, MAP_RIVER,  MAP_RIVER,  MAP_RIVER,  MAP_RIVER,  MAP_RIVER,           MAP_RIVER,           MAP_RIVER,          MAP_GROUND,          MAP_GROUND]];
 
 
 final List<List<int>> Map_3 = 
