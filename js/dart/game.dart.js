@@ -10828,10 +10828,10 @@ Isolate.$lazy($, "BoatPos", "BoatPos", "get$BoatPos", function() {
   return [7, 6];
 });
 Isolate.$lazy($, "MapBackground", "MapBackground", "get$MapBackground", function() {
-  return ["../../source/map1.png", "../../source/map2.png", "../../source/map3.png"];
+  return ["../source/map1.png", "../source/map2.png", "../source/map3.png"];
 });
 Isolate.$lazy($, "BlockImgs", "BlockImgs", "get$BlockImgs", function() {
-  return ["../../source/arbor1.png", "../../source/arbor2.png", "../../source/arbor3.png", "../../source/arbor4.png", "../../source/bush.png", "../../source/straw.png", "../../source/egg.png", "../../source/tree1.png", "../../source/tree2.png", "../../source/tree3.png", "../../source/tree4.png"];
+  return ["../source/arbor1.png", "../source/arbor2.png", "../source/arbor3.png", "../source/arbor4.png", "../source/bush.png", "../source/straw.png", "../source/egg.png", "../source/tree1.png", "../source/tree2.png", "../source/tree3.png", "../source/tree4.png"];
 });
 Isolate.$lazy($, "Maps", "Maps", "get$Maps", function() {
   return [$.get$Map_1(), $.get$Map_2(), $.get$Map_3()];
