@@ -50,7 +50,7 @@ class LevelMap {
     resetPos();
 
     //TODO: remove it
-//    _completeBtn.click();
+    _completeBtn.click();
   }
   
   void resetPos() {
@@ -240,37 +240,34 @@ class LevelMap {
           ..style.left = '${j * STEP_UNIT}px'
           ..style.top = '${i * STEP_UNIT}px'
           ..style.boxSizing = 'border-box'
-          ..style.borderTop = '1px solid #c0c0c0'
-          ..style.borderLeft = '1px solid #c0c0c0'
+          ..style.borderTop = '1px solid #eee'
+          ..style.borderLeft = '1px solid #eee'
           ..classes.add('block');
-      if (i == MAP_HEIGHT || j == MAP_WIDTH) {
-        mapBlock[i][j].style..borderTop = '1px solid #c0c0c0'
-                            ..borderLeft = '1px solid #c0c0c0';
-      }
                
        gameBlocks.children.insert(0, mapBlock[i][j]);
       }
-    }
-    
+    } 
   }
   
   void _genImgs() {
     for (int i = 0; i < MAP_HEIGHT; i++) {
       for (int j = 0; j < MAP_WIDTH; j++) {
         if (map[i][j] <= MAP_ITEMS_COUNT) {
-          ImageElement img = new ImageElement();
-          img.src = map[i][j] != MAP_UNFLIPPED_TREE ? BlockImgs[map[i][j]] 
-                                                    : BlockImgs[map[i][j] + new Random().nextInt(4)];
-          img.style..width = '45px'
-                   ..height = '45px';
-          
-          mapBlock[i][j].children.insert(0, img);
-          
-          if (map[i][j] == MAP_FLIPPED_ARBOR_3) {
+          if (map[i][j] != MAP_EGG) {
+            ImageElement img = new ImageElement();
+            img.src = map[i][j] != MAP_UNFLIPPED_TREE ? BlockImgs[map[i][j]] 
+                                                      : BlockImgs[map[i][j] + new Random().nextInt(4)];
+            img.style..width = '45px'
+                     ..height = '45px';
+            
+            mapBlock[i][j].children.insert(0, img);
+          }
+          if (map[i][j] == MAP_EGG || map[i][j] == MAP_FLIPPED_ARBOR_3) {
             ImageElement img = new ImageElement();
             img.src = BlockImgs[MAP_EGG];
-            img.style..width = '45px'
-                     ..height = '45px'
+            img.style..width = '25px'
+                     ..height = '25px'
+                     ..margin = '10px'
                      ..position = 'absolute';
             
             mapBlock[i][j].children.insert(0, img);
