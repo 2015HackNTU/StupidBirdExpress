@@ -1,6 +1,7 @@
 library clienr.parse;
 
 import "dart:async";
+import "dart:html";
 import "dart:js" as js;
 
 /**
@@ -14,12 +15,12 @@ import "dart:js" as js;
  * @param  {func}    onFailure function(string errmsg)
  * @return {void}
  */
-Future uploadMsg(email, isFile, content, filename) {
+Future uploadMsg(String sendname, String sendemail, String recvname, String recvemail, bool isFile, File content, String filename) {
   Completer cmpl = new Completer();
   var ok = (response) => cmpl.complete(response);
   var fail = (error) => cmpl.completeError(error);
   
-  js.context.callMethod('uploadMsg', [email, isFile, content, filename, fail]);
+  js.context.callMethod('uploadMsg', [sendname, sendemail, recvname, recvemail, isFile, content, filename, ok, fail]);
   return cmpl.future;
 }
 
@@ -31,7 +32,7 @@ Future uploadMsg(email, isFile, content, filename) {
  * @param  {func  }   onFailure functoin(string errmsg)
  * @return {void  }
  */
-Future isDone(msgId) {
+Future isDone(String msgId) {
     Completer cmpl = new Completer();
     var ok = (response) => cmpl.complete(response);
     var fail = (error) => cmpl.completeError(error);
@@ -48,7 +49,7 @@ Future isDone(msgId) {
  * @param {func}     onSuccess function(void)
  * @param {func}     onFailure function(string errmsg)
  */
-Future setStatus(msgId, isDone) {
+Future setStatus(String msgId, bool isDone) {
   Completer cmpl = new Completer();
   var ok = (response) => cmpl.complete(response);
   var fail = (error) => cmpl.completeError(error);
@@ -68,9 +69,21 @@ Future setStatus(msgId, isDone) {
  */
 Future downloadMsg(msgId) {
   Completer cmpl = new Completer();
-  var ok = (response) => cmpl.complete(response);
+  var ok = (response) => cmpl.complete(new Massage(response['isFile'], response['content'],
+      response['sendname'], response['sendemail'], response['recvname'], response['recvemail']));
   var fail = (error) => cmpl.completeError(error);
   
   js.context.callMethod('downloadMsg', [msgId, ok, fail]);
   return cmpl.future;
+}
+
+class Massage {
+   bool isFile;
+   File content;
+   String sendname;
+   String sendemail;
+   String recvname;
+   String recvemail;
+   
+   Massage(this.isFile, this.content, this.sendname, this.sendemail, this.recvname, this.recvemail);
 }
