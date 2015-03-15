@@ -28,6 +28,8 @@ void main() {
       querySelector('#receiverEmailInfoEn').text = "The sender's email is private, and we have already filled in  his/her email address.";
       receiverEmailInput.type = "hidden";
       receiverEmailInput.value = msg.sendemail;
+      senderNameInput.value = msg.recvname;
+      senderEmailInput.value = msg.recvemail;
     }).catchError((e){
       querySelector("#reply-error-alter").classes.remove('disappear');
     }).whenComplete(() {
