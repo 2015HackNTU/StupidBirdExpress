@@ -17,6 +17,12 @@ import "dart:js" as js;
  */
 Future uploadMsg(String sendname, String sendemail, String recvname, String recvemail, bool isFile, String textMessage, File file, String filename) {
   Completer cmpl = new Completer();
+  //check file size
+  if (isFile) {
+    if (file.size > 1024*1024*3)
+      cmpl.completeError('file size is too big');
+  }
+  
   var ok = (response) => cmpl.complete(response);
   var fail = (error) => cmpl.completeError(error);
   var content;
