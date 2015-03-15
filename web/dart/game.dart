@@ -21,32 +21,17 @@ MotionGenerator mGenerator;
 void main() {
   id = getPlayerId(window.location);
   
-//  if (id == null) {
-//      window.location.replace('../error/');
-//      return;
-//  }
-//  
-//  checkID()
-//  .then((_) {
-//    startGame();
-//  })
-//  .catchError((ex) {
-//    window.location.replace('../error/');
-//    return;
-//  });
+  if (id == null)
+    window.location.href = 'error.html';
   
-//  checkID().then((bool isDoneID) {
-//    if (!isDoneID) {
-//      startGame();
-//    } else {
-//    window.location.replace('../complete/');
-//    return;
-//    }
-//  }).catchError((ex) {
-//    window.location.replace('../error/');
-//    return;
-//  });
-  startGame();
+  checkID().then((bool isDoneID) {
+    if (!isDoneID)
+      startGame();
+    else
+    window.location.href = 'complete.html';
+  }).catchError((ex) {
+    window.location.href = 'error.html';
+  });
 }
 
 String getPlayerId(Location location) 
@@ -58,7 +43,7 @@ Future checkID() {
   var ok = (response) => cmpl.complete(response);
   var fail = (error) => cmpl.completeError(error);
   
-  js.context.callMethod('isDone', [id, true, ok, fail]);
+  js.context.callMethod('isDone', [id, ok, fail]);
   
   return cmpl.future;
 }

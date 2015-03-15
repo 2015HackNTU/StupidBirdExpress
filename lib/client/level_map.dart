@@ -31,6 +31,7 @@ class LevelMap {
   AudioElement _cmplAudio;
   VideoElement _cmplVideo;
   AnchorElement _downloadBtn;
+  AnchorElement _replyBtn;
   
   ButtonElement _completeBtn;
   int _boatLeft;
@@ -57,6 +58,7 @@ class LevelMap {
     _cmplAudio = querySelector('.cmpl-audio');
     _cmplVideo = querySelector('.cmpl-video');
     _downloadBtn = querySelector('.download a');
+    _replyBtn = querySelector('.reply a');
     
     _createBlocks();
     _genImgs();
@@ -428,11 +430,14 @@ class LevelMap {
             _downloadBtn.href = response['content'];
           } else {
             _cmplText.text = 'Unable to display file content. Please download it directly.';
+            _downloadBtn.href = response['content'];
           } 
         } else {
           _cmplText.classes.remove('disappear');
           _cmplText.text = response['content'];
         }
+        
+        _replyBtn.href = '../authen/?id=$id';
       });
     })
     .catchError((ex) {print('error: $ex');});
