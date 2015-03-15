@@ -2337,20 +2337,6 @@ var $$ = Object.create(null);
     reflectionInfo.fixed$length = Array;
     return H.Closure_fromTearOff(receiver, functions, reflectionInfo, !!isStatic, jsArguments, $name);
   },
-  propertyTypeCastError: function(value, property) {
-    var t1 = J.getInterceptor$asx(property);
-    throw H.wrapException(H.CastErrorImplementation$(H.Primitives_objectTypeName(value), t1.substring$2(property, 3, t1.get$length(property))));
-  },
-  interceptedTypeCast: function(value, property) {
-    var t1;
-    if (value != null)
-      t1 = typeof value === "object" && J.getInterceptor(value)[property];
-    else
-      t1 = true;
-    if (t1)
-      return value;
-    H.propertyTypeCastError(value, property);
-  },
   throwCyclicInit: function(staticName) {
     throw H.wrapException(P.CyclicInitializationError$("Cyclic initialization for static " + H.S(staticName)));
   },
@@ -3076,20 +3062,10 @@ var $$ = Object.create(null);
         }
       }}
   },
-  CastErrorImplementation: {
-    "^": "Error;message",
-    toString$0: function(_) {
-      return this.message;
-    },
-    $isError: true,
-    static: {CastErrorImplementation$: function(actualType, expectedType) {
-        return new H.CastErrorImplementation("CastError: Casting value of type " + H.S(actualType) + " to incompatible type " + H.S(expectedType));
-      }}
-  },
   RuntimeError: {
     "^": "Error;message",
     toString$0: function(_) {
-      return "RuntimeError: " + H.S(this.message);
+      return "RuntimeError: " + this.message;
     },
     static: {RuntimeError$: function(message) {
         return new H.RuntimeError(message);
@@ -3216,8 +3192,15 @@ var $$ = Object.create(null);
 ["clienr.parse", "package:StupidBirdExpress/client/parse.dart", , Q, {
   "^": "",
   uploadMsg: function(sendname, sendemail, recvname, recvemail, isFile, textMessage, file, filename) {
-    var cmpl, $content;
+    var cmpl, t1, $content;
     cmpl = H.setRuntimeTypeInfo(new P._AsyncCompleter(H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null])), [null]);
+    if (isFile) {
+      t1 = file.size;
+      if (typeof t1 !== "number")
+        return t1.$gt();
+      if (t1 > 3145728)
+        cmpl.completeError$1("file size is too big");
+    }
     $content = isFile ? file : textMessage;
     $.get$context().callMethod$2("uploadMsg", [sendname, sendemail, recvname, recvemail, isFile, $content, filename, new Q.uploadMsg_closure(cmpl), new Q.uploadMsg_closure0(cmpl)]);
     return cmpl.future;
@@ -3259,9 +3242,11 @@ var $$ = Object.create(null);
 ["client.authen", "authen.dart", , A, {
   "^": "",
   main: [function() {
-    var receiverNameInput, receiverEmailInput, submitButton, search, position, t1;
+    var receiverNameInput, receiverEmailInput, senderNameInput, senderEmailInput, submitButton, search, position, t1;
     receiverNameInput = document.querySelector("#receiverName");
     receiverEmailInput = document.querySelector("#receiverEmail");
+    senderNameInput = document.querySelector("#userName");
+    senderEmailInput = document.querySelector("#userEmail");
     submitButton = document.querySelector(".submit-btn");
     if (window.location.search.length !== 0) {
       J.set$disabled$x(submitButton, true);
@@ -3272,7 +3257,7 @@ var $$ = Object.create(null);
     t1 = J.get$onClick$x(document.querySelector("#form-alert-close"));
     H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new A.main_closure2()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
     t1 = J.get$onClick$x(submitButton);
-    H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new A.main_closure3(receiverNameInput, receiverEmailInput)), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
+    H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new A.main_closure3(receiverNameInput, receiverEmailInput, senderNameInput, senderEmailInput)), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
   }, "call$0", "main$closure", 0, 0, 10],
   main_closure: {
     "^": "Closure:38;receiverNameInput_0,receiverEmailInput_1",
@@ -3306,18 +3291,30 @@ var $$ = Object.create(null);
     }, "call$1", null, 2, 0, null, 39, "call"]
   },
   main_closure3: {
-    "^": "Closure:28;receiverNameInput_3,receiverEmailInput_4",
+    "^": "Closure:28;receiverNameInput_3,receiverEmailInput_4,senderNameInput_5,senderEmailInput_6",
     call$1: [function(_) {
-      var receiverName, receiverEmail, userName, userEmail, messageInput, t1, message, filename, messageFile, isFile, pos;
+      var receiverName, receiverEmail, userName, userEmail, t1, messageInput, message, filename, messageFile, isFile, pos;
       receiverName = J.get$value$x(this.receiverNameInput_3);
       receiverEmail = J.get$value$x(this.receiverEmailInput_4);
-      userName = H.interceptedTypeCast(document.querySelector("#userName"), "$isInputElement").value;
-      userEmail = H.interceptedTypeCast(document.querySelector("#userEmail"), "$isInputElement").value;
+      userName = J.get$value$x(this.senderNameInput_5);
+      userEmail = J.get$value$x(this.senderEmailInput_6);
+      if (J.get$isEmpty$asx(receiverName) || J.get$isEmpty$asx(receiverEmail) || J.get$isEmpty$asx(userName) || J.get$isEmpty$asx(userEmail)) {
+        J.get$classes$x(document.querySelector("#form-error-alert")).remove$1(0, "disappear");
+        t1 = H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null]);
+        t1._asyncComplete$1(null);
+        return t1;
+      }
       messageInput = document.querySelector(".tab-content .active input");
       t1 = J.getInterceptor$x(messageInput);
       switch (t1.get$type(messageInput)) {
         case "text":
           message = t1.get$value(messageInput);
+          if (message === "") {
+            J.get$classes$x(document.querySelector("#form-error-alert")).remove$1(0, "disappear");
+            t1 = H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null]);
+            t1._asyncComplete$1(null);
+            return t1;
+          }
           filename = null;
           messageFile = null;
           isFile = false;
@@ -3332,8 +3329,10 @@ var $$ = Object.create(null);
             filename = "HackMessage" + J.substring$1$s(messageFile.name, pos);
             P.print(filename);
           } else {
-            filename = null;
-            messageFile = null;
+            J.get$classes$x(document.querySelector("#form-error-alert")).remove$1(0, "disappear");
+            t1 = H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null]);
+            t1._asyncComplete$1(null);
+            return t1;
           }
           message = null;
           isFile = true;
@@ -3344,7 +3343,7 @@ var $$ = Object.create(null);
           messageFile = null;
           isFile = false;
       }
-      Q.uploadMsg(userName, userEmail, receiverName, receiverEmail, isFile, message, messageFile, filename).then$1(new A.main__closure()).catchError$1(new A.main__closure0());
+      return Q.uploadMsg(userName, userEmail, receiverName, receiverEmail, isFile, message, messageFile, filename).then$1(new A.main__closure()).catchError$1(new A.main__closure0());
     }, "call$1", null, 2, 0, null, 39, "call"]
   },
   main__closure: {
@@ -6950,7 +6949,6 @@ var $$ = Object.create(null);
   },
   InputElement: {
     "^": "HtmlElement;disabled},files=,type%,value%",
-    $isInputElement: true,
     $isNode: true,
     "%": "HTMLInputElement"
   },
@@ -8157,6 +8155,9 @@ J.get$error$x = function(receiver) {
 };
 J.get$hashCode$ = function(receiver) {
   return J.getInterceptor(receiver).get$hashCode(receiver);
+};
+J.get$isEmpty$asx = function(receiver) {
+  return J.getInterceptor$asx(receiver).get$isEmpty(receiver);
 };
 J.get$iterator$ax = function(receiver) {
   return J.getInterceptor$ax(receiver).get$iterator(receiver);
