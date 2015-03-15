@@ -1,6 +1,7 @@
 library client.authen;
 
 import 'dart:html';
+import 'dart:async';
 import 'package:StupidBirdExpress/client/parse.dart';
 
 void main() {
@@ -43,6 +44,11 @@ void main() {
     String receiverEmail = receiverEmailInput.value;
     String userName = senderNameInput.value;
     String userEmail = senderEmailInput.value;
+    if(receiverName == null || receiverEmail == null || userName == null || userEmail == null) {
+      querySelector('#form-error-alert').classes.remove('disappear');
+      return new Future.value(null);
+    }
+      
     //determine massage type
     InputElement messageInput= querySelector('.tab-content .active input');
     String message;
@@ -52,6 +58,10 @@ void main() {
     switch(messageInput.type) {
       case 'text':
         message = messageInput.value;
+        if (message == null){
+          querySelector('#form-error-alert').classes.remove('disappear');
+          return new Future.value(null);
+        }
         break;
       case 'file':
         isFile = true;
@@ -60,10 +70,13 @@ void main() {
           int pos = messageFile.name.indexOf('.');
           filename = 'HackMessage' + messageFile.name.substring(pos);
           print(filename);
+        } else {
+          querySelector('#form-error-alert').classes.remove('disappear');
+          return new Future.value(null);
         }
         break;
     }
-    uploadMsg(userName, userEmail, receiverName, receiverEmail, isFile, message, messageFile, filename)
+    return uploadMsg(userName, userEmail, receiverName, receiverEmail, isFile, message, messageFile, filename)
     .then((_) {
       window.location.href = '../authen_done';
     })
