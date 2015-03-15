@@ -44,7 +44,7 @@ void main() {
     String receiverEmail = receiverEmailInput.value;
     String userName = senderNameInput.value;
     String userEmail = senderEmailInput.value;
-    if(receiverName == null || receiverEmail == null || userName == null || userEmail == null) {
+    if(receiverName.isEmpty || receiverEmail.isEmpty || userName.isEmpty || userEmail.isEmpty) {
       querySelector('#form-error-alert').classes.remove('disappear');
       return new Future.value(null);
     }
@@ -58,7 +58,7 @@ void main() {
     switch(messageInput.type) {
       case 'text':
         message = messageInput.value;
-        if (message == null){
+        if (message == ""){
           querySelector('#form-error-alert').classes.remove('disappear');
           return new Future.value(null);
         }
