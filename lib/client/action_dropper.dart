@@ -16,16 +16,19 @@ class ActionDropper {
   LIElement _dragged;
   LIElement _inserted;
   
-  int _ParentLeft;
-  int _ParentRight;
-  int _ParentTop;
-  int _ParentBottom;
   int _ChildHeight = 40;
+  bool infoIsClicked;
   
   int get _windowW => window.innerWidth;
   
   int get _windowH => window.innerHeight;
   
+
+  int get _ParentLeft => (_windowW * 0.05 + _windowW * 0.9 * (1/6 + 0.03)).ceil() - 10;
+  int get _ParentRight => _ParentLeft + ((_windowW * 0.9) / 6 - 8).floor() + 20;
+  int get _ParentTop => (_windowH * 0.03).ceil() + 160 + (infoIsClicked ? 62 : 0);
+  int get _ParentBottom => _ParentTop + 580;
+    
   List<LIElement> get _children => parent.querySelectorAll('.b-action');
   
   ActionDropper.start() {
@@ -67,12 +70,9 @@ class ActionDropper {
     _actionsCount = 0;
     allowDragging = true;
     _isOnDrag = false;
+    infoIsClicked = false;
     
     DivElement pad = querySelector('.your-code');
-    _ParentLeft = (_windowW * 0.05 + _windowW * 0.9 * (1/6 + 0.03)).ceil() - 10;
-    _ParentRight = _ParentLeft + ((_windowW * 0.9) / 6 - 8).floor() + 20;
-    _ParentTop = (_windowH * 0.03).ceil() + 160;
-    _ParentBottom = _ParentTop + 580;
   }
   
   void _startDragListener() {
