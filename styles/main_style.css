@@ -1,0 +1,259 @@
+body {
+	background-color: #ffe530;
+}
+
+.page-header {
+	border-style: none;
+	padding: 0 10%;
+	margin-top: 1%;
+	margin-bottom: 1%;
+}
+
+.page-header .en-title {
+	color: #7a4f2d;
+	font-family: 'Coming Soon', cursive;
+}
+
+.page-header i {
+	color: #7a4f2d;
+	font-size: 16px;
+	margin: 0 5px;
+}
+
+.nav-tabs li a{
+	background-color: white;
+	border: 1px solid #ddd;
+}
+
+.nav-tabs active a{
+	background-color: white;
+	border-bottom-style: none;
+}
+
+.tab-content {
+	height: 250px;
+	padding: 25px;
+	background-color: white;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+
+	-webkit-border-radius: 4px;
+	-webkit-border-top-left-radius: 0;
+	-moz-border-radius: 4px;
+	-moz-border-radius-topleft: 0;
+	border-radius: 4px;
+	border-top-left-radius: 0;
+}
+
+.game-page .panel {
+	height: 600px;
+	border: none;
+}
+
+.game-page .code-list {
+	margin: 1%;
+	margin-top: 0;
+	padding: 0px;
+}
+
+.game-page .code-list .panel-body {
+	padding: 0px;
+}
+
+.game-page .game-panel {
+	width: 690px;
+	margin-left: 2%;
+	padding: 30px;
+}
+
+.game-page .game-panel .panel-body {
+	width: 100%
+	height: 100%;
+	padding: 0;
+}
+
+.game-page .game-panel .game-canvas {
+	width: 630px;
+	height: 540px;
+	margin: 
+	overflow: hidden;
+}
+
+.game-page .game-panel .game-blocks {
+	width: 630px;
+	height: 540px;
+	position: absolute;
+}
+
+.block, .stupid-bird, .boat, .flower {
+	width: 45px;
+	height: 45px;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+}
+
+.invalid {
+  width: 250px;
+  height: 20px;
+  
+  position: absolute;
+  left: 38px;
+  top: -25px;
+  
+  font-size: 16px;
+  font-family: 'Coming Soon', cursive;
+}
+
+.message {
+  width: 250px;
+  height: 30px;
+  margin: 0;
+  padding: 8px;
+  position: absolute;
+  
+  background-color: #fff;
+  color: black;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: 'Coming Soon', cursive;
+}
+
+.stupid-bird img {
+	height: 45px;
+	margin: auto;
+	position: relative;
+}
+
+.boat img {
+  width: 45px;
+  margin-top: 15px;
+  position: relative;
+}
+
+.flower img {
+  width: 45px;
+  margin-top: 10px;
+  position: relative;
+}
+
+.game-page .code-list .panel-heading {
+	background-color: #cc0000;
+	color: white;
+	border: none;
+	font-size: 16px;
+	font-family: 'Coming Soon', cursive;
+}
+
+.game-page .code-list .panel-body {
+	font-family: 'Coming Soon', cursive;
+}
+.game-page .code-list .list-group .list-group-item {
+	height: 40px;
+	padding: 2px 5px;
+	font-size: 12px;
+	border: none;
+	border-bottom: 1px dashed #cc0000;
+	border-radius: 0;
+	margin: 0px;
+	cursor: pointer;
+}
+
+.game-page .code-list .list-group .category {
+	padding-top: 10px;
+	padding-left: 15px;
+	background-color: #ddd;
+	font-size: 16px;
+}
+
+.game-page .code-list .list-group .move-tag {
+	width: 20px;
+	margin-top: 10px;
+	display: inline-block;
+	align-items: center;
+}
+
+.game-page .parameter-input {
+	width: 40px;
+	margin: 0;
+	font-size: 12px;
+}
+
+.game-page .code-sample .parameter-input {
+	cursor: not-allowed;
+}
+
+.game-page .your-code .parameter-input {
+	cursor: text;
+}
+
+.game-page .select-input {
+	padding: 0;
+	margin: 0;
+	font-size: 12px;
+	width: 50px;
+	display: inline;
+}
+
+.game-page .your-code .panel-heading .run-btn {
+	float: right;
+	font-size: 20px;
+}
+
+.run-btn {
+  cursor: pointer;
+}
+
+footer {
+	text-align: center;
+	margin: 1%;
+}
+
+.my-alert {
+	border-color: #fff550;
+	background-color: #fff550;
+	color: #555;
+}
+
+.my-alert .alert-link{
+	color: #cc0000;
+}
+
+.my-alert .alert-link:hover{
+	text-decoration:none;
+	color: #ee2020;
+	transition: color 0.1s linear 0s;
+}
+
+.list-group-item .del-icon{
+	font-size: 8px;
+	float: right;
+	margin-top: 15px;
+}
+
+.input-group .input-group-addon {
+	background-color: white;
+	border-color: #ddd; 
+	border-right: none;
+}
+
+.well {
+	background-color: white;
+	padding: 10px;
+	height: 120px;
+}
+
+.well p {
+	margin-top: 22px;
+	margin-bottom: 5px;
+}
+
+.well img {
+	float: left;
+}
+
+.disappear {
+	display: none;
+}
