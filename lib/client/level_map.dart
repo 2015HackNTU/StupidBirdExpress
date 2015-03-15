@@ -3,9 +3,14 @@ library client.level_map;
 import 'dart:html';
 import 'dart:math';
 import 'dart:async';
+import 'dart:js' as js;
+
 import "field_name.dart";
 
 class LevelMap {
+  String id;
+  bool isText;
+  
   List<List<int>> map;
   List<List<DivElement>> mapBlock;
 
@@ -27,10 +32,8 @@ class LevelMap {
   bool _isComplete;
   
   List _actorInfo;
-  //int _lastImg;
   
-  List<LIElement> get _children => querySelectorAll('.your-code .list-group .b-action');
-    
+  List<LIElement> get _children => querySelectorAll('.your-code .list-group .b-action');  
   
   LevelMap(this._actorInfo, this.map, this.isMap2) {
     mainActor = querySelector('.stupid-bird');
@@ -45,6 +48,9 @@ class LevelMap {
     _genImgs();
 
     resetPos();
+
+    //TODO: remove it
+//    _completeBtn.click();
   }
   
   void resetPos() {
@@ -193,6 +199,7 @@ class LevelMap {
             break;
         }
         _message.text = response[2];
+        _message.classes.remove('disappear');
         _message.style..left = '${mainActorLeft * STEP_UNIT}px'
                       ..top = '${mainActorTop * STEP_UNIT + STEP_UNIT}px';
         
@@ -203,8 +210,10 @@ class LevelMap {
       if (state == imgs.length * TIME_UNIT_PER_POS - 1) {
         _removeRunningStatus(_children[highlight[posState]]);
         timer.cancel();
-        if (_isComplete)
+        if (_isComplete) {
           _completeBtn.click();
+          _renderCompletePage();
+        }
       }
       state++;
       _isComplete = false;
@@ -230,9 +239,14 @@ class LevelMap {
         mapBlock[i][j]
           ..style.left = '${j * STEP_UNIT}px'
           ..style.top = '${i * STEP_UNIT}px'
-//          ..style.boxSizing = 'border-box'
-//          ..style.border = '1px solid black'
+          ..style.boxSizing = 'border-box'
+          ..style.borderTop = '1px solid #c0c0c0'
+          ..style.borderLeft = '1px solid #c0c0c0'
           ..classes.add('block');
+      if (i == MAP_HEIGHT || j == MAP_WIDTH) {
+        mapBlock[i][j].style..borderTop = '1px solid #c0c0c0'
+                            ..borderLeft = '1px solid #c0c0c0';
+      }
                
        gameBlocks.children.insert(0, mapBlock[i][j]);
       }
@@ -376,5 +390,36 @@ class LevelMap {
       default:
         return([false]);
     } 
+  }
+  
+  void _renderCompletePage() {
+    _setIdStatus().then((_) {
+      _getMessage().then((response) {
+        print('content: ${response['content']}');
+      });
+    })
+    .catchError((ex) {print('error: $ex');});
+  }
+  
+  Future _setIdStatus() {
+    final Completer cmpl = new Completer();
+    
+    var ok = (response) => cmpl.complete(response);
+    var fail = (error) => cmpl.completeError(error);
+    
+    js.context.callMethod('setStatus', [id, true, ok, fail]);
+    
+    return cmpl.future;
+  }
+  
+  Future _getMessage() {
+    final Completer cmpl = new Completer();
+    
+    var ok = (response) => cmpl.complete(response);
+    var fail = (error) => cmpl.completeError(error);
+    
+    js.context.callMethod('downloadMsg', [id, ok, fail]);
+    
+    return cmpl.future;
   }
 }

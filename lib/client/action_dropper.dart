@@ -10,23 +10,26 @@ class ActionDropper {
   UListElement parent;
   List<LIElement> actionDraggers;
   
-  int _actionsCount;
-  int _lastPos;
   bool _isOnDrag;
   LIElement _dragged;
   LIElement _inserted;
   
-  int _ParentLeft;
-  int _ParentRight;
-  int _ParentTop;
-  int _ParentBottom;
   int _ChildHeight = 40;
+  bool infoIsClicked;
   
   int get _windowW => window.innerWidth;
   
   int get _windowH => window.innerHeight;
   
+
+  int get _ParentLeft => (_windowW * 0.05 + _windowW * 0.9 * (1/6 + 0.03)).ceil() - 10;
+  int get _ParentRight => _ParentLeft + ((_windowW * 0.9) / 6 - 8).floor() + 20;
+  int get _ParentTop => (_windowH * 0.03).ceil() + 160 + (infoIsClicked ? 62 : 0);
+  int get _ParentBottom => _ParentTop + 580;
+    
   List<LIElement> get _children => parent.querySelectorAll('.b-action');
+  
+  int get _actionsCount => _children == null ? 0 : _children.length;
   
   ActionDropper.start() {
     _initValues();
@@ -64,15 +67,11 @@ class ActionDropper {
   void _initValues() {
     parent = querySelector('.your-code .list-group');
     actionDraggers = querySelectorAll('.code-sample .b-action');
-    _actionsCount = 0;
     allowDragging = true;
     _isOnDrag = false;
+    infoIsClicked = false;
     
     DivElement pad = querySelector('.your-code');
-    _ParentLeft = (_windowW * 0.05 + _windowW * 0.9 * (1/6 + 0.03)).ceil() - 10;
-    _ParentRight = _ParentLeft + ((_windowW * 0.9) / 6 - 8).floor() + 20;
-    _ParentTop = (_windowH * 0.03).ceil() + 160;
-    _ParentBottom = _ParentTop + 580;
   }
   
   void _startDragListener() {
@@ -163,10 +162,12 @@ class ActionDropper {
   }
   
   LIElement _appendAction(int pos, LIElement elem) {
+    //TODO
+    print('insert ${elem.text}');
+    
     LIElement newElement = elem.clone(true);
     parent.children.insert(pos, newElement);
     _startDeleteActionListener(newElement);
-    _actionsCount++;
     return newElement;
   }
   
@@ -176,7 +177,6 @@ class ActionDropper {
     listener = newElement.querySelector('.del-icon').onClick.listen((_) {
       newElement.remove();
       listener.cancel();
-      _actionsCount--;
     });
   }
 

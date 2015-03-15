@@ -10,7 +10,7 @@ import 'package:StupidBirdExpress/client/motion_controller.dart';
 
 int rand;
 LevelMap map;
-
+ActionDropper dropper;
 MotionGenerator mGenerator;
 
 void main() {
@@ -19,13 +19,18 @@ void main() {
   mGenerator = new MotionGenerator();
   setMapBackground();
   
-  ActionDropper dropper = new ActionDropper.start();
+  dropper = new ActionDropper.start();
+  startInfoBtnListener();
   startRunBtnListener(dropper);
 }
 
 void setMapBackground() {
   ImageElement img = querySelector('.map-image');
   img.src = MapBackground[rand];
+}
+
+void startInfoBtnListener() {
+  querySelector('#show-alert').onClick.listen((_) => dropper.infoIsClicked = !dropper.infoIsClicked);
 }
 
 void startRunBtnListener(ActionDropper dropper) {
