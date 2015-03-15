@@ -226,6 +226,7 @@ class LevelMap {
         if (_isComplete) {
           _completeBtn.click();
           _renderCompletePage();
+          querySelector('.numbers-insert').text = id;
         }
       }
       state++;
@@ -405,13 +406,13 @@ class LevelMap {
   void _renderCompletePage() {
     _setIdStatus().then((_) {
       _getMessage().then((response) {
-        print('content: ${response['content']}');
+//        print('content: ${response['content']}');
         
         if (response['isFile']) {
           List<String> fileType = response['content'].split('.');
           String type = fileType[fileType.length - 1].toLowerCase();
           
-          print(type);
+//          print(type);
           
           if (type == 'jpg' || type == 'jpeg' || type == 'png') {
             _cmplImg.classes.remove('disappear');
@@ -449,7 +450,7 @@ class LevelMap {
     var ok = () => cmpl.complete();
     var fail = (error) => cmpl.completeError(error);
     
-    print(id);
+//    print(id);
     js.context.callMethod('setStatus', [id, true, ok, fail]);
     
     return cmpl.future;
