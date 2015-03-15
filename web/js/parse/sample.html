@@ -16,7 +16,7 @@
     var msgId;
 
     function uploadText() {
-      uploadMsg(false, "abcabcabc", null, function(objectId) {
+      uploadMsg("weitang114@gmail.com", false, "abcabcabc", null, function(objectId) {
         window.alert("uploaded id = " + objectId);
         msgId = objectId;
       }, function(error) {
@@ -47,7 +47,7 @@
         var name = file.name;
         console.log("filename:" + name);
        
-        uploadMsg(true, file, name, function(objectId) {
+        uploadMsg("weitang114@gmail.com", true, file, name, function(objectId) {
           window.alert("uploaded id = " + objectId);
           msgId = objectId;
         }, function(error) {
@@ -59,7 +59,7 @@
     function download() {
       downloadMsg(msgId, function(msg) {
         console.log("downloaded message:" + JSON.stringify(msg));
-        window.alert(msg.content);
+        window.alert(msg.content + ", from " + msg.email);
       }, function(error) {
         window.alert(error);
       });

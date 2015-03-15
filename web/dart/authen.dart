@@ -36,6 +36,11 @@ void main() {
       case 'file':
         break;
     }
+    try {
+      
+    } catch(e) {
+      
+    }
 
   });
 }
