@@ -2,11 +2,16 @@ library client.game;
 
 import 'dart:html';
 import 'dart:math';
+import 'dart:async';
+
+import 'dart:js' as js;
 
 import 'package:StupidBirdExpress/client/field_name.dart';
 import 'package:StupidBirdExpress/client/level_map.dart';
 import 'package:StupidBirdExpress/client/action_dropper.dart';
 import 'package:StupidBirdExpress/client/motion_controller.dart';
+
+String id;
 
 int rand;
 LevelMap map;
@@ -14,6 +19,38 @@ ActionDropper dropper;
 MotionGenerator mGenerator;
 
 void main() {
+  id = getPlayerId(window.location);
+  
+  if (id == null) {
+      window.location.replace('../error/');
+      return;
+  }
+  
+  checkID().then((bool isValidID) {
+    if (isValidID) {
+      startGame();
+    }
+  }).catchError((ex) {
+    window.location.replace('../error/');
+    return;
+  });
+}
+
+String getPlayerId(Location location) 
+  => location.search.isEmpty ? null : location.search.substring(1);
+
+Future checkID() {
+  final Completer cmpl = new Completer();
+  
+  var ok = (response) => cmpl.complete(response);
+  var fail = (error) => cmpl.completeError(error);
+  
+  js.context.callMethod('isDone', [id, true, ok, fail]);
+  
+  return cmpl.future;
+}
+
+void startGame() {
   rand = new Random().nextInt(Maps.length);
   map = new LevelMap(MainActorPos[rand], Maps[rand], rand == 1);
   mGenerator = new MotionGenerator();
