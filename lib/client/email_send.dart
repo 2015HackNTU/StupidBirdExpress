@@ -7,7 +7,7 @@ const String SENDER_EMAIL = 'radleaf@gmail.com';//'hackntu@gmail.com';
 const String SENDER_PASSWORD = 'rfvgy7';//'ilovehackntu2015';
 const String EMAIL_SUBJECT = '【黑客週】您有一則HackMessage';
 
-Future sendEmail(String receiverName, String receiverEmail, String senderName) {
+Future sendEmail(String receiverName, String receiverEmail, String senderName, String id) {
   var options = new GmailSmtpOptions()
     ..username = SENDER_EMAIL
     ..password = SENDER_PASSWORD;
