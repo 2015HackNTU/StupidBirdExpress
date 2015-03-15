@@ -7,6 +7,8 @@ void main() {
   String sequence;
   InputElement receiverNameInput = querySelector('#receiverName');
   InputElement receiverEmailInput = querySelector('#receiverEmail');
+  InputElement senderNameInput = querySelector('#userName');
+  InputElement senderEmailInput = querySelector('#userEmail');
   ButtonElement submitButton = querySelector('.submit-btn');
   //  is reply
   if (!window.location.search.isEmpty) {
@@ -39,8 +41,8 @@ void main() {
   submitButton.onClick.listen((_) {
     String receiverName = receiverNameInput.value;
     String receiverEmail = receiverEmailInput.value;
-    String userName = (querySelector('#userName') as InputElement).value;
-    String userEmail = (querySelector('#userEmail') as InputElement).value;
+    String userName = senderNameInput.value;
+    String userEmail = senderEmailInput.value;
     //determine massage type
     InputElement messageInput= querySelector('.tab-content .active input');
     String message;
