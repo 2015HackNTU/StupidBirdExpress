@@ -1,7 +1,7 @@
 library client.authen;
 
 import 'dart:html';
-//import 'package:StupidBirdExpress/client/email_send.dart';
+import 'dart:convert';
 
 void main() {
   String sequence;
@@ -29,11 +29,20 @@ void main() {
     //determine massage type
     InputElement massageInput= querySelector('.tab-content .active input');
     String massage;
+    String filename;
     File massageFile;
+    bool isFile = false;
     switch(massageInput.type) {
       case 'text':
+        massage = massageInput.value;
         break;
       case 'file':
+        isFile = true;
+        if(massageInput.files.length > 0) {
+          massageFile = massageInput.files[0];
+          filename = UTF8.encode(massageFile.name).toString();
+          print(filename);
+        }
         break;
     }
     try { 
