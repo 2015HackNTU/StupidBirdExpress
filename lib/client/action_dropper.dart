@@ -162,8 +162,7 @@ class ActionDropper {
   }
   
   LIElement _appendAction(int pos, LIElement elem) {
-    //TODO
-    print('insert ${elem.text}');
+//    print('insert ${elem.text}');
     
     LIElement newElement = elem.clone(true);
     parent.children.insert(pos, newElement);
