@@ -18,7 +18,10 @@ function initParse() {
 
 /**
  * upload your message, text or file
- * @param  {string}  email    email
+ * @param  {string}  sendname 
+ * @param  {string}  sendemail
+ * @param  {string}  recvname
+ * @param  {string}  recvemail 
  * @param  {Boolean} isFile   text->false; file->true
  * @param  {object}  content  text->the text, 
  *                            file->html5 file object, see sample.html for details
@@ -27,7 +30,7 @@ function initParse() {
  * @param  {func}    onFailure function(string errmsg)
  * @return {void}
  */
-function uploadMsg(email, isFile, content, filename, onSuccess, onFailure) {
+function uploadMsg(sendname, sendemail, recvname, recvemail, isFile, content, filename, onSuccess, onFailure) {
   if (!init) {
     initParse();
   }
@@ -35,7 +38,10 @@ function uploadMsg(email, isFile, content, filename, onSuccess, onFailure) {
   var promise = Parse.Promise.as();
   var Message = Parse.Object.extend("Message");
   var msg = new Message();
-  msg.set("email", email);
+  msg.set("sendname", sendname);
+  msg.set("sendemail", sendemail);
+  msg.set("recvname", recvemail);
+  msg.set("recvemail", recvemail);
   msg.set("isDone", false);
   msg.set("isFile", isFile);
 
@@ -127,7 +133,14 @@ function setStatus(msgId, isDone, onSuccess, onFailure) {
 /**
  * download the message, text or file
  * @param  {string}   msgId     message id, frmo uploadMsg
- * @param  {func}     onSuccess function({isFile: bool isFile, content: string content, email: string email})
+ * @param  {func}     onSuccess function({
+ *                                  isFile: bool isFile, 
+ *                                  content: string content, 
+ *                                  sendname: string sendname,
+ *                                  sendemail: string sendemail,
+ *                                  recvname: string recvname,
+ *                                  recvemail: string recvemail
+ *                               })
  *                              isFile: file->true; text->false
  *                              content: file->url; text->text message
  * @param  {func}     onFailure function(string errmsg)
@@ -145,11 +158,25 @@ function downloadMsg(msgId, onSuccess, onFailure) {
 
     if (msg.get("isFile")) {
       console.log("download: isFile, url=" + msg.get("file").url());
-      onSuccess({isFile:true, content:msg.get("file").url(), email:msg.get("email")});
+      onSuccess({
+        isFile:true, 
+        content:msg.get("file").url(), 
+        sendname:msg.get("sendname"),
+        sendemail:msg.get("sendemail"),
+        recvname:msg.get("recvname"),
+        recvemail:msg.get("recvemail")
+      });
     }
     else {
       console.log("download: text, text=" + msg.get("text"));
-      onSuccess({isFile:false, content:msg.get("text"), email:msg.get("email")});
+      onSuccess({
+        isFile:false, 
+        content:msg.get("text"), 
+        sendname:msg.get("sendname"),
+        sendemail:msg.get("sendemail"),
+        recvname:msg.get("recvname"),
+        recvemail:msg.get("recvemail")
+      });
     }
   }, function(error) {
     console.log("query failed");
