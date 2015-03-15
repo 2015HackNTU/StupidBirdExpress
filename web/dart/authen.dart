@@ -21,7 +21,7 @@ void main() {
     //set receiverName, receiverEmail(not alloewd to chage)
     downloadMsg(sequence).then((Message msg) {
       receiverNameInput.value = msg.sendname;
-      querySelector('#receiverEmailInfo').text = '寄件者是不公開的喔！已經幫你填好收件者郵件地址了。';
+      querySelector('#receiverEmailInfo').text = '寄件者是不公開的喔！我們會直接幫你/妳回傳給對方。';
       querySelector('#receiverEmailInfoEn').text = "The sender's email is private, and we have already filled in  his/her email address.";
       receiverEmailInput.type = "hidden";
       receiverEmailInput.value = msg.sendemail;
