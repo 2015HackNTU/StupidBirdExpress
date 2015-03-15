@@ -25,6 +25,13 @@ class LevelMap {
   DivElement _boat;
   DivElement _flower;
   DivElement _message;
+  
+  Element _cmplText;
+  DivElement _cmplImg;
+  AudioElement _cmplAudio;
+  VideoElement _cmplVideo;
+  AnchorElement _downloadBtn;
+  
   ButtonElement _completeBtn;
   int _boatLeft;
   int _boatTop;
@@ -35,22 +42,26 @@ class LevelMap {
   
   List<LIElement> get _children => querySelectorAll('.your-code .list-group .b-action');  
   
-  LevelMap(this._actorInfo, this.map, this.isMap2) {
+  LevelMap(this.id, this._actorInfo, this.map, this.isMap2) {
     mainActor = querySelector('.stupid-bird');
     mainActorImgs = querySelectorAll('.game-blocks .stupid-bird img');
+    
     _boat = querySelector('.boat');
     _flower = querySelector('.flower');
     _message = querySelector('.message');
     _completeBtn = querySelector('.complete-btn');
     _isOnBoat = false;
     
+    _cmplText = querySelector('.cmpl-text');
+    _cmplImg = querySelector('.cmpl-img');
+    _cmplAudio = querySelector('.cmpl-audio');
+    _cmplVideo = querySelector('.cmpl-video');
+    _downloadBtn = querySelector('.download a');
+    
     _createBlocks();
     _genImgs();
 
     resetPos();
-
-    //TODO: remove it
-    _completeBtn.click();
   }
   
   void resetPos() {
@@ -393,6 +404,35 @@ class LevelMap {
     _setIdStatus().then((_) {
       _getMessage().then((response) {
         print('content: ${response['content']}');
+        
+        if (response['isFile']) {
+          List<String> fileType = response['content'].split('.');
+          String type = fileType[fileType.length - 1].toLowerCase();
+          
+          print(type);
+          
+          if (type == 'jpg' || type == 'jpeg' || type == 'png') {
+            _cmplImg.classes.remove('disappear');
+            ImageElement srcElem = _cmplImg.querySelector('img');
+            srcElem.src = response['content'];
+            _downloadBtn.href = response['content'];
+          } else if (type == 'mp3') {
+            _cmplAudio.classes.remove('disappear');
+            SourceElement srcElem = _cmplAudio.querySelector('source');
+            srcElem.src = response['content'];
+            _downloadBtn.href = response['content'];
+          } else if (type == 'mp4') {
+            _cmplVideo.classes.remove('disappear');
+            SourceElement srcElem = _cmplVideo.querySelector('source');
+            srcElem.src = response['content'];
+            _downloadBtn.href = response['content'];
+          } else {
+            _cmplText.text = 'Unable to display file content. Please download it directly.';
+          } 
+        } else {
+          _cmplText.classes.remove('disappear');
+          _cmplText.text = response['content'];
+        }
       });
     })
     .catchError((ex) {print('error: $ex');});
@@ -401,9 +441,10 @@ class LevelMap {
   Future _setIdStatus() {
     final Completer cmpl = new Completer();
     
-    var ok = (response) => cmpl.complete(response);
+    var ok = () => cmpl.complete();
     var fail = (error) => cmpl.completeError(error);
     
+    print(id);
     js.context.callMethod('setStatus', [id, true, ok, fail]);
     
     return cmpl.future;

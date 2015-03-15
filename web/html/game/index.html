@@ -11,6 +11,8 @@
     <link href='http://fonts.googleapis.com/css?family=Coming+Soon' rel='stylesheet' type='text/css'>
     <script src="../../js/jquery-1.11.2.min.js"></script>
     <script src="../../js/bootstrap/bootstrap.js"></script>
+    <script src="../../js/parse/parse-1.3.4.min.js"></script>
+    <script src="../../js/parse/parse_client.js"></script>
     <title>Stupid Bird Express</title>
     <link rel="shortcut icon" href="../../source/logo2.png"/>
   </head>
@@ -41,7 +43,7 @@
                       <i class="fa fa-times del-icon hidden"></i>
                     </li>
                     <li class="list-group-item b-action b-turn">
-                      <span class="move-tag"><i class="fa fa-bars"></i></span>stubirBird.turn
+                      <span class="move-tag"><i class="fa fa-bars"></i></span>stupidBird.turn
                       <select class="form-control parameter-input select-input">
                         <option>45&#176</option>
                         <option>90&#176</option>
@@ -54,16 +56,16 @@
                       <i class="fa fa-times del-icon hidden"></i>
                     </li>
                     <li class="list-group-item b-action b-fly">
-                      <span class="move-tag"><i class="fa fa-bars"></i></span>stubirBird.fly
+                      <span class="move-tag"><i class="fa fa-bars"></i></span>stupidBird.fly
                       <i class="fa fa-times del-icon hidden"></i>
                     </li>
                     <li class="list-group-item b-action b-paddle">
-                      <span class="move-tag"><i class="fa fa-bars"></i></span>stubirBird.paddle
+                      <span class="move-tag"><i class="fa fa-bars"></i></span>stupidBird.paddle
                       <input type="text" name="stepnum" class="parameter-input text-input">
                       <i class="fa fa-times del-icon hidden"></i>
                     </li>
                     <li class="list-group-item b-action b-hatch">
-                      <span class="move-tag"><i class="fa fa-bars"></i></span>stubirBird.hatch
+                      <span class="move-tag"><i class="fa fa-bars"></i></span>stupidBird.hatch
                       <i class="fa fa-times del-icon hidden"></i>
                     </li>
                   </fieldest>
@@ -120,13 +122,24 @@
             <h1 class="modal-title" id="myModalLabel">Complete!</h1>
           </div>
           <div class="modal-body">
-            <div class="users-msg"></div>
-            <div class="whole-btn">
+            <div class="users-msg">
+              <p class="cmpl-text disappear"></p>
+              <div class="cmpl-img disappear">
+                <img src="">
+              </div>
+              <audio controls class="cmpl-audio disappear">
+                <source src="" type="audio/mpeg"></source>
+              </audio>
+              <video controls class="cmpl-video disappear">
+                <source src="" type="video/mp4"></source>
+              </video>
+            </div>
+            <div class="whole-btn download">
               <a download><div class="completepage-btn"><i class="fa fa-download"></i></div></a>
               <div class="btn-info">download</div>
             </div>
             <div class="whole-btn">
-              <div class="completepage-btn"><i class="fa fa-reply"></i></div>
+              <a href=""><div class="completepage-btn"><i class="fa fa-reply"></i></div></a>
               <div class="btn-info">reply</div>
             </div>
             <div class="whole-btn">
