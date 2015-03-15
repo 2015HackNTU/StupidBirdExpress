@@ -22,7 +22,7 @@ void main() {
   id = getPlayerId(window.location);
   
   if (id == null)
-    window.location.href = 'error/';
+    window.location.href = 'error.html';
   
   checkID().then((bool isDoneID) {
     if (!isDoneID)
