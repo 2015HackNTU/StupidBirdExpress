@@ -36,7 +36,7 @@ void main() {
       case 'file':
         break;
     }
-    try {
+    try { 
       
     } catch(e) {
       
