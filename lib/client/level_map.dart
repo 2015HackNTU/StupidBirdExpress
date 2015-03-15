@@ -18,9 +18,13 @@ class LevelMap {
   bool isMap2;
 
   DivElement _boat;
+  DivElement _flower;
+  DivElement _message;
+  ButtonElement _completeBtn;
   int _boatLeft;
   int _boatTop;
   bool _isOnBoat;
+  bool _isComplete;
   
   List _actorInfo;
   //int _lastImg;
@@ -32,6 +36,10 @@ class LevelMap {
     mainActor = querySelector('.stupid-bird');
     mainActorImgs = querySelectorAll('.game-blocks .stupid-bird img');
     _boat = querySelector('.boat');
+    _flower = querySelector('.flower');
+    _message = querySelector('.message');
+    _completeBtn = querySelector('.complete-btn');
+    _isOnBoat = false;
     
     _createBlocks();
     _genImgs();
@@ -48,6 +56,8 @@ class LevelMap {
     _showImg(IMG_ORIGIN);
     
     mainActorImgs[IMG_ORIGIN].classes.remove('disappear');
+    _flower.querySelector('img').classes.add('disappear');
+    _message.classes.add('disappear');
     
     mainActor.style..left = '${mainActorLeft * STEP_UNIT}px'
                    ..top = '${mainActorTop * STEP_UNIT}px'
@@ -57,10 +67,12 @@ class LevelMap {
       _boatLeft = BoatPos[0];
       _boatTop = BoatPos[1];
       _isOnBoat = false;
+      _isComplete = false;
       
       _boat.querySelector('img').classes.remove('disappear');
       _boat.style..left = '${_boatLeft * STEP_UNIT}px'
-                 ..top = '${_boatTop * STEP_UNIT}px';
+                 ..top = '${_boatTop * STEP_UNIT}px'
+                 ..transform = 'rotate(0deg)';
     }   
   }
   
@@ -83,20 +95,14 @@ class LevelMap {
           _addRunningStatus(_children[highlight[posState]]);
         }
         
-        //setPos        
+        //checkPos        
         response = _isValidMove(pos[posState][0], pos[posState][1], pos[posState][2]);
-        //isValid = response[0];
-        print(response);
-        
-//        if (!isValid) {
-//          //TODO:STOP
-//          timer.cancel();
-//        }    
+        isValid = response[0];
+        //print(response);   
       }
       
       if (isValid) {
-
-        _setPos(pos[posState][0], pos[posState][1], imgState);
+        _setPos(pos[posState][0], pos[posState][1], imgState, _isOnBoat && imgs[posState][ACTION_TYPE] == ACTION_PADDLE);
         
         switch (imgs[posState][ACTION_TYPE]) {
           case ACTION_TURN:
@@ -106,9 +112,13 @@ class LevelMap {
             if (imgState == 0) {
               degree += imgs[posState][1] * 12;
               mainActor.style.transform = 'rotate(${degree}deg)';
+              if (_isOnBoat)
+                _boat.style.transform = 'rotate(${degree - 270}deg)';
             } else {
               degree += imgs[posState][1] * 11;
               mainActor.style.transform = 'rotate(${degree}deg)';
+              if (_isOnBoat)
+                _boat.style.transform = 'rotate(${degree - 270}deg)';
             }
             break;
             
@@ -156,21 +166,53 @@ class LevelMap {
           case ACTION_HATCH:
             _hideImgs();
             _showImg(IMG_ORIGIN);
+            _isComplete = true;
             break;
         }
-        
-        if (state == imgs.length * TIME_UNIT_PER_POS - 1) {
-          _removeRunningStatus(_children[highlight[posState]]);
-          timer.cancel();
+      } else {        
+        switch (response[1]) {
+          case ERROR_OUT_OF_BORDER:
+          case ERROR_HIT_WALL:
+          case ERROR_NOT_FLY:
+            _hideImgs();
+            _showImg(IMG_ORIGIN);
+            break;
+            
+          case ERROR_DRAWN:
+            _setPos(pos[posState][0], pos[posState][1], 3, false);
+            _hideImgs();
+
+            _flower.querySelector('img').classes.remove('disappear');
+            _flower.style..left = '${mainActorLeft * STEP_UNIT}px'
+                         ..top = '${mainActorTop * STEP_UNIT}px';
+            break;
+            
+          case ERROR_NO_EGG:
+            _hideImgs();
+            _showImg(IMG_ORIGIN);
+            break;
         }
+        _message.text = response[2];
+        _message.style..left = '${mainActorLeft * STEP_UNIT}px'
+                      ..top = '${mainActorTop * STEP_UNIT + STEP_UNIT}px';
         
-        state++;
+        _removeRunningStatus(_children[highlight[posState]]);
+        timer.cancel();
       }
+      
+      if (state == imgs.length * TIME_UNIT_PER_POS - 1) {
+        _removeRunningStatus(_children[highlight[posState]]);
+        timer.cancel();
+        if (_isComplete)
+          _completeBtn.click();
+      }
+      state++;
+      _isComplete = false;
     }); 
   }
   
   void _addRunningStatus(Element elem) {
-    elem.style.backgroundColor = 'gray';
+    elem.style.backgroundColor = '#ddd';
   }
 
   void _removeRunningStatus(Element elem) {
@@ -188,6 +230,8 @@ class LevelMap {
         mapBlock[i][j]
           ..style.left = '${j * STEP_UNIT}px'
           ..style.top = '${i * STEP_UNIT}px'
+//          ..style.boxSizing = 'border-box'
+//          ..style.border = '1px solid black'
           ..classes.add('block');
                
        gameBlocks.children.insert(0, mapBlock[i][j]);
@@ -222,22 +266,38 @@ class LevelMap {
     }
   }
   
-  void _setPos(int hor, int ver, int state) {
+  void _setPos(int hor, int ver, int state, bool moveBoat) {
     if (state == 0) {
       mainActor.style..left = '${mainActorLeft * STEP_UNIT + hor * 11}px'
                      ..top = '${mainActorTop * STEP_UNIT + ver * 11}px';
+      if (moveBoat) {
+        _boat.style..left = '${mainActorLeft * STEP_UNIT + hor * 11}px'
+                   ..top = '${mainActorTop * STEP_UNIT + ver * 11}px';
+      }
     } else if (state == 1) {
       mainActor.style..left = '${mainActorLeft * STEP_UNIT + hor * 22}px'
                      ..top = '${mainActorTop * STEP_UNIT + ver * 22}px';
+      if (moveBoat) {
+        _boat.style..left = '${mainActorLeft * STEP_UNIT + hor * 22}px'
+                   ..top = '${mainActorTop * STEP_UNIT + ver * 22}px';
+      }
     } else if (state == 2) {
       mainActor.style..left = '${mainActorLeft * STEP_UNIT + hor * 33}px'
                      ..top = '${mainActorTop * STEP_UNIT + ver * 33}px';
+      if (moveBoat) {
+        _boat.style..left = '${mainActorLeft * STEP_UNIT + hor * 33}px'
+                   ..top = '${mainActorTop * STEP_UNIT + ver * 33}px';
+      }
     } else {
       mainActorLeft += hor;
       mainActorTop += ver;
       
       mainActor.style..left = '${mainActorLeft * STEP_UNIT}px'
                      ..top = '${mainActorTop * STEP_UNIT}px';
+      if (moveBoat) {
+        _boat.style..left = '${mainActorLeft * STEP_UNIT}px'
+                   ..top = '${mainActorTop * STEP_UNIT}px';
+      }
     }
     
   }
@@ -271,18 +331,16 @@ class LevelMap {
               return [true];
             }
           }
-          return [false, ERROR_DRAWN, "Help me brabrabra......!"];
-        } else if (map[y][x] == MAP_EGG || map[y][x] == MAP_FLIPPED_ARBOR_3)
-          return [false, ERROR_BREAK_EGG, "Oops my egg!!!"];
-        else if (map[y][x] == MAP_FLIPPED_BUSH || map[y][x] == MAP_FLIPPED_STRAW)
-          return [false, ERROR_NOT_FLY, "I should fly through it!!!"];
+          return [false, ERROR_DRAWN, "Help me plz! brabrabra......"];
+        } else if (map[y][x] == MAP_FLIPPED_BUSH || map[y][x] == MAP_FLIPPED_STRAW)
+          return [false, ERROR_NOT_FLY, "I should fly through it!"];
         else if (map[y][x] == MAP_UNFLIPPED_ARBOR_1 ||
                  map[y][x] == MAP_UNFLIPPED_ARBOR_2 ||
                  map[y][x] == MAP_UNFLIPPED_ARBOR_4 ||
                  map[y][x] == MAP_UNFLIPPED_TREE ||
                  map[y][x] == MAP_BACKGROUND_TREE ||
                  map[y][x] == MAP_UNFLIPPED_WALL)
-          return [false, ERROR_HIT_WALL, "I hurt my face Q_q(#"];
+          return [false, ERROR_HIT_WALL, "I hurt my face woowoo Q_q(#"];
         return [true];
         
       case ACTION_FLY:
@@ -292,7 +350,7 @@ class LevelMap {
             map[y][x] == MAP_UNFLIPPED_TREE ||
             map[y][x] == MAP_BACKGROUND_TREE ||
             map[y][x] == MAP_UNFLIPPED_WALL)
-          return [false, ERROR_HIT_WALL, "I hurt my face Q_q(#"];
+          return [false, ERROR_HIT_WALL, "I hurt my face woowoo Q_q(#"];
         return [true];
         
       case ACTION_PADDLE:
@@ -301,20 +359,18 @@ class LevelMap {
             return [true];
         }
         if (map[y][x] == MAP_GROUND)
-          return [false, ERROR_DRAWN, "My wings get dirty QAQ"];
+          return [false, ERROR_DRAWN, "My wings are getting dirty QAQ"];
         else if (map[y][x] == MAP_RIVER)
-          return [false, ERROR_DRAWN, "Help me brabrabra......!"];
-        else if (map[y][x] == MAP_EGG || map[y][x] == MAP_FLIPPED_ARBOR_3)
-          return [false, ERROR_BREAK_EGG, "Oops my egg!!!"];
+          return [false, ERROR_DRAWN, "Help me plz! brabrabra......"];
         else if (map[y][x] == MAP_FLIPPED_BUSH || map[y][x] == MAP_FLIPPED_STRAW)
           return [false, ERROR_NOT_FLY, "I should fly through it!!!"];
         else
-          return [false, ERROR_HIT_WALL, "I hurt my face Q_q(#"];
+          return [false, ERROR_HIT_WALL, "I hurt my face woowoo Q_q(#"];
         return [false];
         
       case ACTION_HATCH:
         if (map[y][x] != MAP_EGG && map[y][x] != MAP_FLIPPED_ARBOR_3)
-          return [false, ERROR_NO_EGG, "Oops my bun bun!"];
+          return [false, ERROR_NO_EGG, "My bun bun touches the ground!"];
         return [true];
         
       default:
