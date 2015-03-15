@@ -50,7 +50,7 @@ class LevelMap {
     resetPos();
 
     //TODO: remove it
-    _completeBtn.click();
+//    _completeBtn.click();
   }
   
   void resetPos() {
@@ -239,9 +239,14 @@ class LevelMap {
         mapBlock[i][j]
           ..style.left = '${j * STEP_UNIT}px'
           ..style.top = '${i * STEP_UNIT}px'
-//          ..style.boxSizing = 'border-box'
-//          ..style.border = '1px solid black'
+          ..style.boxSizing = 'border-box'
+          ..style.borderTop = '1px solid #c0c0c0'
+          ..style.borderLeft = '1px solid #c0c0c0'
           ..classes.add('block');
+      if (i == MAP_HEIGHT || j == MAP_WIDTH) {
+        mapBlock[i][j].style..borderTop = '1px solid #c0c0c0'
+                            ..borderLeft = '1px solid #c0c0c0';
+      }
                
        gameBlocks.children.insert(0, mapBlock[i][j]);
       }

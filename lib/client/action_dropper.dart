@@ -10,8 +10,6 @@ class ActionDropper {
   UListElement parent;
   List<LIElement> actionDraggers;
   
-  int _actionsCount;
-  int _lastPos;
   bool _isOnDrag;
   LIElement _dragged;
   LIElement _inserted;
@@ -30,6 +28,8 @@ class ActionDropper {
   int get _ParentBottom => _ParentTop + 580;
     
   List<LIElement> get _children => parent.querySelectorAll('.b-action');
+  
+  int get _actionsCount => _children == null ? 0 : _children.length;
   
   ActionDropper.start() {
     _initValues();
@@ -67,7 +67,6 @@ class ActionDropper {
   void _initValues() {
     parent = querySelector('.your-code .list-group');
     actionDraggers = querySelectorAll('.code-sample .b-action');
-    _actionsCount = 0;
     allowDragging = true;
     _isOnDrag = false;
     infoIsClicked = false;
@@ -163,10 +162,12 @@ class ActionDropper {
   }
   
   LIElement _appendAction(int pos, LIElement elem) {
+    //TODO
+    print('insert ${elem.text}');
+    
     LIElement newElement = elem.clone(true);
     parent.children.insert(pos, newElement);
     _startDeleteActionListener(newElement);
-    _actionsCount++;
     return newElement;
   }
   
@@ -176,7 +177,6 @@ class ActionDropper {
     listener = newElement.querySelector('.del-icon').onClick.listen((_) {
       newElement.remove();
       listener.cancel();
-      _actionsCount--;
     });
   }
 

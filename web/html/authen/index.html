@@ -10,8 +10,8 @@
     <link href='http://fonts.googleapis.com/css?family=Coming+Soon' rel='stylesheet' type='text/css'>
     <script src="../../js/jquery-1.11.2.min.js"></script>
     <script src="../../js/bootstrap/bootstrap.js"></script>
-    <script src="parse-1.3.4.min.js"></script>
-    <script src="parse_client.js"></script>
+    <script src="../../js/parse/parse-1.3.4.min.js"></script>
+    <script src="../../js/parse/parse_client.js"></script>
     <title>Stupid Bird Express</title>
     <link rel="shortcut icon" href="../../source/logo2.png"/>
   </head>
@@ -46,20 +46,20 @@
             </div>
             <br/>
             <div class="form-group">
-              <label for="receiverEmail">你的信箱/Your Email Address</label>
+              <label for="userEmail">你的信箱/Your Email Address</label>
               <p>不會讓對方知道。我們會幫忙回信。</p>
-              <p>Receiver will not know your email address, but they can still reply.</p>
-              <input type="text" class="form-control" id="receiverEmail" placeholder="Enter Receiver's Email Address">
+              <p>Receiver is not allowed to know your email address, but they can still reply.</p>
+              <input type="text" class="form-control" id="userEmail" placeholder="Enter Receiver's Email Address">
             </div>
             <br/>
 
             <div class="form-group">
-              <label for="userName">訊息/Message</label>
+              <label for="userMsg">訊息/Message</label>
               <p>你可以傳送一段文字訊息或是一個檔案。</p>
               <p>You can send a text message or a file.</p>
               <div role="tabpanel">
                 <!-- Nav tabs -->
-                <ul class="nav nav-tabs msg-tabs" role="tablist">
+                <ul class="nav nav-tabs ." role="tablist">
                   <li role="presentation" class="active"><a href="#textMessage" aria-controls="home" role="tab" data-toggle="tab">Text Message</a></li>
                   <li role="presentation"><a href="#fileUpload" aria-controls="profile" role="tab" data-toggle="tab">File</a></li>
                 </ul>
@@ -76,7 +76,7 @@
               </div>
             </div>
             <br/>
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="button" class="btn btn-default submit-btn">Submit</button>
           </form>
         </div>
       </div>
@@ -84,8 +84,17 @@
     <footer>copyright &copy 2015HackNTU</footer>
 
 
-    <!-- <script type="application/dart" src="../../dart/authen.dart"></script> -->
+    <script type="application/dart" src="../../dart/authen.dart"></script>
     <!-- for this next line to work, your pubspec.yaml file must have a dependency on 'browser' -->
-    <!-- <script src="packages/browser/dart.js"></script> -->
+    <script src="packages/browser/dart.js"></script>
+    <!-- GA -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-42814280-2', 'auto');
+      ga('send', 'pageview');
+    </script>
   </body>
 </html>
