@@ -1,14 +1,17 @@
 library client.authen;
 
 import 'dart:html';
-import 'dart:convert';
+import 'package:StupidBirdExpress/client/parse.dart';
 
 void main() {
   String sequence;
   InputElement receiverNameInput = querySelector('#receiverName');
-  InputElement receiverEmailInput = querySelector('#receiverName');
-  //is reply
+  InputElement receiverEmailInput = querySelector('#receiverEmail');
+  ButtonElement submitButton = querySelector('.submit-btn');
+  //  is reply
   if (!window.location.search.isEmpty) {
+    //protect form
+    submitButton.disabled = true;
     //get sequence
     String search = window.location.search.substring(1);
     int position = search.indexOf('=');
@@ -16,40 +19,53 @@ void main() {
       sequence = search.substring(position);
     }
     //set receiverName, receiverEmail(not alloewd to chage)
-    receiverNameInput.value = "";
-    
+    downloadMsg(sequence).then((Message msg) {
+      receiverNameInput.value = msg.sendname;
+      querySelector('#receiverEmailInfo').text = '寄件者是不公開的喔！已經幫你填好收件者郵件地址了。';
+      querySelector('#receiverEmailInfoEn').text = "The sender's email is private, and we have already filled in  his/her email address.";
+      receiverEmailInput.type = "hidden";
+      receiverEmailInput.value = msg.sendemail;
+    }).catchError((e){
+      querySelector("#reply-error-alter").classes.remove('disappear');
+    }).whenComplete(() {
+      submitButton.disabled = false;
+    });
   }
   
-  ButtonElement btn = querySelector('.submit-btn');
-  btn.onClick.listen((_) {
+  querySelector('#form-alert-close').onClick.listen((_) {
+    querySelector('#form-error-alert').classes.add('disappear');
+  });
+  
+  submitButton.onClick.listen((_) {
     String receiverName = receiverNameInput.value;
-    String receiverEmail = (querySelector('#receiverEmail') as InputElement).value;
-    String userName = receiverEmailInput.value;
+    String receiverEmail = receiverEmailInput.value;
+    String userName = (querySelector('#userEmail') as InputElement).value;
     String userEmail = (querySelector('#userEmail') as InputElement).value;
     //determine massage type
-    InputElement massageInput= querySelector('.tab-content .active input');
-    String massage;
+    InputElement messageInput= querySelector('.tab-content .active input');
+    String message;
     String filename;
-    File massageFile;
+    File messageFile;
     bool isFile = false;
-    switch(massageInput.type) {
+    switch(messageInput.type) {
       case 'text':
-        massage = massageInput.value;
+        message = messageInput.value;
         break;
       case 'file':
         isFile = true;
-        if(massageInput.files.length > 0) {
-          massageFile = massageInput.files[0];
-          filename = UTF8.encode(massageFile.name).toString();
+        if(messageInput.files.length > 0) {
+          messageFile = messageInput.files[0];
+          filename = Uri.decodeComponent(messageFile.name);
           print(filename);
         }
         break;
     }
-    try { 
-      
-    } catch(e) {
-      
-    }
-
+    uploadMsg(userName, userEmail, receiverName, receiverEmail, isFile, message, messageFile, filename)
+    .then((_) {
+      window.location.href = '../authen_done';
+    })
+    .catchError((_) {
+      querySelector('#form-error-alert').classes.remove('disappear');
+    });
   });
 }

@@ -15,11 +15,15 @@ import "dart:js" as js;
  * @param  {func}    onFailure function(string errmsg)
  * @return {void}
  */
-Future uploadMsg(String sendname, String sendemail, String recvname, String recvemail, bool isFile, File content, String filename) {
+Future uploadMsg(String sendname, String sendemail, String recvname, String recvemail, bool isFile, String textMessage, File file, String filename) {
   Completer cmpl = new Completer();
   var ok = (response) => cmpl.complete(response);
   var fail = (error) => cmpl.completeError(error);
-  
+  var content;
+  if (isFile)
+    content = file;
+  else
+    content = textMessage;
   js.context.callMethod('uploadMsg', [sendname, sendemail, recvname, recvemail, isFile, content, filename, ok, fail]);
   return cmpl.future;
 }
@@ -69,7 +73,7 @@ Future setStatus(String msgId, bool isDone) {
  */
 Future downloadMsg(msgId) {
   Completer cmpl = new Completer();
-  var ok = (response) => cmpl.complete(new Massage(response['isFile'], response['content'],
+  var ok = (response) => cmpl.complete(new Message(response['isFile'], response['content'],
       response['sendname'], response['sendemail'], response['recvname'], response['recvemail']));
   var fail = (error) => cmpl.completeError(error);
   
@@ -77,7 +81,7 @@ Future downloadMsg(msgId) {
   return cmpl.future;
 }
 
-class Massage {
+class Message {
    bool isFile;
    File content;
    String sendname;
@@ -85,5 +89,5 @@ class Massage {
    String recvname;
    String recvemail;
    
-   Massage(this.isFile, this.content, this.sendname, this.sendemail, this.recvname, this.recvemail);
+   Message(this.isFile, this.content, this.sendname, this.sendemail, this.recvname, this.recvemail);
 }

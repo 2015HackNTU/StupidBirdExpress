@@ -23,6 +23,15 @@
     <div class = "inner-page padd">
       <div class = "about-vedio padd">
         <div class = "container-fluid" style="width:60%">
+          <div class="alert alert-danger alert-dismissible disappear" id="reply-error-alter" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Sorry!</strong> Somethind went wrong. You can not reply the mail.
+          </div>
+          <div class="alert alert-danger alert-dismissible disappear" id="form-error-alert" role="alert">
+              <button type="button" class="close" id="form-alert-close">
+                <span aria-hidden="true">&times;</span></button>
+                <strong>Warning!</strong> You have to fill up all blocks.
+              </div>
           <form>
             <div class="form-group">
               <label for="about-us">關於我們/About HackNTU</label>
@@ -37,6 +46,8 @@
             <br/>
             <div class="form-group">
               <label for="receiverEmail">收件人信箱/Receiver's Email Address</label>
+              <p id="receiverEmailInfo"></p>
+              <p id="receiverEmailInfoEn"></p>
               <input type="text" class="form-control" id="receiverEmail" placeholder="Enter Receiver's Email Address" min="1">
             </div>
             <br/>
