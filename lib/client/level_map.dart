@@ -388,9 +388,23 @@ class LevelMap {
   }
   
   void _renderCompletePage() {
-    _getMessage()
-    .then((response) {})
-    .catchError((ex) {});
+    _setIdStatus().then((_) {
+      _getMessage().then((response) {
+        print('content: ${response['content']}');
+      });
+    })
+    .catchError((ex) {print('error: $ex');});
+  }
+  
+  Future _setIdStatus() {
+    final Completer cmpl = new Completer();
+    
+    var ok = (response) => cmpl.complete(response);
+    var fail = (error) => cmpl.completeError(error);
+    
+    js.context.callMethod('setStatus', [id, true, ok, fail]);
+    
+    return cmpl.future;
   }
   
   Future _getMessage() {
