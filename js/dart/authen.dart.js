@@ -3236,7 +3236,7 @@ var $$ = Object.create(null);
     }, "call$1", null, 2, 0, null, 16, "call"]
   },
   Message: {
-    "^": "Object;isFile,content,sendname<,sendemail<,recvname,recvemail"
+    "^": "Object;isFile,content,sendname<,sendemail<,recvname<,recvemail<"
   }
 }],
 ["client.authen", "authen.dart", , A, {
@@ -3252,7 +3252,7 @@ var $$ = Object.create(null);
       J.set$disabled$x(submitButton, true);
       search = J.substring$1$s(window.location.search, 1);
       position = C.JSString_methods.indexOf$1(search, "=");
-      Q.downloadMsg(C.JSString_methods.substring$2(search, 0, position) === "id" ? C.JSString_methods.substring$1(search, position + 1) : null).then$1(new A.main_closure(receiverNameInput, receiverEmailInput)).catchError$1(new A.main_closure0()).whenComplete$1(new A.main_closure1(submitButton));
+      Q.downloadMsg(C.JSString_methods.substring$2(search, 0, position) === "id" ? C.JSString_methods.substring$1(search, position + 1) : null).then$1(new A.main_closure(receiverNameInput, receiverEmailInput, senderNameInput, senderEmailInput)).catchError$1(new A.main_closure0()).whenComplete$1(new A.main_closure1(submitButton));
     }
     t1 = J.get$onClick$x(document.querySelector("#form-alert-close"));
     H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new A.main_closure2()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
@@ -3260,7 +3260,7 @@ var $$ = Object.create(null);
     H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new A.main_closure3(receiverNameInput, receiverEmailInput, senderNameInput, senderEmailInput)), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
   }, "call$0", "main$closure", 0, 0, 10],
   main_closure: {
-    "^": "Closure:38;receiverNameInput_0,receiverEmailInput_1",
+    "^": "Closure:38;receiverNameInput_0,receiverEmailInput_1,senderNameInput_2,senderEmailInput_3",
     call$1: [function(msg) {
       var t1, t2;
       J.set$value$x(this.receiverNameInput_0, msg.get$sendname());
@@ -3270,6 +3270,8 @@ var $$ = Object.create(null);
       t2 = J.getInterceptor$x(t1);
       t2.set$type(t1, "hidden");
       t2.set$value(t1, msg.get$sendemail());
+      J.set$value$x(this.senderNameInput_2, msg.get$recvname());
+      J.set$value$x(this.senderEmailInput_3, msg.get$recvemail());
     }, "call$1", null, 2, 0, null, 37, "call"]
   },
   main_closure0: {
@@ -3279,9 +3281,9 @@ var $$ = Object.create(null);
     }, "call$1", null, 2, 0, null, 2, "call"]
   },
   main_closure1: {
-    "^": "Closure:31;submitButton_2",
+    "^": "Closure:31;submitButton_4",
     call$0: function() {
-      J.set$disabled$x(this.submitButton_2, false);
+      J.set$disabled$x(this.submitButton_4, false);
     }
   },
   main_closure2: {
@@ -3291,13 +3293,13 @@ var $$ = Object.create(null);
     }, "call$1", null, 2, 0, null, 39, "call"]
   },
   main_closure3: {
-    "^": "Closure:28;receiverNameInput_3,receiverEmailInput_4,senderNameInput_5,senderEmailInput_6",
+    "^": "Closure:28;receiverNameInput_5,receiverEmailInput_6,senderNameInput_7,senderEmailInput_8",
     call$1: [function(_) {
       var receiverName, receiverEmail, userName, userEmail, t1, messageInput, message, filename, messageFile, isFile, pos;
-      receiverName = J.get$value$x(this.receiverNameInput_3);
-      receiverEmail = J.get$value$x(this.receiverEmailInput_4);
-      userName = J.get$value$x(this.senderNameInput_5);
-      userEmail = J.get$value$x(this.senderEmailInput_6);
+      receiverName = J.get$value$x(this.receiverNameInput_5);
+      receiverEmail = J.get$value$x(this.receiverEmailInput_6);
+      userName = J.get$value$x(this.senderNameInput_7);
+      userEmail = J.get$value$x(this.senderEmailInput_8);
       if (J.get$isEmpty$asx(receiverName) || J.get$isEmpty$asx(receiverEmail) || J.get$isEmpty$asx(userName) || J.get$isEmpty$asx(userEmail)) {
         J.get$classes$x(document.querySelector("#form-error-alert")).remove$1(0, "disappear");
         t1 = H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null]);
