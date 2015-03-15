@@ -83,18 +83,11 @@ Future downloadMsg(msgId) {
 
 class Message {
    bool isFile;
-   File file;
-   String textMessage;
+   String content;
    String sendname;
    String sendemail;
    String recvname;
    String recvemail;
-   var content;
    
-   Message(this.isFile, this.content, this.sendname, this.sendemail, this.recvname, this.recvemail) {
-     if (isFile)
-       file = content;
-     else 
-       textMessage = content;
-   }
+   Message(this.isFile, this.content, this.sendname, this.sendemail, this.recvname, this.recvemail);
 }

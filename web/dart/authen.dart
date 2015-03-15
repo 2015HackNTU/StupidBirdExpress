@@ -55,7 +55,8 @@ void main() {
         isFile = true;
         if(messageInput.files.length > 0) {
           messageFile = messageInput.files[0];
-          filename = Uri.encodeFull(messageFile.name);
+          int pos = messageFile.name.indexOf('.');
+          filename = 'HackMessage' + messageFile.name.substring(pos);
           print(filename);
         }
         break;
