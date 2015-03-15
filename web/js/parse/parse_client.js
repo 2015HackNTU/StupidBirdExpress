@@ -40,7 +40,7 @@ function uploadMsg(sendname, sendemail, recvname, recvemail, isFile, content, fi
   var msg = new Message();
   msg.set("sendname", sendname);
   msg.set("sendemail", sendemail);
-  msg.set("recvname", recvemail);
+  msg.set("recvname", recvname);
   msg.set("recvemail", recvemail);
   msg.set("isDone", false);
   msg.set("isFile", isFile);

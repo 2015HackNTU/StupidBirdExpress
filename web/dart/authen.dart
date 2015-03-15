@@ -16,7 +16,7 @@ void main() {
     String search = window.location.search.substring(1);
     int position = search.indexOf('=');
     if (search.substring(0, position) == 'id') {
-      sequence = search.substring(position);
+      sequence = search.substring(position + 1);
     }
     //set receiverName, receiverEmail(not alloewd to chage)
     downloadMsg(sequence).then((Message msg) {
@@ -39,7 +39,7 @@ void main() {
   submitButton.onClick.listen((_) {
     String receiverName = receiverNameInput.value;
     String receiverEmail = receiverEmailInput.value;
-    String userName = (querySelector('#userEmail') as InputElement).value;
+    String userName = (querySelector('#userName') as InputElement).value;
     String userEmail = (querySelector('#userEmail') as InputElement).value;
     //determine massage type
     InputElement messageInput= querySelector('.tab-content .active input');
@@ -55,7 +55,7 @@ void main() {
         isFile = true;
         if(messageInput.files.length > 0) {
           messageFile = messageInput.files[0];
-          filename = Uri.decodeComponent(messageFile.name);
+          filename = Uri.encodeFull(messageFile.name);
           print(filename);
         }
         break;
