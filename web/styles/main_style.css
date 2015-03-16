@@ -47,8 +47,8 @@ body {
 }
 
 .game-rule {
-	border-color: #e0d515;
-	background-color: #fff5a3;
+	border-color: #fff550;
+	background-color: #fff550;
 	color: #7a4f2d;
 }
 
@@ -220,7 +220,7 @@ footer {
 .my-alert {
 	border-color: #fff550;
 	background-color: #fff550;
-	color: #555;
+	color: #7a4f2d;
 }
 
 .my-alert .alert-link{

@@ -26,12 +26,13 @@
       <div class="alert alert-info alert-dismissible my-alert hidden" role="alert">
         <strong>Info! </strong>我們遊戲的靈感來源為<a href="http://www.playcodemonkey.com/" class="alert-link">codemonkey</a>，喜歡我們的遊戲的話也去試試吧！
       </div>
+        <div class="alert alert-info game-rule" role="alert">把左邊框框的指令拖到中間的框框，再改變參數，最後按中間框框右上角的執行按鈕。讓大笨鳥幫你把訊息孵出來吧！
+        Drag the commands into middle blocks, and then revise the parameter. Make the stupid bird hatch your message.
+        </div>
     </div>
     <div class = "inner-page padd game-page">
       <div class = "about-vedio padd">
         <div class = "container-fluid" style="width:90%">
-          <div class="alert alert-info game-rule" role="alert">把左邊框框的指令拖到中間的框框，在改變參數，最後按中間框框右上角的執行按鈕。讓大笨鳥幫你把訊息孵出來吧！
-          </div>
           <div class="row">
             <div class="panel panel-default col-md-2 code-list code-sample">
               <div class="panel-heading">Sample Code</div>
@@ -165,7 +166,7 @@
     <!-- show alert -->
     <script>
       $("#show-alert").click(function() {
-        $(".alert").toggleClass("hidden");
+        $(".my-alert").toggleClass("hidden");
       });
     </script>
     <!-- dart file -->
