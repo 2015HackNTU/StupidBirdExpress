@@ -49,6 +49,11 @@
               <p id="receiverEmailInfo">信箱要填寫完整喔！</p>
               <p id="receiverEmailInfoEn">You should complete all detail of address</p>
               <input type="email" class="form-control" id="receiverEmail" placeholder="Enter Receiver's Email Address" min="1">
+              <div class="alert alert-danger alert-dismissible disappear" id="recv-email-alert" role="alert">
+                <button type="button" class="close" id="recv-email-alert-close">
+                <span aria-hidden="true">&times;</span></button>
+                <strong>Warning!</strong> Email is not valid.
+              </div>
             </div>
             <br/>
             <div class="form-group">
@@ -61,6 +66,11 @@
               <p>信箱要填寫完整喔！對方不會知道你信箱。我們會幫忙回信。</p>
               <p>You should complete all detail of address. Receiver is not allowed to know your email address, but they can still reply.</p>
               <input type="email" class="form-control" id="userEmail" placeholder="Enter Receiver's Email Address" min="1">
+              <div class="alert alert-danger alert-dismissible disappear" id="send-email-alert" role="alert">
+                <button type="button" class="close" id="send-email-alert-close">
+                <span aria-hidden="true">&times;</span></button>
+                <strong>Warning!</strong> Email is not valid.
+              </div>
             </div>
             <br/>
 
