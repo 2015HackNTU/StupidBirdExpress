@@ -56,6 +56,7 @@ void main() {
       querySelector('#form-error-alert').classes.remove('disappear');
       return new Future.value(null);
     }
+<<<<<<< HEAD
     //check email valid
     if (!_EMAIL_FORMAT.hasMatch(receiverEmail)) {
       querySelector('#recv-email-alert').classes.remove('disappear');
@@ -66,6 +67,9 @@ void main() {
       return new Future.value(null);  
     }
       
+=======
+
+>>>>>>> a9ce19a61705a5188613bb9eff8db7afddf34664
     //determine massage type
     InputElement messageInput= querySelector('.tab-content .active input');
     String message;
@@ -74,8 +78,9 @@ void main() {
     bool isFile = false;
     switch(messageInput.type) {
       case 'text':
-        message = messageInput.value;
-        if (message == ""){
+        message = (querySelector('.tab-content .active textarea') as TextAreaElement).value;
+//        print(message);
+        if (message == "") {
           querySelector('#form-error-alert').classes.remove('disappear');
           return new Future.value(null);
         }
@@ -86,7 +91,7 @@ void main() {
           messageFile = messageInput.files[0];
           int pos = messageFile.name.indexOf('.');
           filename = 'HackMessage' + messageFile.name.substring(pos);
-          print(filename);
+//          print(filename);
         } else {
           querySelector('#form-error-alert').classes.remove('disappear');
           return new Future.value(null);
