@@ -29,9 +29,9 @@
           </div>
           <div class="alert alert-danger alert-dismissible disappear" id="form-error-alert" role="alert">
               <button type="button" class="close" id="form-alert-close">
-                <span aria-hidden="true">&times;</span></button>
-                <strong>Warning!</strong> You have to fill up all blocks and the file have to be smaller than 3MB.
-              </div>
+              <span aria-hidden="true">&times;</span></button>
+              <strong>Warning!</strong> You have to fill up all blocks and the file have to be smaller than 3MB.
+          </div>
           <form>
             <div class="form-group">
               <label for="about-us">關於我們/About HackNTU</label>
@@ -49,6 +49,12 @@
               <p id="receiverEmailInfo"></p>
               <p id="receiverEmailInfoEn"></p>
               <input type="email" class="form-control" id="receiverEmail" placeholder="Enter Receiver's Email Address" min="1">
+            
+              <div class="alert alert-danger alert-dismissible disappear" id="recv-email-alert" role="alert">
+                <button type="button" class="close" id="recv-email-alert-close">
+                <span aria-hidden="true">&times;</span></button>
+                <strong>Warning!</strong> Email is not valid.
+              </div>
             </div>
             <br/>
             <div class="form-group">
@@ -61,6 +67,12 @@
               <p>不會讓對方知道。我們會幫忙回信。</p>
               <p>Receiver is not allowed to know your email address, but they can still reply.</p>
               <input type="email" class="form-control" id="userEmail" placeholder="Enter Receiver's Email Address" min="1">
+              
+              <div class="alert alert-danger alert-dismissible disappear" id="send-email-alert" role="alert">
+                <button type="button" class="close" id="send-email-alert-close">
+                <span aria-hidden="true">&times;</span></button>
+                <strong>Warning!</strong> Email is not valid.
+              </div>
             </div>
             <br/>
 

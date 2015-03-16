@@ -36,9 +36,15 @@ void main() {
       submitButton.disabled = false;
     });
   }
-  
+  //close X btn litsener
   querySelector('#form-alert-close').onClick.listen((_) {
     querySelector('#form-error-alert').classes.add('disappear');
+  });
+  querySelector('#send-email-alert-close').onClick.listen((_) {
+    querySelector('#send-email-alert').classes.add('disappear');
+  });
+  querySelector('#recv-email-alert-close').onClick.listen((_) {
+    querySelector('#recv-email-alert').classes.add('disappear');
   });
   
   submitButton.onClick.listen((_) {
@@ -49,6 +55,15 @@ void main() {
     if(receiverName.isEmpty || receiverEmail.isEmpty || userName.isEmpty || userEmail.isEmpty) {
       querySelector('#form-error-alert').classes.remove('disappear');
       return new Future.value(null);
+    }
+    //check email valid
+    if (!_EMAIL_FORMAT.hasMatch(receiverEmail)) {
+      querySelector('#recv-email-alert').classes.remove('disappear');
+      return new Future.value(null);     
+    }
+    if (!_EMAIL_FORMAT.hasMatch(userEmail)) {
+      querySelector('#send-email-alert').classes.remove('disappear');
+      return new Future.value(null);  
     }
       
     //determine massage type
@@ -87,3 +102,5 @@ void main() {
     });
   });
 }
+
+final RegExp _EMAIL_FORMAT = new RegExp(r"^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
