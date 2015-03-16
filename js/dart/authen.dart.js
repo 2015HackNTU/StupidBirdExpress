@@ -2337,6 +2337,20 @@ var $$ = Object.create(null);
     reflectionInfo.fixed$length = Array;
     return H.Closure_fromTearOff(receiver, functions, reflectionInfo, !!isStatic, jsArguments, $name);
   },
+  propertyTypeCastError: function(value, property) {
+    var t1 = J.getInterceptor$asx(property);
+    throw H.wrapException(H.CastErrorImplementation$(H.Primitives_objectTypeName(value), t1.substring$2(property, 3, t1.get$length(property))));
+  },
+  interceptedTypeCast: function(value, property) {
+    var t1;
+    if (value != null)
+      t1 = typeof value === "object" && J.getInterceptor(value)[property];
+    else
+      t1 = true;
+    if (t1)
+      return value;
+    H.propertyTypeCastError(value, property);
+  },
   throwCyclicInit: function(staticName) {
     throw H.wrapException(P.CyclicInitializationError$("Cyclic initialization for static " + H.S(staticName)));
   },
@@ -3062,10 +3076,20 @@ var $$ = Object.create(null);
         }
       }}
   },
+  CastErrorImplementation: {
+    "^": "Error;message",
+    toString$0: function(_) {
+      return this.message;
+    },
+    $isError: true,
+    static: {CastErrorImplementation$: function(actualType, expectedType) {
+        return new H.CastErrorImplementation("CastError: Casting value of type " + H.S(actualType) + " to incompatible type " + H.S(expectedType));
+      }}
+  },
   RuntimeError: {
     "^": "Error;message",
     toString$0: function(_) {
-      return "RuntimeError: " + this.message;
+      return "RuntimeError: " + H.S(this.message);
     },
     static: {RuntimeError$: function(message) {
         return new H.RuntimeError(message);
@@ -3310,7 +3334,7 @@ var $$ = Object.create(null);
       t1 = J.getInterceptor$x(messageInput);
       switch (t1.get$type(messageInput)) {
         case "text":
-          message = t1.get$value(messageInput);
+          message = H.interceptedTypeCast(document.querySelector(".tab-content .active textarea"), "$isTextAreaElement").value;
           if (message === "") {
             J.get$classes$x(document.querySelector("#form-error-alert")).remove$1(0, "disappear");
             t1 = H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null]);
@@ -3329,7 +3353,6 @@ var $$ = Object.create(null);
             messageFile = t1[0];
             pos = J.indexOf$1$asx(messageFile.name, ".");
             filename = "HackMessage" + J.substring$1$s(messageFile.name, pos);
-            P.print(filename);
           } else {
             J.get$classes$x(document.querySelector("#form-error-alert")).remove$1(0, "disappear");
             t1 = H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null]);
@@ -7048,6 +7071,7 @@ var $$ = Object.create(null);
   },
   TextAreaElement: {
     "^": "HtmlElement;disabled},type=,value%",
+    $isTextAreaElement: true,
     "%": "HTMLTextAreaElement"
   },
   Window: {
