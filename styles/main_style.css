@@ -46,6 +46,12 @@ body {
 	border-top-left-radius: 0;
 }
 
+.game-rule {
+	border-color: #fff550;
+	background-color: #fff550;
+	color: #7a4f2d;
+}
+
 .game-page .panel {
 	height: 600px;
 	border: none;
@@ -76,7 +82,6 @@ body {
 .game-page .game-panel .game-canvas {
 	width: 630px;
 	height: 540px;
-	margin: 
 	overflow: hidden;
 }
 
@@ -152,7 +157,7 @@ body {
 }
 .game-page .code-list .list-group .list-group-item {
 	height: 40px;
-	padding: 2px 5px;
+	padding: 0px;
 	font-size: 12px;
 	border: none;
 	border-bottom: 1px dashed #cc0000;
@@ -168,11 +173,14 @@ body {
 	font-size: 16px;
 }
 
-.game-page .code-list .list-group .move-tag {
-	width: 20px;
-	margin-top: 10px;
+.game-page .move-tag {
+	padding: 12px;
+	padding-bottom: 10px;
+	padding-left:8px;
 	display: inline-block;
 	align-items: center;
+	font-family: 'Coming Soon', cursive;
+	cursor: pointer;
 }
 
 .game-page .parameter-input {
@@ -214,7 +222,7 @@ footer {
 .my-alert {
 	border-color: #fff550;
 	background-color: #fff550;
-	color: #555;
+	color: #7a4f2d;
 }
 
 .my-alert .alert-link{
