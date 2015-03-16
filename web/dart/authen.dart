@@ -50,7 +50,7 @@ void main() {
       querySelector('#form-error-alert').classes.remove('disappear');
       return new Future.value(null);
     }
-      
+
     //determine massage type
     InputElement messageInput= querySelector('.tab-content .active input');
     String message;
@@ -59,8 +59,9 @@ void main() {
     bool isFile = false;
     switch(messageInput.type) {
       case 'text':
-        message = messageInput.value;
-        if (message == ""){
+        message = (querySelector('.tab-content .active textarea') as TextAreaElement).value;
+//        print(message);
+        if (message == "") {
           querySelector('#form-error-alert').classes.remove('disappear');
           return new Future.value(null);
         }
@@ -71,7 +72,7 @@ void main() {
           messageFile = messageInput.files[0];
           int pos = messageFile.name.indexOf('.');
           filename = 'HackMessage' + messageFile.name.substring(pos);
-          print(filename);
+//          print(filename);
         } else {
           querySelector('#form-error-alert').classes.remove('disappear');
           return new Future.value(null);
