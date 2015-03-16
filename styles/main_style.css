@@ -46,6 +46,12 @@ body {
 	border-top-left-radius: 0;
 }
 
+.game-rule {
+	border-color: #e0d515;
+	background-color: #fff5a3;
+	color: #7a4f2d;
+}
+
 .game-page .panel {
 	height: 600px;
 	border: none;
