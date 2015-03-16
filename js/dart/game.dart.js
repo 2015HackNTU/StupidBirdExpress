@@ -3525,17 +3525,14 @@ var $$ = Object.create(null);
   ActionDropper__startDragListener_closure: {
     "^": "Closure:29;box_0,this_5,startMouseDownListener_6",
     call$1: [function(evt) {
-      var t1, t2, t3, t4, newElement;
+      var t1, t2, newElement;
       t1 = this.this_5;
       if (t1._isOnDrag === true) {
         J.remove$0$ax(t1._dragged);
         t2 = J.getInterceptor$x(evt);
         if (t1._isInDropbox$2(J.get$x$x(t2.get$page(evt)), J.get$y$x(t2.get$page(evt)))) {
           t2 = t1._getValidPos$1(J.get$y$x(t2.get$page(evt)));
-          t3 = t1._inserted;
-          t4 = J.getInterceptor$x(t3);
-          P.print("insert " + H.S(t4.get$text(t3)));
-          newElement = t4.clone$1(t3, true);
+          newElement = J.clone$1$x(t1._inserted, true);
           J.get$children$x(t1.parent).insert$2(0, t2, newElement);
           t1._startDeleteActionListener$1(newElement);
           this.startMouseDownListener_6.call$2(newElement, false);
@@ -3625,12 +3622,44 @@ var $$ = Object.create(null);
     $.id = t1;
     if (t1 == null)
       window.location.href = "error.html";
-    U.checkID().then$1(new U.main_closure()).catchError$1(new U.main_closure0());
+    else if (t1 === "demo")
+      U.startGame();
+    else
+      U.checkID().then$1(new U.main_closure()).catchError$1(new U.main_closure0());
   }, "call$0", "main$closure", 0, 0, 11],
   checkID: function() {
     var cmpl = H.setRuntimeTypeInfo(new P._AsyncCompleter(H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null])), [null]);
     $.get$context().callMethod$2("isDone", [$.id, new U.checkID_closure(cmpl), new U.checkID_closure0(cmpl)]);
     return cmpl.future;
+  },
+  startGame: function() {
+    var t1, t2, t3, t4, t5, img;
+    t1 = $.get$Maps();
+    t2 = C.C__JSRandom.nextInt$1(3);
+    $.rand = t2;
+    t3 = $.id;
+    t4 = $.get$MainActorPos();
+    if (t2 < 0 || t2 >= 3)
+      return H.ioore(t4, t2);
+    t4 = t4[t2];
+    t1 = t1[t2];
+    t2 = t2 === 1;
+    t5 = new X.LevelMap(t3, null, t1, null, null, null, null, null, null, t2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, t4);
+    t5.LevelMap$4(t3, t4, t1, t2);
+    $.map = t5;
+    $.mGenerator = new U.MotionGenerator(null);
+    img = document.querySelector(".map-image");
+    t5 = $.get$MapBackground();
+    t2 = $.rand;
+    if (t2 >>> 0 !== t2 || t2 >= 3)
+      return H.ioore(t5, t2);
+    J.set$src$x(img, t5[t2]);
+    t2 = new A.ActionDropper(null, null, null, null, null, null, 40, null);
+    t2._initValues$0();
+    t2._startDragListener$0();
+    $.dropper = t2;
+    U.startInfoBtnListener();
+    U.startRunBtnListener($.dropper);
   },
   startInfoBtnListener: function() {
     var t1 = J.get$onClick$x(document.querySelector("#show-alert"));
@@ -3643,35 +3672,9 @@ var $$ = Object.create(null);
   main_closure: {
     "^": "Closure:40;",
     call$1: [function(isDoneID) {
-      var t1, t2, t3, t4, t5, img;
-      if (isDoneID !== true) {
-        t1 = $.get$Maps();
-        t2 = C.C__JSRandom.nextInt$1(3);
-        $.rand = t2;
-        t3 = $.id;
-        t4 = $.get$MainActorPos();
-        if (t2 < 0 || t2 >= 3)
-          return H.ioore(t4, t2);
-        t4 = t4[t2];
-        t1 = t1[t2];
-        t2 = t2 === 1;
-        t5 = new X.LevelMap(t3, null, t1, null, null, null, null, null, null, t2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, t4);
-        t5.LevelMap$4(t3, t4, t1, t2);
-        $.map = t5;
-        $.mGenerator = new U.MotionGenerator(null);
-        img = document.querySelector(".map-image");
-        t5 = $.get$MapBackground();
-        t2 = $.rand;
-        if (t2 >>> 0 !== t2 || t2 >= 3)
-          return H.ioore(t5, t2);
-        J.set$src$x(img, t5[t2]);
-        t2 = new A.ActionDropper(null, null, null, null, null, null, 40, null);
-        t2._initValues$0();
-        t2._startDragListener$0();
-        $.dropper = t2;
-        U.startInfoBtnListener();
-        U.startRunBtnListener($.dropper);
-      } else
+      if (isDoneID !== true)
+        U.startGame();
+      else
         window.location.href = "complete.html";
     }, "call$1", null, 2, 0, null, 39, "call"]
   },
@@ -4143,11 +4146,8 @@ var $$ = Object.create(null);
       this._setIdStatus$0().then$1(new X.LevelMap__renderCompletePage_closure(this)).catchError$1(new X.LevelMap__renderCompletePage_closure0());
     },
     _setIdStatus$0: function() {
-      var cmpl, t1;
-      cmpl = H.setRuntimeTypeInfo(new P._AsyncCompleter(H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null])), [null]);
-      t1 = this.id;
-      P.print(t1);
-      $.get$context().callMethod$2("setStatus", [t1, true, new X.LevelMap__setIdStatus_closure(cmpl), new X.LevelMap__setIdStatus_closure0(cmpl)]);
+      var cmpl = H.setRuntimeTypeInfo(new P._AsyncCompleter(H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null])), [null]);
+      $.get$context().callMethod$2("setStatus", [this.id, true, new X.LevelMap__setIdStatus_closure(cmpl), new X.LevelMap__setIdStatus_closure0(cmpl)]);
       return cmpl.future;
     },
     _getMessage$0: function() {
@@ -4482,7 +4482,11 @@ var $$ = Object.create(null);
         t1.timer_0.cancel$0();
         if (t2._isComplete === true) {
           J.click$0$x(t2._completeBtn);
-          t2._renderCompletePage$0();
+          t3 = t2.id;
+          if (t3 !== "demo") {
+            t2._renderCompletePage$0();
+            document.querySelector(".numbers-insert").textContent = t3;
+          }
         }
       }
       ++t1.state_1;
@@ -4501,7 +4505,6 @@ var $$ = Object.create(null);
     call$1: [function(response) {
       var t1, fileType, t2, t3, type;
       t1 = J.getInterceptor$asx(response);
-      P.print("content: " + H.S(t1.$index(response, "content")));
       if (t1.$index(response, "isFile") === true) {
         fileType = J.split$1$s(t1.$index(response, "content"), ".");
         t2 = fileType.length;
@@ -4509,7 +4512,6 @@ var $$ = Object.create(null);
         if (t3 < 0)
           return H.ioore(fileType, t3);
         type = J.toLowerCase$0$s(fileType[t3]);
-        P.print(type);
         if (type === "jpg" || type === "jpeg" || type === "png") {
           t2 = this.this_1;
           J.get$classes$x(t2._cmplImg).remove$1(0, "disappear");
@@ -4675,9 +4677,7 @@ var $$ = Object.create(null);
             return t3.$add();
           if (typeof t4 !== "number")
             return H.iae(t4);
-          t4 = C.JSNumber_methods.$mod(t3 + t4, 360);
-          t2.degree = t4;
-          P.print("degree: " + H.S(t4));
+          t2.degree = C.JSNumber_methods.$mod(t3 + t4, 360);
           t2 = this.actionsPos_1;
           i = 0;
           while (true) {
@@ -8683,7 +8683,7 @@ var $$ = Object.create(null);
     "%": "DragEvent|MSPointerEvent|MouseEvent|MouseScrollEvent|MouseWheelEvent|PointerEvent|WheelEvent"
   },
   Node: {
-    "^": "EventTarget;text:textContent=",
+    "^": "EventTarget;",
     remove$0: function(receiver) {
       var t1 = receiver.parentNode;
       if (t1 != null)
@@ -8711,7 +8711,7 @@ var $$ = Object.create(null);
       return receiver.replaceChild(newChild, oldChild);
     },
     $isNode: true,
-    "%": "DocumentType|Notation;Node"
+    "%": "Attr|DocumentType|Notation;Node"
   },
   NodeList: {
     "^": "Interceptor_ListMixin_ImmutableListMixin0;",
@@ -8801,13 +8801,6 @@ var $$ = Object.create(null);
     $isWindow: true,
     $isEventTarget: true,
     "%": "DOMWindow|Window"
-  },
-  _Attr: {
-    "^": "Node;",
-    get$text: function(receiver) {
-      return receiver.textContent;
-    },
-    "%": "Attr"
   },
   _ClientRect: {
     "^": "Interceptor;bottom=,height=,left=,right=,top=,width=",
@@ -10419,6 +10412,9 @@ J.addEventListener$3$x = function(receiver, a0, a1, a2) {
 };
 J.click$0$x = function(receiver) {
   return J.getInterceptor$x(receiver).click$0(receiver);
+};
+J.clone$1$x = function(receiver, a0) {
+  return J.getInterceptor$x(receiver).clone$1(receiver, a0);
 };
 J.compareTo$1$ns = function(receiver, a0) {
   return J.getInterceptor$ns(receiver).compareTo$1(receiver, a0);
