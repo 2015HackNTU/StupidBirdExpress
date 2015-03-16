@@ -15,18 +15,17 @@ class ActionDropper {
   LIElement _inserted;
   
   int _ChildHeight = 40;
-  bool infoIsClicked;
   
   int get _windowW => window.innerWidth;
   
   int get _windowH => window.innerHeight;
   
 
-  int get _ParentLeft => (_windowW * 0.05 + _windowW * 0.9 * (1/6 + 0.03)).ceil() - 10;
-  int get _ParentRight => _ParentLeft + ((_windowW * 0.9) / 6 - 8).floor() + 20;
-  int get _ParentTop => (_windowH * 0.03).ceil() + 160 + (infoIsClicked ? 62 : 0);
-  int get _ParentBottom => _ParentTop + 580;
-    
+  int get _ParentLeft => parent == null ? 0 : parent.offsetTo(querySelector('body')).x;
+  int get _ParentRight => _ParentLeft + ((_windowW * 0.9) / 6).floor();
+  int get _ParentTop => parent == null ? 0 : parent.offsetTo(querySelector('body')).y;
+  int get _ParentBottom => _ParentTop + 560;
+
   List<LIElement> get _children => parent.querySelectorAll('.b-action');
   
   int get _actionsCount => _children == null ? 0 : _children.length;
@@ -34,8 +33,6 @@ class ActionDropper {
   ActionDropper.start() {
     _initValues();
     _startDragListener();
-    
-    //test();
   }
   
   List<List<int>> getActionValues() {
@@ -69,7 +66,6 @@ class ActionDropper {
     actionDraggers = querySelectorAll('.code-sample .b-action');
     allowDragging = true;
     _isOnDrag = false;
-    infoIsClicked = false;
     
     DivElement pad = querySelector('.your-code');
   }
@@ -162,8 +158,6 @@ class ActionDropper {
   }
   
   LIElement _appendAction(int pos, LIElement elem) {
-//    print('insert ${elem.text}');
-    
     LIElement newElement = elem.clone(true);
     parent.children.insert(pos, newElement);
     _startDeleteActionListener(newElement);
