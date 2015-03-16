@@ -225,8 +225,10 @@ class LevelMap {
         timer.cancel();
         if (_isComplete) {
           _completeBtn.click();
-          _renderCompletePage();
-          querySelector('.numbers-insert').text = id;
+          if (id != 'demo') {
+            _renderCompletePage();
+            querySelector('.numbers-insert').text = id;
+          }
         }
       }
       state++;

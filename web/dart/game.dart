@@ -23,15 +23,18 @@ void main() {
   
   if (id == null)
     window.location.href = 'error.html';
-  
-  checkID().then((bool isDoneID) {
-    if (!isDoneID)
-      startGame();
-    else
-    window.location.href = 'complete.html';
-  }).catchError((ex) {
-    window.location.href = 'error.html';
-  });
+  else if(id == 'demo')
+    startGame();
+  else {
+    checkID().then((bool isDoneID) {
+      if (!isDoneID)
+        startGame();
+      else
+      window.location.href = 'complete.html';
+    }).catchError((ex) {
+      window.location.href = 'error.html';
+    });
+  }
 }
 
 String getPlayerId(Location location) 
