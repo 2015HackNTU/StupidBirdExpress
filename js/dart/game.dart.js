@@ -3329,25 +3329,32 @@ var $$ = Object.create(null);
 ["client.action_dropper", "package:StupidBirdExpress/client/action_dropper.dart", , A, {
   "^": "",
   ActionDropper: {
-    "^": "Object;allowDragging,parent,actionDraggers,_isOnDrag,_dragged,_inserted,_ChildHeight,infoIsClicked",
+    "^": "Object;allowDragging,parent,actionDraggers,_isOnDrag,_dragged,_inserted,_ChildHeight",
     get$_ParentLeft: function() {
       var t1, t2;
-      t1 = window.innerWidth;
-      if (typeof t1 !== "number")
-        return t1.$mul();
-      t2 = window.innerWidth;
-      if (typeof t2 !== "number")
-        return t2.$mul();
-      return C.JSNumber_methods.toInt$0(Math.ceil(t1 * 0.05 + t2 * 0.9 * 0.19666666666666666)) - 10;
+      t1 = this.parent;
+      if (t1 == null)
+        t1 = 0;
+      else {
+        t2 = document.querySelector("body");
+        t1.toString;
+        t2 = W.Element__offsetToHelper(t1, t2).x;
+        t1 = t2;
+      }
+      return t1;
     },
     get$_ParentTop: function() {
       var t1, t2;
-      t1 = window.innerHeight;
-      if (typeof t1 !== "number")
-        return t1.$mul();
-      t1 = C.JSNumber_methods.toInt$0(Math.ceil(t1 * 0.03));
-      t2 = this.infoIsClicked === true ? 62 : 0;
-      return t1 + 160 + t2;
+      t1 = this.parent;
+      if (t1 == null)
+        t1 = 0;
+      else {
+        t2 = document.querySelector("body");
+        t1.toString;
+        t2 = W.Element__offsetToHelper(t1, t2).y;
+        t1 = t2;
+      }
+      return t1;
     },
     getActionValues$0: function() {
       var actions, t1;
@@ -3361,7 +3368,6 @@ var $$ = Object.create(null);
       this.actionDraggers = W._FrozenElementList$_wrap(document.querySelectorAll(".code-sample .b-action"), null);
       this.allowDragging = true;
       this._isOnDrag = false;
-      this.infoIsClicked = false;
       document.querySelector(".your-code");
     },
     _startDragListener$0: function() {
@@ -3402,16 +3408,29 @@ var $$ = Object.create(null);
       t1 = this.get$_ParentLeft();
       if (typeof x !== "number")
         return x.$ge();
+      if (typeof t1 !== "number")
+        return H.iae(t1);
       if (x >= t1) {
         t1 = this.get$_ParentLeft();
         t2 = window.innerWidth;
         if (typeof t2 !== "number")
           return t2.$mul();
-        if (x <= t1 + C.JSNumber_methods.toInt$0(Math.floor(t2 * 0.9 / 6 - 8)) + 20) {
+        t2 = C.JSNumber_methods.toInt$0(Math.floor(t2 * 0.9 / 6));
+        if (typeof t1 !== "number")
+          return t1.$add();
+        if (x <= t1 + t2) {
           t1 = this.get$_ParentTop();
           if (typeof y !== "number")
             return y.$ge();
-          t1 = y >= t1 && y <= this.get$_ParentTop() + 580;
+          if (typeof t1 !== "number")
+            return H.iae(t1);
+          if (y >= t1) {
+            t1 = this.get$_ParentTop();
+            if (typeof t1 !== "number")
+              return t1.$add();
+            t1 = y <= t1 + 560;
+          } else
+            t1 = false;
         } else
           t1 = false;
       } else
@@ -3420,14 +3439,20 @@ var $$ = Object.create(null);
     },
     _getValidPos$1: function(y) {
       var t1, t2, tempPos;
-      t1 = window.innerHeight;
-      if (typeof t1 !== "number")
-        return t1.$mul();
-      t1 = C.JSNumber_methods.toInt$0(Math.ceil(t1 * 0.03));
-      t2 = this.infoIsClicked === true ? 62 : 0;
+      t1 = this.parent;
+      if (t1 == null)
+        t1 = 0;
+      else {
+        t2 = document.querySelector("body");
+        t1.toString;
+        t2 = W.Element__offsetToHelper(t1, t2).y;
+        t1 = t2;
+      }
       if (typeof y !== "number")
         return y.$sub();
-      tempPos = C.JSNumber_methods.toInt$0(C.JSNumber_methods.roundToDouble$0((y - (t1 + 160 + t2) - 10) / this._ChildHeight));
+      if (typeof t1 !== "number")
+        return H.iae(t1);
+      tempPos = C.JSNumber_methods.toInt$0(C.JSNumber_methods.roundToDouble$0((y - t1 - 10) / this._ChildHeight));
       W._FrozenElementList$_wrap(this.parent.querySelectorAll(".b-action"), null);
       if (tempPos <= W._FrozenElementList$_wrap(this.parent.querySelectorAll(".b-action"), null)._nodeList.length)
         t1 = tempPos;
@@ -3579,14 +3604,20 @@ var $$ = Object.create(null);
             } else
               for (i = 0; i < W._FrozenElementList$_wrap(t1.parent.querySelectorAll(".b-action"), null)._nodeList.length; i = i0) {
                 t3 = J.get$y$x(t2.get$page(evt));
-                t4 = window.innerHeight;
-                if (typeof t4 !== "number")
-                  return t4.$mul();
-                t4 = C.JSNumber_methods.toInt$0(Math.ceil(t4 * 0.03));
-                t5 = t1.infoIsClicked === true ? 62 : 0;
+                t4 = t1.parent;
+                if (t4 == null)
+                  t4 = 0;
+                else {
+                  t5 = document.querySelector("body");
+                  t4.toString;
+                  t5 = W.Element__offsetToHelper(t4, t5).y;
+                  t4 = t5;
+                }
                 if (typeof t3 !== "number")
                   return t3.$sub();
-                tempPos = C.JSNumber_methods.toInt$0(C.JSNumber_methods.roundToDouble$0((t3 - (t4 + 160 + t5) - 10) / t1._ChildHeight));
+                if (typeof t4 !== "number")
+                  return H.iae(t4);
+                tempPos = C.JSNumber_methods.toInt$0(C.JSNumber_methods.roundToDouble$0((t3 - t4 - 10) / t1._ChildHeight));
                 W._FrozenElementList$_wrap(t1.parent.querySelectorAll(".b-action"), null);
                 if (tempPos <= W._FrozenElementList$_wrap(t1.parent.querySelectorAll(".b-action"), null)._nodeList.length)
                   t3 = tempPos;
@@ -3654,20 +3685,15 @@ var $$ = Object.create(null);
     if (t2 >>> 0 !== t2 || t2 >= 3)
       return H.ioore(t5, t2);
     J.set$src$x(img, t5[t2]);
-    t2 = new A.ActionDropper(null, null, null, null, null, null, 40, null);
+    t2 = new A.ActionDropper(null, null, null, null, null, null, 40);
     t2._initValues$0();
     t2._startDragListener$0();
     $.dropper = t2;
-    U.startInfoBtnListener();
-    U.startRunBtnListener($.dropper);
+    U.startRunBtnListener();
   },
-  startInfoBtnListener: function() {
-    var t1 = J.get$onClick$x(document.querySelector("#show-alert"));
-    H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new U.startInfoBtnListener_closure()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
-  },
-  startRunBtnListener: function(dropper) {
+  startRunBtnListener: function() {
     var t1 = J.get$onClick$x(document.querySelector(".your-code .run-btn"));
-    H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new U.startRunBtnListener_closure(dropper)), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
+    H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new U.startRunBtnListener_closure()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
   },
   main_closure: {
     "^": "Closure:40;",
@@ -3696,18 +3722,8 @@ var $$ = Object.create(null);
       return this.cmpl_1.completeError$1(error);
     }, "call$1", null, 2, 0, null, 17, "call"]
   },
-  startInfoBtnListener_closure: {
-    "^": "Closure:29;",
-    call$1: [function(_) {
-      var t1, t2;
-      t1 = $.dropper;
-      t2 = t1.infoIsClicked !== true;
-      t1.infoIsClicked = t2;
-      return t2;
-    }, "call$1", null, 2, 0, null, 38, "call"]
-  },
   startRunBtnListener_closure: {
-    "^": "Closure:29;dropper_0",
+    "^": "Closure:29;",
     call$1: [function(_) {
       var actions, pos, animate, highlight, t1, t2, t3, exception;
       $.map.resetPos$0();
@@ -3718,7 +3734,7 @@ var $$ = Object.create(null);
         return H.ioore(t2, t3);
       t1.degree = t2[t3][2];
       J.get$classes$x(document.querySelector(".invalid")).add$1(0, "disappear");
-      t3 = this.dropper_0;
+      t3 = $.dropper;
       t3.allowDragging = false;
       try {
         actions = t3.getActionValues$0();
@@ -3733,7 +3749,7 @@ var $$ = Object.create(null);
         J.get$classes$x(document.querySelector(".invalid")).remove$1(0, "disappear");
       }
 
-      t3.allowDragging = true;
+      $.dropper.allowDragging = true;
     }, "call$1", null, 2, 0, null, 38, "call"]
   }
 },
@@ -4277,7 +4293,7 @@ var $$ = Object.create(null);
                 return t5.$add();
               if (typeof t2 !== "number")
                 return H.iae(t2);
-              t2 = t5 + t2;
+              t2 = C.JSNumber_methods.$mod(t5 + t2, 360);
               t3.degree = t2;
               J.set$transform$x(t3.mainActor.style, "rotate(" + H.S(t2) + "deg)");
               if (t3._isOnBoat) {
@@ -4285,7 +4301,7 @@ var $$ = Object.create(null);
                 t4 = t3.degree;
                 if (typeof t4 !== "number")
                   return t4.$sub();
-                J.set$transform$x(t2, "rotate(" + H.S(t4 - 270) + "deg)");
+                J.set$transform$x(t2, "rotate(" + H.S(C.JSNumber_methods.$mod(t4 - 270, 360)) + "deg)");
               }
             } else {
               if (posState >= t7)
@@ -4297,7 +4313,7 @@ var $$ = Object.create(null);
                 return t5.$add();
               if (typeof t2 !== "number")
                 return H.iae(t2);
-              t2 = t5 + t2;
+              t2 = C.JSNumber_methods.$mod(t5 + t2, 360);
               t3.degree = t2;
               J.set$transform$x(t3.mainActor.style, "rotate(" + H.S(t2) + "deg)");
               if (t3._isOnBoat) {
@@ -4305,7 +4321,7 @@ var $$ = Object.create(null);
                 t4 = t3.degree;
                 if (typeof t4 !== "number")
                   return t4.$sub();
-                J.set$transform$x(t2, "rotate(" + H.S(t4 - 270) + "deg)");
+                J.set$transform$x(t2, "rotate(" + H.S(C.JSNumber_methods.$mod(t4 - 270, 360)) + "deg)");
               }
             }
             break;
@@ -8898,6 +8914,27 @@ var $$ = Object.create(null);
   CssStyleDeclaration__camelCase: function(hyphenated) {
     return hyphenated.replace(/^-ms-/, "ms-").replace(/-([\da-z])/ig, C.JS_CONST_s8I);
   },
+  Element__offsetToHelper: function(current, $parent) {
+    var t1, foundAsParent, p, t2, t3, t4;
+    t1 = current == null ? $parent == null : current === $parent;
+    foundAsParent = t1 || $parent.tagName === "HTML";
+    if (current == null || t1) {
+      if (foundAsParent)
+        return H.setRuntimeTypeInfo(new P.Point(0, 0), [null]);
+      throw H.wrapException(P.ArgumentError$("Specified element is not a transitive offset parent of this element."));
+    }
+    p = W.Element__offsetToHelper(current.offsetParent, $parent);
+    t1 = p.x;
+    current.toString;
+    t2 = C.JSNumber_methods.toInt$0(C.JSNumber_methods.roundToDouble$0(current.offsetLeft));
+    if (typeof t1 !== "number")
+      return t1.$add();
+    t3 = p.y;
+    t4 = C.JSNumber_methods.toInt$0(C.JSNumber_methods.roundToDouble$0(current.offsetTop));
+    if (typeof t3 !== "number")
+      return t3.$add();
+    return H.setRuntimeTypeInfo(new P.Point(t1 + t2, t3 + t4), [null]);
+  },
   ImageElement_ImageElement: function(height, src, width) {
     var e = document.createElement("img", null);
     return e;
@@ -10730,7 +10767,7 @@ $.prototypeForTagFunction = null;
 $.dispatchRecordsForInstanceTags = null;
 $.interceptorsForUncacheableTags = null;
 $.initNativeDispatchFlag = null;
-$.id = "D1scN7ABLD";
+$.id = null;
 $.rand = null;
 $.map = null;
 $.dropper = null;
