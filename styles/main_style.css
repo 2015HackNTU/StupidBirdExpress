@@ -174,7 +174,8 @@ body {
 }
 
 .game-page .move-tag {
-	padding: 13px;
+	padding: 12px;
+	padding-bottom: 10px;
 	padding-left:8px;
 	display: inline-block;
 	align-items: center;
