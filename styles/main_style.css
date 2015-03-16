@@ -168,11 +168,12 @@ body {
 	font-size: 16px;
 }
 
-.game-page .code-list .list-group .move-tag {
-	width: 20px;
+.game-page .move-tag {
 	margin-top: 10px;
 	display: inline-block;
 	align-items: center;
+	font-family: 'Coming Soon', cursive;
+	cursor: pointer;
 }
 
 .game-page .parameter-input {
