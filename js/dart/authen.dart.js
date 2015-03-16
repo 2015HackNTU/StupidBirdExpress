@@ -1949,6 +1949,11 @@ var $$ = Object.create(null);
       H.iae(index);
     throw H.wrapException(P.RangeError$value(index, null, null));
   },
+  checkString: function(value) {
+    if (typeof value !== "string")
+      throw H.wrapException(P.ArgumentError$(value));
+    return value;
+  },
   wrapException: function(ex) {
     var wrapper;
     if (ex == null)
@@ -3211,6 +3216,31 @@ var $$ = Object.create(null);
     call$1: function(tag) {
       return this.prototypeForTag_2(tag);
     }
+  },
+  JSSyntaxRegExp: {
+    "^": "Object;pattern,_nativeRegExp,_nativeGlobalRegExp,_nativeAnchoredRegExp",
+    toString$0: function(_) {
+      return "RegExp/" + this.pattern + "/";
+    },
+    static: {JSSyntaxRegExp_makeNative: function(source, multiLine, caseSensitive, global) {
+        var m, i, g, regexp, errorMessage;
+        H.checkString(source);
+        m = multiLine ? "m" : "";
+        i = caseSensitive ? "" : "i";
+        g = global ? "g" : "";
+        regexp = function() {
+          try {
+            return new RegExp(source, m + i + g);
+          } catch (e) {
+            return e;
+          }
+
+        }();
+        if (regexp instanceof RegExp)
+          return regexp;
+        errorMessage = String(regexp);
+        throw H.wrapException(P.FormatException$("Illegal RegExp pattern: " + source + ", " + errorMessage, null, null));
+      }}
   }
 }],
 ["clienr.parse", "package:StupidBirdExpress/client/parse.dart", , Q, {
@@ -3280,8 +3310,12 @@ var $$ = Object.create(null);
     }
     t1 = J.get$onClick$x(document.querySelector("#form-alert-close"));
     H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new A.main_closure2()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
+    t1 = J.get$onClick$x(document.querySelector("#send-email-alert-close"));
+    H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new A.main_closure3()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
+    t1 = J.get$onClick$x(document.querySelector("#recv-email-alert-close"));
+    H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new A.main_closure4()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
     t1 = J.get$onClick$x(submitButton);
-    H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new A.main_closure3(receiverNameInput, receiverEmailInput, senderNameInput, senderEmailInput)), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
+    H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new A.main_closure5(receiverNameInput, receiverEmailInput, senderNameInput, senderEmailInput)), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
   }, "call$0", "main$closure", 0, 0, 10],
   main_closure: {
     "^": "Closure:38;receiverNameInput_0,receiverEmailInput_1,senderNameInput_2,senderEmailInput_3",
@@ -3317,6 +3351,18 @@ var $$ = Object.create(null);
     }, "call$1", null, 2, 0, null, 39, "call"]
   },
   main_closure3: {
+    "^": "Closure:28;",
+    call$1: [function(_) {
+      J.get$classes$x(document.querySelector("#send-email-alert")).add$1(0, "disappear");
+    }, "call$1", null, 2, 0, null, 39, "call"]
+  },
+  main_closure4: {
+    "^": "Closure:28;",
+    call$1: [function(_) {
+      J.get$classes$x(document.querySelector("#recv-email-alert")).add$1(0, "disappear");
+    }, "call$1", null, 2, 0, null, 39, "call"]
+  },
+  main_closure5: {
     "^": "Closure:28;receiverNameInput_5,receiverEmailInput_6,senderNameInput_7,senderEmailInput_8",
     call$1: [function(_) {
       var receiverName, receiverEmail, userName, userEmail, t1, messageInput, message, filename, messageFile, isFile, pos;
@@ -3326,6 +3372,19 @@ var $$ = Object.create(null);
       userEmail = J.get$value$x(this.senderEmailInput_8);
       if (J.get$isEmpty$asx(receiverName) || J.get$isEmpty$asx(receiverEmail) || J.get$isEmpty$asx(userName) || J.get$isEmpty$asx(userEmail)) {
         J.get$classes$x(document.querySelector("#form-error-alert")).remove$1(0, "disappear");
+        t1 = H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null]);
+        t1._asyncComplete$1(null);
+        return t1;
+      }
+      t1 = $.get$_EMAIL_FORMAT()._nativeRegExp;
+      if (!t1.test(H.checkString(receiverEmail))) {
+        J.get$classes$x(document.querySelector("#recv-email-alert")).remove$1(0, "disappear");
+        t1 = H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null]);
+        t1._asyncComplete$1(null);
+        return t1;
+      }
+      if (!t1.test(H.checkString(userEmail))) {
+        J.get$classes$x(document.querySelector("#send-email-alert")).remove$1(0, "disappear");
         t1 = H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null]);
         t1._asyncComplete$1(null);
         return t1;
@@ -6674,6 +6733,16 @@ var $$ = Object.create(null);
       return "Exception: " + H.S(t1);
     }
   },
+  FormatException: {
+    "^": "Object;message,source,offset",
+    toString$0: function(_) {
+      var report = "" !== this.message ? "FormatException: " + this.message : "FormatException";
+      return report;
+    },
+    static: {FormatException$: function(message, source, offset) {
+        return new P.FormatException(message, source, offset);
+      }}
+  },
   IntegerDivisionByZeroException: {
     "^": "Object;",
     toString$0: function(_) {
@@ -8479,6 +8548,9 @@ Isolate.$lazy($, "undefinedLiteralPropertyPattern", "TypeErrorDecoder_undefinedL
     }
 
   }());
+});
+Isolate.$lazy($, "_EMAIL_FORMAT", "_EMAIL_FORMAT", "get$_EMAIL_FORMAT", function() {
+  return new H.JSSyntaxRegExp("^[a-zA-Z0-9.!#$%&\u2019*+\\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$", H.JSSyntaxRegExp_makeNative("^[a-zA-Z0-9.!#$%&\u2019*+\\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$", false, true, false), null, null);
 });
 Isolate.$lazy($, "scheduleImmediateClosure", "_AsyncRun_scheduleImmediateClosure", "get$_AsyncRun_scheduleImmediateClosure", function() {
   return P._AsyncRun__initializeScheduleImmediate();
