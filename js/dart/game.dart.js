@@ -3622,12 +3622,44 @@ var $$ = Object.create(null);
     $.id = t1;
     if (t1 == null)
       window.location.href = "error.html";
-    U.checkID().then$1(new U.main_closure()).catchError$1(new U.main_closure0());
+    else if (t1 === "demo")
+      U.startGame();
+    else
+      U.checkID().then$1(new U.main_closure()).catchError$1(new U.main_closure0());
   }, "call$0", "main$closure", 0, 0, 11],
   checkID: function() {
     var cmpl = H.setRuntimeTypeInfo(new P._AsyncCompleter(H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null])), [null]);
     $.get$context().callMethod$2("isDone", [$.id, new U.checkID_closure(cmpl), new U.checkID_closure0(cmpl)]);
     return cmpl.future;
+  },
+  startGame: function() {
+    var t1, t2, t3, t4, t5, img;
+    t1 = $.get$Maps();
+    t2 = C.C__JSRandom.nextInt$1(3);
+    $.rand = t2;
+    t3 = $.id;
+    t4 = $.get$MainActorPos();
+    if (t2 < 0 || t2 >= 3)
+      return H.ioore(t4, t2);
+    t4 = t4[t2];
+    t1 = t1[t2];
+    t2 = t2 === 1;
+    t5 = new X.LevelMap(t3, null, t1, null, null, null, null, null, null, t2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, t4);
+    t5.LevelMap$4(t3, t4, t1, t2);
+    $.map = t5;
+    $.mGenerator = new U.MotionGenerator(null);
+    img = document.querySelector(".map-image");
+    t5 = $.get$MapBackground();
+    t2 = $.rand;
+    if (t2 >>> 0 !== t2 || t2 >= 3)
+      return H.ioore(t5, t2);
+    J.set$src$x(img, t5[t2]);
+    t2 = new A.ActionDropper(null, null, null, null, null, null, 40, null);
+    t2._initValues$0();
+    t2._startDragListener$0();
+    $.dropper = t2;
+    U.startInfoBtnListener();
+    U.startRunBtnListener($.dropper);
   },
   startInfoBtnListener: function() {
     var t1 = J.get$onClick$x(document.querySelector("#show-alert"));
@@ -3640,35 +3672,9 @@ var $$ = Object.create(null);
   main_closure: {
     "^": "Closure:40;",
     call$1: [function(isDoneID) {
-      var t1, t2, t3, t4, t5, img;
-      if (isDoneID !== true) {
-        t1 = $.get$Maps();
-        t2 = C.C__JSRandom.nextInt$1(3);
-        $.rand = t2;
-        t3 = $.id;
-        t4 = $.get$MainActorPos();
-        if (t2 < 0 || t2 >= 3)
-          return H.ioore(t4, t2);
-        t4 = t4[t2];
-        t1 = t1[t2];
-        t2 = t2 === 1;
-        t5 = new X.LevelMap(t3, null, t1, null, null, null, null, null, null, t2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, t4);
-        t5.LevelMap$4(t3, t4, t1, t2);
-        $.map = t5;
-        $.mGenerator = new U.MotionGenerator(null);
-        img = document.querySelector(".map-image");
-        t5 = $.get$MapBackground();
-        t2 = $.rand;
-        if (t2 >>> 0 !== t2 || t2 >= 3)
-          return H.ioore(t5, t2);
-        J.set$src$x(img, t5[t2]);
-        t2 = new A.ActionDropper(null, null, null, null, null, null, 40, null);
-        t2._initValues$0();
-        t2._startDragListener$0();
-        $.dropper = t2;
-        U.startInfoBtnListener();
-        U.startRunBtnListener($.dropper);
-      } else
+      if (isDoneID !== true)
+        U.startGame();
+      else
         window.location.href = "complete.html";
     }, "call$1", null, 2, 0, null, 39, "call"]
   },
@@ -4476,8 +4482,11 @@ var $$ = Object.create(null);
         t1.timer_0.cancel$0();
         if (t2._isComplete === true) {
           J.click$0$x(t2._completeBtn);
-          t2._renderCompletePage$0();
-          document.querySelector(".numbers-insert").textContent = t2.id;
+          t3 = t2.id;
+          if (t3 !== "demo") {
+            t2._renderCompletePage$0();
+            document.querySelector(".numbers-insert").textContent = t3;
+          }
         }
       }
       ++t1.state_1;
