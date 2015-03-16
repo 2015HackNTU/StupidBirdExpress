@@ -47,8 +47,8 @@ body {
 }
 
 .game-rule {
-	border-color: #e0d515;
-	background-color: #fff5a3;
+	border-color: #fff550;
+	background-color: #fff550;
 	color: #7a4f2d;
 }
 
@@ -82,7 +82,6 @@ body {
 .game-page .game-panel .game-canvas {
 	width: 630px;
 	height: 540px;
-	margin: 
 	overflow: hidden;
 }
 
@@ -221,7 +220,7 @@ footer {
 .my-alert {
 	border-color: #fff550;
 	background-color: #fff550;
-	color: #555;
+	color: #7a4f2d;
 }
 
 .my-alert .alert-link{
