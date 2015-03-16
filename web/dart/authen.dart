@@ -56,7 +56,6 @@ void main() {
       querySelector('#form-error-alert').classes.remove('disappear');
       return new Future.value(null);
     }
-<<<<<<< HEAD
     //check email valid
     if (!_EMAIL_FORMAT.hasMatch(receiverEmail)) {
       querySelector('#recv-email-alert').classes.remove('disappear');
@@ -66,10 +65,7 @@ void main() {
       querySelector('#send-email-alert').classes.remove('disappear');
       return new Future.value(null);  
     }
-      
-=======
-
->>>>>>> a9ce19a61705a5188613bb9eff8db7afddf34664
+    
     //determine massage type
     InputElement messageInput= querySelector('.tab-content .active input');
     String message;
