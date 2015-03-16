@@ -11,7 +11,7 @@ import 'package:StupidBirdExpress/client/level_map.dart';
 import 'package:StupidBirdExpress/client/action_dropper.dart';
 import 'package:StupidBirdExpress/client/motion_controller.dart';
 
-String id = 'D1scN7ABLD';
+String id;
 
 int rand;
 LevelMap map;
@@ -58,8 +58,8 @@ void startGame() {
   setMapBackground();
   
   dropper = new ActionDropper.start();
-  startInfoBtnListener();
-  startRunBtnListener(dropper);
+  startRunBtnListener();
+  
 }
 
 void setMapBackground() {
@@ -67,11 +67,7 @@ void setMapBackground() {
   img.src = MapBackground[rand];
 }
 
-void startInfoBtnListener() {
-  querySelector('#show-alert').onClick.listen((_) => dropper.infoIsClicked = !dropper.infoIsClicked);
-}
-
-void startRunBtnListener(ActionDropper dropper) {
+void startRunBtnListener() {
     querySelector('.your-code .run-btn').onClick.listen((_) {
     reset();
     
