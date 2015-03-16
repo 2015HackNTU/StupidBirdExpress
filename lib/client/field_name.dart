@@ -73,6 +73,7 @@ const int        ERROR_NO_EGG = 4;
 
 final List<String> MapBackground = [MAPBG_1, MAPBG_2, MAPBG_3];
 
+///path for launching
 const String       BOAT = '../source/boat.png';
 const String    ARBOR_3 = '../source/arbor3.png';
 const String  U_ARBOR_1 = '../source/arbor1.png';
@@ -89,6 +90,24 @@ const String     TREE_4 = '../source/tree4.png';
 const String    MAPBG_1 = '../source/map1.png';
 const String    MAPBG_2 = '../source/map2.png';
 const String    MAPBG_3 = '../source/map3.png';
+
+///path for developing
+//const String       BOAT = '../../source/boat.png';
+//const String    ARBOR_3 = '../../source/arbor3.png';
+//const String  U_ARBOR_1 = '../../source/arbor1.png';
+//const String  U_ARBOR_2 = '../../source/arbor2.png';
+//const String  U_ARBOR_4 = '../../source/arbor4.png';
+//const String       BUSH = '../../source/bush.png';
+//const String      STRAW = '../../source/straw.png';
+//const String        EGG = '../../source/egg.png';
+//const String     TREE_1 = '../../source/tree1.png';
+//const String     TREE_2 = '../../source/tree2.png';
+//const String     TREE_3 = '../../source/tree3.png';
+//const String     TREE_4 = '../../source/tree4.png';
+//
+//const String    MAPBG_1 = '../../source/map1.png';
+//const String    MAPBG_2 = '../../source/map2.png';
+//const String    MAPBG_3 = '../../source/map3.png';
 
 final List<String> BlockImgs = [U_ARBOR_1, U_ARBOR_2, ARBOR_3, U_ARBOR_4, BUSH, STRAW, EGG, TREE_1, TREE_2, TREE_3, TREE_4];
 
