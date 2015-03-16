@@ -157,7 +157,7 @@ body {
 }
 .game-page .code-list .list-group .list-group-item {
 	height: 40px;
-	padding: 2px 5px;
+	padding: 0px;
 	font-size: 12px;
 	border: none;
 	border-bottom: 1px dashed #cc0000;
@@ -174,7 +174,8 @@ body {
 }
 
 .game-page .move-tag {
-	margin-top: 10px;
+	padding: 13px;
+	padding-left:8px;
 	display: inline-block;
 	align-items: center;
 	font-family: 'Coming Soon', cursive;
