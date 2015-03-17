@@ -52,6 +52,17 @@ body {
 	color: #7a4f2d;
 }
 
+.game-rule .alert-link{
+	font-weight: 400;
+	color: #ac0000;
+}
+
+.game-rule .alert-link:hover{
+	text-decoration:none;
+	color: #ee2020;
+	transition: color 0.1s ease-out 0s;
+}
+
 .game-page .panel {
 	height: 600px;
 	border: none;
@@ -226,13 +237,13 @@ footer {
 }
 
 .my-alert .alert-link{
-	color: #cc0000;
+	color: #ac0000;
 }
 
 .my-alert .alert-link:hover{
 	text-decoration:none;
 	color: #ee2020;
-	transition: color 0.1s linear 0s;
+	transition: color 0.1s ease-out 0s;
 }
 
 .list-group-item .del-icon{
