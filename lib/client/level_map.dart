@@ -117,7 +117,7 @@ class LevelMap {
         //checkPos        
         response = _isValidMove(pos[posState][0], pos[posState][1], pos[posState][2]);
         isValid = response[0];
-        //print(response);   
+//        print(response);   
       }
       
       if (isValid) {
@@ -129,15 +129,15 @@ class LevelMap {
             _showImg(IMG_ORIGIN);
             
             if (imgState == 0) {
-              degree += imgs[posState][1] * 12;
+              degree = (degree + imgs[posState][1] * 12) % 360;
               mainActor.style.transform = 'rotate(${degree}deg)';
               if (_isOnBoat)
-                _boat.style.transform = 'rotate(${degree - 270}deg)';
+                _boat.style.transform = 'rotate(${(degree - 270) % 360}deg)';
             } else {
-              degree += imgs[posState][1] * 11;
+              degree = (degree + imgs[posState][1] * 11) % 360;
               mainActor.style.transform = 'rotate(${degree}deg)';
               if (_isOnBoat)
-                _boat.style.transform = 'rotate(${degree - 270}deg)';
+                _boat.style.transform = 'rotate(${(degree - 270) % 360}deg)';
             }
             break;
             
@@ -455,7 +455,6 @@ class LevelMap {
     var ok = () => cmpl.complete();
     var fail = (error) => cmpl.completeError(error);
     
-//    print(id);
     js.context.callMethod('setStatus', [id, true, ok, fail]);
     
     return cmpl.future;

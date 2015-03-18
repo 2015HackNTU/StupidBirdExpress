@@ -31,7 +31,6 @@ class MotionGenerator {
       switch (action[ACTION_TYPE]) {
         case ACTION_TURN:
           degree = (degree + action[ACTION_DIRECTION] * action[ACTION_TIMES] * DEGREE_UNIT) % 360;
-//          print('degree: $degree');
           for (int i = 0; i < action[ACTION_TIMES]; i++)
             actionsPos.add([0, 0, ACTION_TURN]);
           break;
@@ -109,6 +108,5 @@ class MotionGenerator {
     }
     return actionsHighlighted;
   }
-
 }
 
