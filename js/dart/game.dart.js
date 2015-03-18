@@ -308,10 +308,10 @@ var $$ = Object.create(null);
     toString$0: function(receiver) {
       return H.Primitives_objectToString(receiver);
     },
-    noSuchMethod$1: function(receiver, invocation) {
+    noSuchMethod$1: [function(receiver, invocation) {
       throw H.wrapException(P.NoSuchMethodError$(receiver, invocation.get$memberName(), invocation.get$positionalArguments(), invocation.get$namedArguments(), null));
-    },
-    "%": "ArrayBuffer|DOMError|FileError|MediaError|MediaKeyError|Navigator|NavigatorUserMediaError|PositionError|SQLError|SVGAnimatedLength|SVGAnimatedLengthList|SVGAnimatedNumber|SVGAnimatedNumberList|SVGAnimatedString"
+    }, "call$1", "get$noSuchMethod", 2, 0, null, 36],
+    "%": "ArrayBuffer|DOMError|DOMImplementation|FileError|MediaError|MediaKeyError|Navigator|NavigatorUserMediaError|PositionError|SQLError|SVGAnimatedLength|SVGAnimatedLengthList|SVGAnimatedNumber|SVGAnimatedNumberList|SVGAnimatedString"
   },
   JSBool: {
     "^": "Interceptor;",
@@ -334,9 +334,9 @@ var $$ = Object.create(null);
     get$hashCode: function(receiver) {
       return 0;
     },
-    noSuchMethod$1: function(receiver, invocation) {
+    noSuchMethod$1: [function(receiver, invocation) {
       return J.Interceptor.prototype.noSuchMethod$1.call(this, receiver, invocation);
-    }
+    }, "call$1", "get$noSuchMethod", 2, 0, null, 36]
   },
   JavaScriptObject: {
     "^": "Interceptor;",
@@ -655,6 +655,19 @@ var $$ = Object.create(null);
     split$1: function(receiver, pattern) {
       return receiver.split(pattern);
     },
+    startsWith$2: function(receiver, pattern, index) {
+      var endIndex;
+      H.checkInt(index);
+      if (index > receiver.length)
+        throw H.wrapException(P.RangeError$range(index, 0, receiver.length, null, null));
+      endIndex = index + pattern.length;
+      if (endIndex > receiver.length)
+        return false;
+      return pattern === receiver.substring(index, endIndex);
+    },
+    startsWith$1: function($receiver, pattern) {
+      return this.startsWith$2($receiver, pattern, 0);
+    },
     substring$2: function(receiver, startIndex, endIndex) {
       if (typeof startIndex !== "number" || Math.floor(startIndex) !== startIndex)
         H.throwExpression(P.ArgumentError$(startIndex));
@@ -941,7 +954,7 @@ var $$ = Object.create(null);
         break;
       case "message":
         if (t1.$index(msg, "port") != null)
-          t1.$index(msg, "port").send$1(t1.$index(msg, "msg"));
+          J.send$1$x(t1.$index(msg, "port"), t1.$index(msg, "msg"));
         init.globalState.topEventLoop.run$0();
         break;
       case "close":
@@ -994,7 +1007,7 @@ var $$ = Object.create(null);
     t1 = context.controlPort;
     t2 = init.globalState.currentContext.id;
     t3 = context.pauseCapability;
-    replyTo.send$1(["spawned", new H._NativeJsSendPort(t1, t2), t3, context.terminateCapability]);
+    J.send$1$x(replyTo, ["spawned", new H._NativeJsSendPort(t1, t2), t3, context.terminateCapability]);
     t2 = new H.IsolateNatives__startIsolate_runStartFunction(topLevel, args, message, isSpawnUri, context);
     if (startPaused === true) {
       context.addPause$2(t3, t3);
@@ -1027,13 +1040,13 @@ var $$ = Object.create(null);
     return x == null || typeof x === "string" || typeof x === "number" || typeof x === "boolean";
   },
   startRootIsolate_closure: {
-    "^": "Closure:32;box_0,entry_1",
+    "^": "Closure:37;box_0,entry_1",
     call$0: function() {
       this.entry_1.call$1(this.box_0.args_0);
     }
   },
   startRootIsolate_closure0: {
-    "^": "Closure:32;box_0,entry_2",
+    "^": "Closure:37;box_0,entry_2",
     call$0: function() {
       this.entry_2.call$2(this.box_0.args_0, null);
     }
@@ -1144,7 +1157,7 @@ var $$ = Object.create(null);
       else
         t2 = true;
       if (t2) {
-        responsePort.send$1(null);
+        J.send$1$x(responsePort, null);
         return;
       }
       t2 = new H._IsolateContext_handlePing_respond(responsePort);
@@ -1205,7 +1218,7 @@ var $$ = Object.create(null);
       message[0] = J.toString$0(error);
       message[1] = stackTrace == null ? null : J.toString$0(stackTrace);
       for (t2 = new P.LinkedHashSetIterator(t1, t1._modifications, null, null), t2._cell = t1._first; t2.moveNext$0();)
-        t2._collection$_current.send$1(message);
+        J.send$1$x(t2._collection$_current, message);
     },
     eval$1: function(code) {
       var old, result, e, s, exception, t1;
@@ -1299,7 +1312,7 @@ var $$ = Object.create(null);
       t1 = this.doneHandlers;
       if (t1 != null) {
         for (t1 = new H.ListIterator(t1, t1.length, 0, null); t1.moveNext$0();)
-          t1.__internal$_current.send$1(null);
+          J.send$1$x(t1.__internal$_current, null);
         this.doneHandlers = null;
       }
     }, "call$0", "get$kill", 0, 0, 11]
@@ -1307,7 +1320,7 @@ var $$ = Object.create(null);
   _IsolateContext_handlePing_respond: {
     "^": "Closure:11;responsePort_0",
     call$0: [function() {
-      this.responsePort_0.send$1(null);
+      J.send$1$x(this.responsePort_0, null);
     }, "call$0", null, 0, 0, null, "call"]
   },
   _EventLoop: {
@@ -1385,7 +1398,7 @@ var $$ = Object.create(null);
     "^": "Object;"
   },
   IsolateNatives__processWorkerMessage_closure: {
-    "^": "Closure:32;entryPoint_0,args_1,message_2,isSpawnUri_3,startPaused_4,replyTo_5",
+    "^": "Closure:37;entryPoint_0,args_1,message_2,isSpawnUri_3,startPaused_4,replyTo_5",
     call$0: [function() {
       H.IsolateNatives__startIsolate(this.entryPoint_0, this.args_1, this.message_2, this.isSpawnUri_3, this.startPaused_4, this.replyTo_5);
     }, "call$0", null, 0, 0, null, "call"]
@@ -1420,7 +1433,7 @@ var $$ = Object.create(null);
   },
   _NativeJsSendPort: {
     "^": "_BaseSendPort;_receivePort,_isolateId",
-    send$1: function(message) {
+    send$1: function(_, message) {
       var t1, t2, isolate, t3, shouldSerialize;
       t1 = {};
       t2 = this._isolateId;
@@ -1455,7 +1468,7 @@ var $$ = Object.create(null);
     $isCapability: true
   },
   _NativeJsSendPort_send_closure: {
-    "^": "Closure:32;box_0,this_1,shouldSerialize_2",
+    "^": "Closure:37;box_0,this_1,shouldSerialize_2",
     call$0: [function() {
       var t1, t2;
       t1 = this.this_1._receivePort;
@@ -1470,7 +1483,7 @@ var $$ = Object.create(null);
   },
   _WorkerSendPort: {
     "^": "_BaseSendPort;_workerId,_receivePortId,_isolateId",
-    send$1: function(message) {
+    send$1: function(_, message) {
       var workerMessage, manager;
       workerMessage = H._serializeMessage(P.LinkedHashMap_LinkedHashMap$_literal(["command", "message", "port", this, "msg", message], null, null));
       if (init.globalState.isWorker === true) {
@@ -1698,7 +1711,7 @@ var $$ = Object.create(null);
     }
   },
   _Copier_visitMap_closure: {
-    "^": "Closure:33;box_0,this_1",
+    "^": "Closure:38;box_0,this_1",
     call$2: function(key, val) {
       var t1 = this.this_1;
       J.$indexSet$ax(this.box_0.copy_0, t1._dispatch$1(key), t1._dispatch$1(val));
@@ -1888,7 +1901,7 @@ var $$ = Object.create(null);
     }, "call$0", null, 0, 0, null, "call"]
   },
   TimerImpl$periodic_closure: {
-    "^": "Closure:32;this_0,callback_1",
+    "^": "Closure:37;this_0,callback_1",
     call$0: [function() {
       this.callback_1.call$1(this.this_0);
     }, "call$0", null, 0, 0, null, "call"]
@@ -2077,6 +2090,11 @@ var $$ = Object.create(null);
     if (typeof index !== "number" || Math.floor(index) !== index)
       H.iae(index);
     throw H.wrapException(P.RangeError$value(index, null, null));
+  },
+  checkInt: function(value) {
+    if (typeof value !== "number" || Math.floor(value) !== value)
+      throw H.wrapException(P.ArgumentError$(value));
+    return value;
   },
   checkString: function(value) {
     if (typeof value !== "string")
@@ -2972,7 +2990,7 @@ var $$ = Object.create(null);
     }
   },
   Primitives_functionNoSuchMethod_closure: {
-    "^": "Closure:34;box_0,arguments_1,namedArgumentList_2",
+    "^": "Closure:39;box_0,arguments_1,namedArgumentList_2",
     call$2: function($name, argument) {
       var t1 = this.box_0;
       t1.names_1 = t1.names_1 + "$" + H.S($name);
@@ -2982,7 +3000,7 @@ var $$ = Object.create(null);
     }
   },
   Primitives_applyFunction_closure: {
-    "^": "Closure:34;box_0,defaultArguments_1",
+    "^": "Closure:39;box_0,defaultArguments_1",
     call$2: function(parameter, value) {
       var t1 = this.defaultArguments_1;
       if (t1.containsKey$1(parameter))
@@ -3088,7 +3106,7 @@ var $$ = Object.create(null);
     }
   },
   unwrapException_saveStackTrace: {
-    "^": "Closure:29;ex_0",
+    "^": "Closure:33;ex_0",
     call$1: function(error) {
       if (!!J.getInterceptor(error).$isError)
         if (error.$thrownJsError == null)
@@ -3111,31 +3129,31 @@ var $$ = Object.create(null);
     }
   },
   invokeClosure_closure: {
-    "^": "Closure:32;closure_0",
+    "^": "Closure:37;closure_0",
     call$0: function() {
       return this.closure_0.call$0();
     }
   },
   invokeClosure_closure0: {
-    "^": "Closure:32;closure_1,arg1_2",
+    "^": "Closure:37;closure_1,arg1_2",
     call$0: function() {
       return this.closure_1.call$1(this.arg1_2);
     }
   },
   invokeClosure_closure1: {
-    "^": "Closure:32;closure_3,arg1_4,arg2_5",
+    "^": "Closure:37;closure_3,arg1_4,arg2_5",
     call$0: function() {
       return this.closure_3.call$2(this.arg1_4, this.arg2_5);
     }
   },
   invokeClosure_closure2: {
-    "^": "Closure:32;closure_6,arg1_7,arg2_8,arg3_9",
+    "^": "Closure:37;closure_6,arg1_7,arg2_8,arg3_9",
     call$0: function() {
       return this.closure_6.call$3(this.arg1_7, this.arg2_8, this.arg3_9);
     }
   },
   invokeClosure_closure3: {
-    "^": "Closure:32;closure_10,arg1_11,arg2_12,arg3_13,arg4_14",
+    "^": "Closure:37;closure_10,arg1_11,arg2_12,arg3_13,arg4_14",
     call$0: function() {
       return this.closure_10.call$4(this.arg1_11, this.arg2_12, this.arg3_13, this.arg4_14);
     }
@@ -3308,13 +3326,13 @@ var $$ = Object.create(null);
     $isDynamicRuntimeType: true
   },
   initHooks_closure: {
-    "^": "Closure:29;getTag_0",
+    "^": "Closure:33;getTag_0",
     call$1: function(o) {
       return this.getTag_0(o);
     }
   },
   initHooks_closure0: {
-    "^": "Closure:35;getUnknownTag_1",
+    "^": "Closure:40;getUnknownTag_1",
     call$2: function(o, tag) {
       return this.getUnknownTag_1(o, tag);
     }
@@ -3475,7 +3493,7 @@ var $$ = Object.create(null);
     }
   },
   ActionDropper_getActionValues_closure: {
-    "^": "Closure:29;actions_0",
+    "^": "Closure:33;actions_0",
     call$1: function(child) {
       var t1, t2, degree, times, direction;
       t1 = J.getInterceptor$x(child);
@@ -3500,14 +3518,14 @@ var $$ = Object.create(null);
     }
   },
   ActionDropper__startDragListener_startMouseDownListener: {
-    "^": "Closure:36;box_0,this_1",
+    "^": "Closure:41;box_0,this_1",
     call$2: function(elem, isSample) {
       var t1 = J.get$onMouseDown$x(J.querySelector$1$x(elem, ".move-tag"));
       H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new A.ActionDropper__startDragListener_startMouseDownListener_closure(this.box_0, this.this_1, elem, isSample)), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
     }
   },
   ActionDropper__startDragListener_startMouseDownListener_closure: {
-    "^": "Closure:29;box_0,this_2,elem_3,isSample_4",
+    "^": "Closure:33;box_0,this_2,elem_3,isSample_4",
     call$1: [function(evt) {
       var t1, t2, t3, t4, t5;
       t1 = this.this_2;
@@ -3545,10 +3563,10 @@ var $$ = Object.create(null);
           t2.remove$0(t5);
         t1._isOnDrag = true;
       }
-    }, "call$1", null, 2, 0, null, 37, "call"]
+    }, "call$1", null, 2, 0, null, 42, "call"]
   },
   ActionDropper__startDragListener_closure: {
-    "^": "Closure:29;box_0,this_5,startMouseDownListener_6",
+    "^": "Closure:33;box_0,this_5,startMouseDownListener_6",
     call$1: [function(evt) {
       var t1, t2, newElement;
       t1 = this.this_5;
@@ -3566,10 +3584,10 @@ var $$ = Object.create(null);
         this.box_0.isFirst_4 = true;
         t1._clearBorder$0();
       }
-    }, "call$1", null, 2, 0, null, 37, "call"]
+    }, "call$1", null, 2, 0, null, 42, "call"]
   },
   ActionDropper__startDragListener_closure0: {
-    "^": "Closure:29;box_0,this_7",
+    "^": "Closure:33;box_0,this_7",
     call$1: [function(evt) {
       var t1, t2, t3, t4, t5, $top, i, tempPos, i0;
       t1 = this.this_7;
@@ -3635,14 +3653,14 @@ var $$ = Object.create(null);
               }
         }
       }
-    }, "call$1", null, 2, 0, null, 37, "call"]
+    }, "call$1", null, 2, 0, null, 42, "call"]
   },
   ActionDropper__startDeleteActionListener_closure: {
-    "^": "Closure:29;box_0,newElement_1",
+    "^": "Closure:33;box_0,newElement_1",
     call$1: [function(_) {
       J.remove$0$ax(this.newElement_1);
       this.box_0.listener_0.cancel$0();
-    }, "call$1", null, 2, 0, null, 38, "call"]
+    }, "call$1", null, 2, 0, null, 43, "call"]
   }
 }],
 ["client.game", "game.dart", , U, {
@@ -3696,34 +3714,34 @@ var $$ = Object.create(null);
     H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new U.startRunBtnListener_closure()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
   },
   main_closure: {
-    "^": "Closure:40;",
+    "^": "Closure:45;",
     call$1: [function(isDoneID) {
       if (isDoneID !== true)
         U.startGame();
       else
         window.location.href = "complete.html";
-    }, "call$1", null, 2, 0, null, 39, "call"]
+    }, "call$1", null, 2, 0, null, 44, "call"]
   },
   main_closure0: {
-    "^": "Closure:29;",
+    "^": "Closure:33;",
     call$1: [function(ex) {
       window.location.href = "error.html";
-    }, "call$1", null, 2, 0, null, 41, "call"]
+    }, "call$1", null, 2, 0, null, 46, "call"]
   },
   checkID_closure: {
-    "^": "Closure:29;cmpl_0",
+    "^": "Closure:33;cmpl_0",
     call$1: [function(response) {
       return this.cmpl_0.complete$1(0, response);
-    }, "call$1", null, 2, 0, null, 42, "call"]
+    }, "call$1", null, 2, 0, null, 47, "call"]
   },
   checkID_closure0: {
-    "^": "Closure:29;cmpl_1",
+    "^": "Closure:33;cmpl_1",
     call$1: [function(error) {
       return this.cmpl_1.completeError$1(error);
     }, "call$1", null, 2, 0, null, 17, "call"]
   },
   startRunBtnListener_closure: {
-    "^": "Closure:29;",
+    "^": "Closure:33;",
     call$1: [function(_) {
       var actions, pos, animate, highlight, t1, t2, t3, exception;
       $.map.resetPos$0();
@@ -3750,7 +3768,7 @@ var $$ = Object.create(null);
       }
 
       $.dropper.allowDragging = true;
-    }, "call$1", null, 2, 0, null, 38, "call"]
+    }, "call$1", null, 2, 0, null, 43, "call"]
   }
 },
 1],
@@ -4191,7 +4209,7 @@ var $$ = Object.create(null);
     }
   },
   LevelMap_startMove_closure: {
-    "^": "Closure:29;box_0,this_1,pos_2,imgs_3,highlight_4",
+    "^": "Closure:33;box_0,this_1,pos_2,imgs_3,highlight_4",
     call$1: function(_) {
       var t1, t2, posState, imgState, t3, t4, t5, t6, response, isValid, t7;
       t1 = this.box_0;
@@ -4502,6 +4520,9 @@ var $$ = Object.create(null);
           if (t3 !== "demo") {
             t2._renderCompletePage$0();
             document.querySelector(".numbers-insert").textContent = t3;
+          } else {
+            J.set$innerHtml$x(document.querySelector(".cmpl-text"), "\u606d\u559c\u4f60\u5b8c\u6210\u904a\u6232\uff01<br/>\u53ea\u8981\u5bc4\u4fe1\u628a\u9019\u500b\u904a\u6232\u5206\u4eab\u7d66\u59b3\u7684\u670b\u53cb\uff0c\u5c31\u53ef\u4ee5\u53c3\u52a0\u62bd\u734e\u5594\uff01");
+            J.get$classes$x(document.querySelector(".cmpl-text")).remove$1(0, "disappear");
           }
         }
       }
@@ -4510,14 +4531,14 @@ var $$ = Object.create(null);
     }
   },
   LevelMap__renderCompletePage_closure: {
-    "^": "Closure:29;this_0",
+    "^": "Closure:33;this_0",
     call$1: [function(_) {
       var t1 = this.this_0;
       t1._getMessage$0().then$1(new X.LevelMap__renderCompletePage__closure(t1));
-    }, "call$1", null, 2, 0, null, 38, "call"]
+    }, "call$1", null, 2, 0, null, 43, "call"]
   },
   LevelMap__renderCompletePage__closure: {
-    "^": "Closure:29;this_1",
+    "^": "Closure:33;this_1",
     call$1: [function(response) {
       var t1, fileType, t2, t3, type;
       t1 = J.getInterceptor$asx(response);
@@ -4559,34 +4580,34 @@ var $$ = Object.create(null);
         t1 = t2;
       }
       J.set$href$x(t1._replyBtn, "../authen/?id=" + H.S(t1.id));
-    }, "call$1", null, 2, 0, null, 42, "call"]
+    }, "call$1", null, 2, 0, null, 47, "call"]
   },
   LevelMap__renderCompletePage_closure0: {
-    "^": "Closure:29;",
+    "^": "Closure:33;",
     call$1: [function(ex) {
       P.print("error: " + H.S(ex));
-    }, "call$1", null, 2, 0, null, 41, "call"]
+    }, "call$1", null, 2, 0, null, 46, "call"]
   },
   LevelMap__setIdStatus_closure: {
-    "^": "Closure:32;cmpl_0",
+    "^": "Closure:37;cmpl_0",
     call$0: [function() {
       return this.cmpl_0.complete$0(0);
     }, "call$0", null, 0, 0, null, "call"]
   },
   LevelMap__setIdStatus_closure0: {
-    "^": "Closure:29;cmpl_1",
+    "^": "Closure:33;cmpl_1",
     call$1: [function(error) {
       return this.cmpl_1.completeError$1(error);
     }, "call$1", null, 2, 0, null, 17, "call"]
   },
   LevelMap__getMessage_closure: {
-    "^": "Closure:29;cmpl_0",
+    "^": "Closure:33;cmpl_0",
     call$1: [function(response) {
       return this.cmpl_0.complete$1(0, response);
-    }, "call$1", null, 2, 0, null, 42, "call"]
+    }, "call$1", null, 2, 0, null, 47, "call"]
   },
   LevelMap__getMessage_closure0: {
-    "^": "Closure:29;cmpl_1",
+    "^": "Closure:33;cmpl_1",
     call$1: [function(error) {
       return this.cmpl_1.completeError$1(error);
     }, "call$1", null, 2, 0, null, 17, "call"]
@@ -4680,7 +4701,7 @@ var $$ = Object.create(null);
     }
   },
   MotionGenerator_generatePos_closure: {
-    "^": "Closure:29;this_0,actionsPos_1",
+    "^": "Closure:33;this_0,actionsPos_1",
     call$1: function(action) {
       var t1, t2, t3, t4, i;
       t1 = J.getInterceptor$asx(action);
@@ -4747,7 +4768,7 @@ var $$ = Object.create(null);
     }
   },
   MotionGenerator_generateAnimation_closure: {
-    "^": "Closure:29;actionsAnimate_0",
+    "^": "Closure:33;actionsAnimate_0",
     call$1: function(action) {
       var t1, t2, i, t3;
       t1 = J.getInterceptor$asx(action);
@@ -4805,6 +4826,13 @@ var $$ = Object.create(null);
 }],
 ["dart._internal", "dart:_internal", , H, {
   "^": "",
+  IterableMixinWorkaround_any: function(iterable, f) {
+    var t1;
+    for (t1 = new H.ListIterator(iterable, iterable.length, 0, null); t1.moveNext$0();)
+      if (f.call$1(t1.__internal$_current) === true)
+        return true;
+    return false;
+  },
   IterableMixinWorkaround_setRangeList: function(list, start, end, from, skipCount) {
     var $length;
     if (start < 0 || start > list.length)
@@ -4822,6 +4850,9 @@ var $$ = Object.create(null);
   },
   IterableElementError_noElement: function() {
     return new P.StateError("No element");
+  },
+  IterableElementError_tooMany: function() {
+    return new P.StateError("Too many elements");
   },
   IterableElementError_tooFew: function() {
     return new P.StateError("Too few elements");
@@ -5448,7 +5479,7 @@ var $$ = Object.create(null);
     P._scheduleAsyncCallback(f);
   },
   _AsyncRun__initializeScheduleImmediate_internalCallback: {
-    "^": "Closure:29;box_0",
+    "^": "Closure:33;box_0",
     call$1: [function(_) {
       var t1, f;
       H.leaveJsAsync();
@@ -5456,10 +5487,10 @@ var $$ = Object.create(null);
       f = t1.storedCallback_0;
       t1.storedCallback_0 = null;
       f.call$0();
-    }, "call$1", null, 2, 0, null, 38, "call"]
+    }, "call$1", null, 2, 0, null, 43, "call"]
   },
   _AsyncRun__initializeScheduleImmediate_closure: {
-    "^": "Closure:43;box_0,div_1,span_2",
+    "^": "Closure:48;box_0,div_1,span_2",
     call$1: function(callback) {
       var t1, t2;
       ++init.globalState.topEventLoop._activeJsAsyncCount;
@@ -5470,14 +5501,14 @@ var $$ = Object.create(null);
     }
   },
   _AsyncRun__scheduleImmediateJsOverride_internalCallback: {
-    "^": "Closure:32;callback_0",
+    "^": "Closure:37;callback_0",
     call$0: [function() {
       H.leaveJsAsync();
       this.callback_0.call$0();
     }, "call$0", null, 0, 0, null, "call"]
   },
   _AsyncRun__scheduleImmediateWithSetImmediate_internalCallback: {
-    "^": "Closure:32;callback_0",
+    "^": "Closure:37;callback_0",
     call$0: [function() {
       H.leaveJsAsync();
       this.callback_0.call$0();
@@ -5828,19 +5859,19 @@ var $$ = Object.create(null);
       }}
   },
   _Future__addListener_closure: {
-    "^": "Closure:32;this_0,listener_1",
+    "^": "Closure:37;this_0,listener_1",
     call$0: function() {
       P._Future__propagateToListeners(this.this_0, this.listener_1);
     }
   },
   _Future__chainForeignFuture_closure: {
-    "^": "Closure:29;target_0",
+    "^": "Closure:33;target_0",
     call$1: [function(value) {
       this.target_0._completeWithValue$1(value);
     }, "call$1", null, 2, 0, null, 14, "call"]
   },
   _Future__chainForeignFuture_closure0: {
-    "^": "Closure:44;target_1",
+    "^": "Closure:49;target_1",
     call$2: [function(error, stackTrace) {
       this.target_1._completeError$2(error, stackTrace);
     }, function(error) {
@@ -5848,25 +5879,25 @@ var $$ = Object.create(null);
     }, "call$1", "call$2", null, null, 2, 2, null, 16, 17, 18, "call"]
   },
   _Future__asyncComplete_closure: {
-    "^": "Closure:32;this_0,coreFuture_1",
+    "^": "Closure:37;this_0,coreFuture_1",
     call$0: function() {
       P._Future__chainCoreFuture(this.coreFuture_1, this.this_0);
     }
   },
   _Future__asyncComplete_closure0: {
-    "^": "Closure:32;this_2,value_3",
+    "^": "Closure:37;this_2,value_3",
     call$0: function() {
       this.this_2._completeWithValue$1(this.value_3);
     }
   },
   _Future__asyncCompleteError_closure: {
-    "^": "Closure:32;this_0,error_1,stackTrace_2",
+    "^": "Closure:37;this_0,error_1,stackTrace_2",
     call$0: function() {
       this.this_0._completeError$2(this.error_1, this.stackTrace_2);
     }
   },
   _Future__propagateToListeners_handleValueCallback: {
-    "^": "Closure:45;box_1,listener_3,sourceValue_4,zone_5",
+    "^": "Closure:50;box_1,listener_3,sourceValue_4,zone_5",
     call$0: function() {
       var e, s, exception, t1;
       try {
@@ -5979,13 +6010,13 @@ var $$ = Object.create(null);
     }
   },
   _Future__propagateToListeners_handleWhenCompleteCallback_closure: {
-    "^": "Closure:29;box_2,result_11",
+    "^": "Closure:33;box_2,result_11",
     call$1: [function(ignored) {
       P._Future__propagateToListeners(this.box_2.source_4, new P._FutureListener(null, this.result_11, 0, null, null));
-    }, "call$1", null, 2, 0, null, 46, "call"]
+    }, "call$1", null, 2, 0, null, 51, "call"]
   },
   _Future__propagateToListeners_handleWhenCompleteCallback_closure0: {
-    "^": "Closure:44;box_0,result_12",
+    "^": "Closure:49;box_0,result_12",
     call$2: [function(error, stackTrace) {
       var t1, completeResult;
       t1 = this.box_0;
@@ -6031,7 +6062,7 @@ var $$ = Object.create(null);
     "^": "Closure;box_0,this_1,action_2,future_3",
     call$1: [function(element) {
       P._runUserCode(new P.Stream_forEach__closure(this.action_2, element), new P.Stream_forEach__closure0(), P._cancelAndErrorClosure(this.box_0.subscription_0, this.future_3));
-    }, "call$1", null, 2, 0, null, 47, "call"],
+    }, "call$1", null, 2, 0, null, 26, "call"],
     $signature: function() {
       return H.computeSignature(function(T) {
         return {func: "dynamic__T", args: [T]};
@@ -6039,30 +6070,30 @@ var $$ = Object.create(null);
     }
   },
   Stream_forEach__closure: {
-    "^": "Closure:32;action_4,element_5",
+    "^": "Closure:37;action_4,element_5",
     call$0: function() {
       return this.action_4.call$1(this.element_5);
     }
   },
   Stream_forEach__closure0: {
-    "^": "Closure:29;",
+    "^": "Closure:33;",
     call$1: function(_) {
     }
   },
   Stream_forEach_closure0: {
-    "^": "Closure:32;future_6",
+    "^": "Closure:37;future_6",
     call$0: [function() {
       this.future_6._complete$1(null);
     }, "call$0", null, 0, 0, null, "call"]
   },
   Stream_length_closure: {
-    "^": "Closure:29;box_0",
+    "^": "Closure:33;box_0",
     call$1: [function(_) {
       ++this.box_0.count_0;
-    }, "call$1", null, 2, 0, null, 38, "call"]
+    }, "call$1", null, 2, 0, null, 43, "call"]
   },
   Stream_length_closure0: {
-    "^": "Closure:32;box_0,future_1",
+    "^": "Closure:37;box_0,future_1",
     call$0: [function() {
       this.future_1._complete$1(this.box_0.count_0);
     }, "call$0", null, 0, 0, null, "call"]
@@ -6356,7 +6387,7 @@ var $$ = Object.create(null);
     }
   },
   _PendingEvents_schedule_closure: {
-    "^": "Closure:32;this_0,dispatch_1",
+    "^": "Closure:37;this_0,dispatch_1",
     call$0: function() {
       var t1, oldState;
       t1 = this.this_0;
@@ -6393,13 +6424,13 @@ var $$ = Object.create(null);
     }
   },
   _cancelAndError_closure: {
-    "^": "Closure:32;future_0,error_1,stackTrace_2",
+    "^": "Closure:37;future_0,error_1,stackTrace_2",
     call$0: function() {
       return this.future_0._completeError$2(this.error_1, this.stackTrace_2);
     }
   },
   _cancelAndErrorClosure_closure: {
-    "^": "Closure:48;subscription_0,future_1",
+    "^": "Closure:52;subscription_0,future_1",
     call$2: function(error, stackTrace) {
       return P._cancelAndError(this.subscription_0, this.future_1, error, stackTrace);
     }
@@ -6466,10 +6497,10 @@ var $$ = Object.create(null);
       return H.computeSignature(function(S, T) {
         return {func: "void__S", void: true, args: [S]};
       }, this.$receiver, "_ForwardingStreamSubscription");
-    }, 49],
+    }, 53],
     _handleError$2: [function(error, stackTrace) {
       this._addError$2(error, stackTrace);
-    }, "call$2", "get$_handleError", 4, 0, 50, 17, 18],
+    }, "call$2", "get$_handleError", 4, 0, 54, 17, 18],
     _handleDone$0: [function() {
       this._close$0();
     }, "call$0", "get$_handleDone", 0, 0, 11],
@@ -6515,7 +6546,7 @@ var $$ = Object.create(null);
     "^": "Object;"
   },
   _rootHandleUncaughtError_closure: {
-    "^": "Closure:32;error_0,stackTrace_1",
+    "^": "Closure:37;error_0,stackTrace_1",
     call$0: function() {
       throw H.wrapException(P._UncaughtAsyncError$(this.error_0, this.stackTrace_1));
     }
@@ -6609,28 +6640,28 @@ var $$ = Object.create(null);
     static: {"^": "_RootZone__rootMap,_RootZone__rootDelegate"}
   },
   _RootZone_bindCallback_closure: {
-    "^": "Closure:32;this_0,f_1",
+    "^": "Closure:37;this_0,f_1",
     call$0: function() {
       return this.this_0.runGuarded$1(this.f_1);
     }
   },
   _RootZone_bindCallback_closure0: {
-    "^": "Closure:32;this_2,f_3",
+    "^": "Closure:37;this_2,f_3",
     call$0: function() {
       return this.this_2.run$1(this.f_3);
     }
   },
   _RootZone_bindUnaryCallback_closure: {
-    "^": "Closure:29;this_0,f_1",
+    "^": "Closure:33;this_0,f_1",
     call$1: [function(arg) {
       return this.this_0.runUnaryGuarded$2(this.f_1, arg);
-    }, "call$1", null, 2, 0, null, 51, "call"]
+    }, "call$1", null, 2, 0, null, 55, "call"]
   },
   _RootZone_bindUnaryCallback_closure0: {
-    "^": "Closure:29;this_2,f_3",
+    "^": "Closure:33;this_2,f_3",
     call$1: [function(arg) {
       return this.this_2.runUnary$2(this.f_3, arg);
-    }, "call$1", null, 2, 0, null, 51, "call"]
+    }, "call$1", null, 2, 0, null, 55, "call"]
   }
 }],
 ["dart.collection", "dart:collection", , P, {
@@ -6981,10 +7012,10 @@ var $$ = Object.create(null);
       }}
   },
   _HashMap_values_closure: {
-    "^": "Closure:29;this_0",
+    "^": "Closure:33;this_0",
     call$1: [function(each) {
       return this.this_0.$index(0, each);
-    }, "call$1", null, 2, 0, null, 52, "call"]
+    }, "call$1", null, 2, 0, null, 56, "call"]
   },
   HashMapKeyIterable: {
     "^": "IterableBase;_map",
@@ -7247,10 +7278,10 @@ var $$ = Object.create(null);
       }}
   },
   _LinkedHashMap_values_closure: {
-    "^": "Closure:29;this_0",
+    "^": "Closure:33;this_0",
     call$1: [function(each) {
       return this.this_0.$index(0, each);
-    }, "call$1", null, 2, 0, null, 52, "call"]
+    }, "call$1", null, 2, 0, null, 56, "call"]
   },
   LinkedHashMapCell: {
     "^": "Object;_key<,_value@,_next@,_previous@"
@@ -7354,14 +7385,14 @@ var $$ = Object.create(null);
       index = this._findBucketIndex$2(bucket, object);
       if (index < 0)
         return;
-      return J.$index$asx(bucket, index).get$_element();
+      return J.$index$asx(bucket, index).get$_collection$_element();
     },
     forEach$1: function(_, action) {
       var cell, modifications;
       cell = this._first;
       modifications = this._modifications;
       for (; cell != null;) {
-        action.call$1(cell.get$_element());
+        action.call$1(cell.get$_collection$_element());
         if (modifications !== this._modifications)
           throw H.wrapException(P.ConcurrentModificationError$(this));
         cell = cell.get$_next();
@@ -7498,7 +7529,7 @@ var $$ = Object.create(null);
         return -1;
       $length = bucket.length;
       for (i = 0; i < $length; ++i)
-        if (J.$eq(bucket[i].get$_element(), element))
+        if (J.$eq(bucket[i].get$_collection$_element(), element))
           return i;
       return -1;
     },
@@ -7511,7 +7542,7 @@ var $$ = Object.create(null);
       }}
   },
   LinkedHashSetCell: {
-    "^": "Object;_element<,_next@,_previous@"
+    "^": "Object;_collection$_element<,_next@,_previous@"
   },
   LinkedHashSetIterator: {
     "^": "Object;_set,_modifications,_cell,_collection$_current",
@@ -7528,7 +7559,7 @@ var $$ = Object.create(null);
           this._collection$_current = null;
           return false;
         } else {
-          this._collection$_current = t1.get$_element();
+          this._collection$_current = t1.get$_collection$_element();
           this._cell = this._cell.get$_next();
           return true;
         }
@@ -7560,6 +7591,16 @@ var $$ = Object.create(null);
       for (count = 0; it.moveNext$0();)
         ++count;
       return count;
+    },
+    get$single: function(_) {
+      var it, result;
+      it = this.get$iterator(this);
+      if (!it.moveNext$0())
+        throw H.wrapException(H.IterableElementError_noElement());
+      result = it.get$current();
+      if (it.moveNext$0())
+        throw H.wrapException(H.IterableElementError_tooMany());
+      return result;
     },
     elementAt$1: function(_, index) {
       var t1, remaining, element;
@@ -7640,7 +7681,7 @@ var $$ = Object.create(null);
     $isEfficientLength: true
   },
   Maps_mapToString_closure: {
-    "^": "Closure:33;box_0,result_1",
+    "^": "Closure:38;box_0,result_1",
     call$2: function(k, v) {
       var t1 = this.box_0;
       if (!t1.first_0)
@@ -7783,8 +7824,8 @@ var $$ = Object.create(null);
     "^": "Object;",
     addAll$1: function(_, elements) {
       var t1;
-      for (t1 = new P.LinkedHashSetIterator(elements, elements._modifications, null, null), t1._cell = elements._first; t1.moveNext$0();)
-        this.add$1(0, t1._collection$_current);
+      for (t1 = J.get$iterator$ax(elements); t1.moveNext$0();)
+        this.add$1(0, t1.get$current());
     },
     map$1: function(_, f) {
       return H.setRuntimeTypeInfo(new H.EfficientLengthMappedIterable(this, f), [H.getTypeArgumentByIndex(this, 0), null]);
@@ -7864,13 +7905,13 @@ var $$ = Object.create(null);
     H.printString(line);
   },
   Function__toMangledNames_closure: {
-    "^": "Closure:33;result_0",
+    "^": "Closure:38;result_0",
     call$2: function(symbol, value) {
       this.result_0.$indexSet(0, symbol.get$_name(), value);
     }
   },
   NoSuchMethodError_toString_closure: {
-    "^": "Closure:53;box_0",
+    "^": "Closure:57;box_0",
     call$2: function(key, value) {
       var t1 = this.box_0;
       if (t1.i_1 > 0)
@@ -8018,7 +8059,7 @@ var $$ = Object.create(null);
       }}
   },
   Duration_toString_sixDigits: {
-    "^": "Closure:54;",
+    "^": "Closure:58;",
     call$1: function(n) {
       if (n >= 100000)
         return "" + n;
@@ -8034,7 +8075,7 @@ var $$ = Object.create(null);
     }
   },
   Duration_toString_twoDigits: {
-    "^": "Closure:54;",
+    "^": "Closure:58;",
     call$1: function(n) {
       if (n >= 10)
         return "" + n;
@@ -8374,17 +8415,17 @@ var $$ = Object.create(null);
   "^": "",
   HtmlElement: {
     "^": "Element;",
-    "%": "HTMLAppletElement|HTMLBRElement|HTMLCanvasElement|HTMLContentElement|HTMLDListElement|HTMLDataListElement|HTMLDetailsElement|HTMLDialogElement|HTMLDirectoryElement|HTMLDivElement|HTMLFieldSetElement|HTMLFontElement|HTMLFrameElement|HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLKeygenElement|HTMLLabelElement|HTMLLegendElement|HTMLMapElement|HTMLMarqueeElement|HTMLMenuElement|HTMLMenuItemElement|HTMLMetaElement|HTMLModElement|HTMLOListElement|HTMLObjectElement|HTMLOptGroupElement|HTMLParagraphElement|HTMLPictureElement|HTMLPreElement|HTMLQuoteElement|HTMLShadowElement|HTMLSpanElement|HTMLStyleElement|HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableDataCellElement|HTMLTableElement|HTMLTableHeaderCellElement|HTMLTableRowElement|HTMLTableSectionElement|HTMLTemplateElement|HTMLTitleElement|HTMLUListElement|HTMLUnknownElement;HTMLElement"
+    "%": "HTMLAppletElement|HTMLBRElement|HTMLCanvasElement|HTMLContentElement|HTMLDListElement|HTMLDataListElement|HTMLDetailsElement|HTMLDialogElement|HTMLDirectoryElement|HTMLDivElement|HTMLFontElement|HTMLFrameElement|HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLLabelElement|HTMLLegendElement|HTMLMarqueeElement|HTMLMenuElement|HTMLMenuItemElement|HTMLModElement|HTMLOListElement|HTMLOptGroupElement|HTMLParagraphElement|HTMLPictureElement|HTMLPreElement|HTMLQuoteElement|HTMLShadowElement|HTMLSpanElement|HTMLStyleElement|HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableDataCellElement|HTMLTableHeaderCellElement|HTMLTitleElement|HTMLUListElement|HTMLUnknownElement;HTMLElement"
   },
   AnchorElement: {
-    "^": "HtmlElement;href}",
+    "^": "HtmlElement;hostname=,href},port=,protocol=",
     toString$0: function(receiver) {
       return receiver.toString();
     },
     "%": "HTMLAnchorElement"
   },
   AreaElement: {
-    "^": "HtmlElement;href}",
+    "^": "HtmlElement;hostname=,href},port=,protocol=",
     toString$0: function(receiver) {
       return receiver.toString();
     },
@@ -8401,11 +8442,12 @@ var $$ = Object.create(null);
   },
   BodyElement: {
     "^": "HtmlElement;",
+    $isBodyElement: true,
     $isEventTarget: true,
     "%": "HTMLBodyElement"
   },
   ButtonElement: {
-    "^": "HtmlElement;value=",
+    "^": "HtmlElement;name=,value=",
     "%": "HTMLButtonElement"
   },
   CharacterData: {
@@ -8528,7 +8570,10 @@ var $$ = Object.create(null);
     "%": ";DOMRectReadOnly"
   },
   Element: {
-    "^": "Node;className%,style=",
+    "^": "Node;className%,style=,tagName=",
+    get$attributes: function(receiver) {
+      return new W._ElementAttributeMap(receiver);
+    },
     get$children: function(receiver) {
       return new W._ChildrenElementList(receiver, receiver.children);
     },
@@ -8540,6 +8585,73 @@ var $$ = Object.create(null);
     },
     toString$0: function(receiver) {
       return receiver.localName;
+    },
+    createFragment$3$treeSanitizer$validator: function(receiver, html, treeSanitizer, validator) {
+      var t1, t2, base, contextElement, fragment;
+      if (treeSanitizer == null) {
+        t1 = $.Element__defaultValidator;
+        if (t1 == null) {
+          t1 = H.setRuntimeTypeInfo([], [W.NodeValidator]);
+          t2 = new W.NodeValidatorBuilder(t1);
+          t1.push(W._Html5NodeValidator$(null));
+          t1.push(W._TemplatingNodeValidator$());
+          $.Element__defaultValidator = t2;
+          validator = t2;
+        } else
+          validator = t1;
+        t1 = $.Element__defaultSanitizer;
+        if (t1 == null) {
+          t1 = new W._ValidatingTreeSanitizer(validator);
+          $.Element__defaultSanitizer = t1;
+          treeSanitizer = t1;
+        } else {
+          t1.validator = validator;
+          treeSanitizer = t1;
+        }
+      }
+      if ($.Element__parseDocument == null) {
+        t1 = document.implementation.createHTMLDocument("");
+        $.Element__parseDocument = t1;
+        $.Element__parseRange = t1.createRange();
+        base = $.Element__parseDocument.createElement("base", null);
+        J.set$href$x(base, document.baseURI);
+        $.Element__parseDocument.head.appendChild(base);
+      }
+      t1 = $.Element__parseDocument;
+      if (!!this.$isBodyElement)
+        contextElement = t1.body;
+      else {
+        contextElement = t1.createElement(receiver.tagName, null);
+        $.Element__parseDocument.body.appendChild(contextElement);
+      }
+      if ("createContextualFragment" in window.Range.prototype) {
+        $.Element__parseRange.selectNodeContents(contextElement);
+        fragment = $.Element__parseRange.createContextualFragment(html);
+      } else {
+        contextElement.innerHTML = html;
+        fragment = $.Element__parseDocument.createDocumentFragment();
+        for (; t1 = contextElement.firstChild, t1 != null;)
+          fragment.appendChild(t1);
+      }
+      t1 = $.Element__parseDocument.body;
+      if (contextElement == null ? t1 != null : contextElement !== t1)
+        J.remove$0$ax(contextElement);
+      treeSanitizer.sanitizeTree$1(fragment);
+      document.adoptNode(fragment);
+      return fragment;
+    },
+    createFragment$2$treeSanitizer: function($receiver, html, treeSanitizer) {
+      return this.createFragment$3$treeSanitizer$validator($receiver, html, treeSanitizer, null);
+    },
+    set$innerHtml: function(receiver, html) {
+      this.setInnerHtml$1(receiver, html);
+    },
+    setInnerHtml$3$treeSanitizer$validator: function(receiver, html, treeSanitizer, validator) {
+      receiver.textContent = null;
+      receiver.appendChild(this.createFragment$3$treeSanitizer$validator(receiver, html, treeSanitizer, validator));
+    },
+    setInnerHtml$1: function($receiver, html) {
+      return this.setInnerHtml$3$treeSanitizer$validator($receiver, html, null, null);
     },
     click$0: function(receiver) {
       return receiver.click();
@@ -8561,7 +8673,7 @@ var $$ = Object.create(null);
     "%": ";Element"
   },
   EmbedElement: {
-    "^": "HtmlElement;src}",
+    "^": "HtmlElement;name=,src}",
     "%": "HTMLEmbedElement"
   },
   ErrorEvent: {
@@ -8592,8 +8704,12 @@ var $$ = Object.create(null);
     $isEventTarget: true,
     "%": "MediaStream;EventTarget"
   },
+  FieldSetElement: {
+    "^": "HtmlElement;name=",
+    "%": "HTMLFieldSetElement"
+  },
   FormElement: {
-    "^": "HtmlElement;length=",
+    "^": "HtmlElement;length=,name=",
     "%": "HTMLFormElement"
   },
   HtmlCollection: {
@@ -8626,7 +8742,7 @@ var $$ = Object.create(null);
     "%": "HTMLCollection|HTMLFormControlsCollection|HTMLOptionsCollection"
   },
   IFrameElement: {
-    "^": "HtmlElement;src}",
+    "^": "HtmlElement;name=,src}",
     "%": "HTMLIFrameElement"
   },
   ImageData: {
@@ -8639,11 +8755,15 @@ var $$ = Object.create(null);
     "%": "HTMLImageElement"
   },
   InputElement: {
-    "^": "HtmlElement;src},value=",
+    "^": "HtmlElement;name=,src},value=",
     $isElement: true,
     $isEventTarget: true,
     $isNode: true,
     "%": "HTMLInputElement"
+  },
+  KeygenElement: {
+    "^": "HtmlElement;name=",
+    "%": "HTMLKeygenElement"
   },
   LIElement: {
     "^": "HtmlElement;value=",
@@ -8660,13 +8780,35 @@ var $$ = Object.create(null);
     },
     "%": "Location"
   },
+  MapElement: {
+    "^": "HtmlElement;name=",
+    "%": "HTMLMapElement"
+  },
   MediaElement: {
     "^": "HtmlElement;error=,src}",
     "%": "HTMLAudioElement|HTMLMediaElement|HTMLVideoElement"
   },
+  MetaElement: {
+    "^": "HtmlElement;name=",
+    "%": "HTMLMetaElement"
+  },
   MeterElement: {
     "^": "HtmlElement;value=",
     "%": "HTMLMeterElement"
+  },
+  MidiOutput: {
+    "^": "MidiPort;",
+    send$2: function(receiver, data, timestamp) {
+      return receiver.send(data, timestamp);
+    },
+    send$1: function($receiver, data) {
+      return $receiver.send(data);
+    },
+    "%": "MIDIOutput"
+  },
+  MidiPort: {
+    "^": "EventTarget;",
+    "%": "MIDIInput;MIDIPort"
   },
   MouseEvent: {
     "^": "UIEvent;",
@@ -8700,6 +8842,9 @@ var $$ = Object.create(null);
   },
   Node: {
     "^": "EventTarget;",
+    get$nodes: function(receiver) {
+      return new W._ChildNodeListLazy(receiver);
+    },
     remove$0: function(receiver) {
       var t1 = receiver.parentNode;
       if (t1 != null)
@@ -8727,7 +8872,7 @@ var $$ = Object.create(null);
       return receiver.replaceChild(newChild, oldChild);
     },
     $isNode: true,
-    "%": "Attr|DocumentType|Notation;Node"
+    "%": "DocumentType|Notation;Node"
   },
   NodeList: {
     "^": "Interceptor_ListMixin_ImmutableListMixin0;",
@@ -8758,28 +8903,39 @@ var $$ = Object.create(null);
     $isJavaScriptIndexingBehavior: true,
     "%": "NodeList|RadioNodeList"
   },
+  ObjectElement: {
+    "^": "HtmlElement;name=",
+    "%": "HTMLObjectElement"
+  },
   OptionElement: {
     "^": "HtmlElement;value=",
     "%": "HTMLOptionElement"
   },
   OutputElement: {
-    "^": "HtmlElement;value=",
+    "^": "HtmlElement;name=,value=",
     "%": "HTMLOutputElement"
   },
   ParamElement: {
-    "^": "HtmlElement;value=",
+    "^": "HtmlElement;name=,value=",
     "%": "HTMLParamElement"
   },
   ProgressElement: {
     "^": "HtmlElement;value=",
     "%": "HTMLProgressElement"
   },
-  ScriptElement: {
+  Range: {
+    "^": "Interceptor;",
+    getBoundingClientRect$0: function(receiver) {
+      return receiver.getBoundingClientRect();
+    },
+    "%": "Range"
+  },
+  ScriptElement0: {
     "^": "HtmlElement;src}",
     "%": "HTMLScriptElement"
   },
   SelectElement: {
-    "^": "HtmlElement;length=,value=",
+    "^": "HtmlElement;length=,name=,value=",
     "%": "HTMLSelectElement"
   },
   ShadowRoot: {
@@ -8797,8 +8953,75 @@ var $$ = Object.create(null);
     "^": "Event;error=",
     "%": "SpeechRecognitionError"
   },
+  TableElement: {
+    "^": "HtmlElement;",
+    createFragment$3$treeSanitizer$validator: function(receiver, html, treeSanitizer, validator) {
+      var table, fragment;
+      if ("createContextualFragment" in window.Range.prototype)
+        return W.Element.prototype.createFragment$3$treeSanitizer$validator.call(this, receiver, html, treeSanitizer, validator);
+      table = W.Element_Element$html("<table>" + html + "</table>", treeSanitizer, validator);
+      fragment = document.createDocumentFragment();
+      fragment.toString;
+      new W._ChildNodeListLazy(fragment).addAll$1(0, J.get$nodes$x(table));
+      return fragment;
+    },
+    "%": "HTMLTableElement"
+  },
+  TableRowElement: {
+    "^": "HtmlElement;",
+    createFragment$3$treeSanitizer$validator: function(receiver, html, treeSanitizer, validator) {
+      var fragment, t1, section, row;
+      if ("createContextualFragment" in window.Range.prototype)
+        return W.Element.prototype.createFragment$3$treeSanitizer$validator.call(this, receiver, html, treeSanitizer, validator);
+      fragment = document.createDocumentFragment();
+      t1 = J.createFragment$3$treeSanitizer$validator$x(document.createElement("table", null), html, treeSanitizer, validator);
+      t1.toString;
+      t1 = new W._ChildNodeListLazy(t1);
+      section = t1.get$single(t1);
+      section.toString;
+      t1 = new W._ChildNodeListLazy(section);
+      row = t1.get$single(t1);
+      fragment.toString;
+      row.toString;
+      new W._ChildNodeListLazy(fragment).addAll$1(0, new W._ChildNodeListLazy(row));
+      return fragment;
+    },
+    "%": "HTMLTableRowElement"
+  },
+  TableSectionElement: {
+    "^": "HtmlElement;",
+    createFragment$3$treeSanitizer$validator: function(receiver, html, treeSanitizer, validator) {
+      var fragment, t1, section;
+      if ("createContextualFragment" in window.Range.prototype)
+        return W.Element.prototype.createFragment$3$treeSanitizer$validator.call(this, receiver, html, treeSanitizer, validator);
+      fragment = document.createDocumentFragment();
+      t1 = J.createFragment$3$treeSanitizer$validator$x(document.createElement("table", null), html, treeSanitizer, validator);
+      t1.toString;
+      t1 = new W._ChildNodeListLazy(t1);
+      section = t1.get$single(t1);
+      fragment.toString;
+      section.toString;
+      new W._ChildNodeListLazy(fragment).addAll$1(0, new W._ChildNodeListLazy(section));
+      return fragment;
+    },
+    "%": "HTMLTableSectionElement"
+  },
+  TemplateElement: {
+    "^": "HtmlElement;",
+    setInnerHtml$3$treeSanitizer$validator: function(receiver, html, treeSanitizer, validator) {
+      var fragment;
+      receiver.textContent = null;
+      fragment = this.createFragment$3$treeSanitizer$validator(receiver, html, treeSanitizer, validator);
+      receiver.content.appendChild(fragment);
+    },
+    setInnerHtml$1: function($receiver, html) {
+      return this.setInnerHtml$3$treeSanitizer$validator($receiver, html, null, null);
+    },
+    $isTemplateElement: true,
+    "%": "HTMLTemplateElement"
+  },
   TextAreaElement: {
-    "^": "HtmlElement;value=",
+    "^": "HtmlElement;name=,value=",
     "%": "HTMLTextAreaElement"
   },
   TrackElement: {
@@ -8817,6 +9040,10 @@ var $$ = Object.create(null);
     $isWindow: true,
     $isEventTarget: true,
     "%": "DOMWindow|Window"
+  },
+  _Attr: {
+    "^": "Node;name=,value=",
+    "%": "Attr"
   },
   _ClientRect: {
     "^": "Interceptor;bottom=,height=,left=,right=,top=,width=",
@@ -8913,6 +9140,14 @@ var $$ = Object.create(null);
   },
   CssStyleDeclaration__camelCase: function(hyphenated) {
     return hyphenated.replace(/^-ms-/, "ms-").replace(/-([\da-z])/ig, C.JS_CONST_s8I);
+  },
+  Element_Element$html: function(html, treeSanitizer, validator) {
+    var fragment, t1;
+    fragment = J.createFragment$3$treeSanitizer$validator$x(document.body, html, treeSanitizer, validator);
+    fragment.toString;
+    t1 = new W._ChildNodeListLazy(fragment);
+    t1 = t1.where$1(t1, new W.Element_Element$html_closure());
+    return t1.get$single(t1);
   },
   Element__offsetToHelper: function(current, $parent) {
     var t1, foundAsParent, p, t2, t3, t4;
@@ -9016,7 +9251,7 @@ var $$ = Object.create(null);
     }
   },
   _ChildrenElementList: {
-    "^": "ListBase;_html$_element,_childElements",
+    "^": "ListBase;_element,_childElements",
     get$length: function(_) {
       return this._childElements.length;
     },
@@ -9030,13 +9265,13 @@ var $$ = Object.create(null);
       var t1 = this._childElements;
       if (index >>> 0 !== index || index >= t1.length)
         return H.ioore(t1, index);
-      this._html$_element.replaceChild(value, t1[index]);
+      this._element.replaceChild(value, t1[index]);
     },
     set$length: function(_, newLength) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize element lists"));
     },
     add$1: function(_, value) {
-      this._html$_element.appendChild(value);
+      this._element.appendChild(value);
       return value;
     },
     get$iterator: function(_) {
@@ -9049,7 +9284,7 @@ var $$ = Object.create(null);
         throw H.wrapException(P.RangeError$range(index, 0, this.get$length(this), null, null));
       t1 = this._childElements;
       t2 = t1.length;
-      t3 = this._html$_element;
+      t3 = this._element;
       if (index === t2)
         t3.appendChild(element);
       else {
@@ -9099,7 +9334,13 @@ var $$ = Object.create(null);
       }}
   },
   _FrozenElementList$_wrap_closure: {
-    "^": "Closure:29;",
+    "^": "Closure:33;",
+    call$1: function(e) {
+      return !!J.getInterceptor(e).$isElement;
+    }
+  },
+  Element_Element$html_closure: {
+    "^": "Closure:33;",
     call$1: function(e) {
       return !!J.getInterceptor(e).$isElement;
     }
@@ -9122,8 +9363,27 @@ var $$ = Object.create(null);
   },
   _ChildNodeListLazy: {
     "^": "ListBase;_this",
+    get$single: function(_) {
+      var t1, l;
+      t1 = this._this;
+      l = t1.childNodes.length;
+      if (l === 0)
+        throw H.wrapException(P.StateError$("No elements"));
+      if (l > 1)
+        throw H.wrapException(P.StateError$("More than one element"));
+      return t1.firstChild;
+    },
     add$1: function(_, value) {
       this._this.appendChild(value);
+    },
+    addAll$1: function(_, iterable) {
+      var t1, t2, len, i;
+      t1 = iterable._this;
+      t2 = this._this;
+      if (t1 !== t2)
+        for (len = t1.childNodes.length, i = 0; i < len; ++i)
+          t2.appendChild(t1.firstChild);
+      return;
     },
     $indexSet: function(_, index, value) {
       var t1, t2;
@@ -9187,6 +9447,65 @@ var $$ = Object.create(null);
     },
     $isEfficientLength: true
   },
+  _AttributeMap: {
+    "^": "Object;",
+    forEach$1: function(_, f) {
+      var t1, key;
+      for (t1 = this.get$keys(), t1 = new H.ListIterator(t1, t1.length, 0, null); t1.moveNext$0();) {
+        key = t1.__internal$_current;
+        f.call$2(key, this.$index(0, key));
+      }
+    },
+    get$keys: function() {
+      var attributes, keys, len, i;
+      attributes = this._element.attributes;
+      keys = H.setRuntimeTypeInfo([], [P.String]);
+      for (len = attributes.length, i = 0; i < len; ++i) {
+        if (i >= attributes.length)
+          return H.ioore(attributes, i);
+        if (this._matches$1(attributes[i])) {
+          if (i >= attributes.length)
+            return H.ioore(attributes, i);
+          keys.push(J.get$name$x(attributes[i]));
+        }
+      }
+      return keys;
+    },
+    get$values: function(_) {
+      var attributes, values, len, i;
+      attributes = this._element.attributes;
+      values = H.setRuntimeTypeInfo([], [P.String]);
+      for (len = attributes.length, i = 0; i < len; ++i) {
+        if (i >= attributes.length)
+          return H.ioore(attributes, i);
+        if (this._matches$1(attributes[i])) {
+          if (i >= attributes.length)
+            return H.ioore(attributes, i);
+          values.push(J.get$value$x(attributes[i]));
+        }
+      }
+      return values;
+    },
+    $isMap: true,
+    $asMap: function() {
+      return [P.String, P.String];
+    }
+  },
+  _ElementAttributeMap: {
+    "^": "_AttributeMap;_element",
+    $index: function(_, key) {
+      return this._element.getAttribute(key);
+    },
+    $indexSet: function(_, key, value) {
+      this._element.setAttribute(key, value);
+    },
+    get$length: function(_) {
+      return this.get$keys().length;
+    },
+    _matches$1: function(node) {
+      return node.namespaceURI == null;
+    }
+  },
   _MultiElementCssClassSet: {
     "^": "CssClassSetImpl;_elementIterable,_elementCssClassSetIterable",
     readClasses$0: function() {
@@ -9213,29 +9532,29 @@ var $$ = Object.create(null);
       }}
   },
   _MultiElementCssClassSet_closure: {
-    "^": "Closure:29;",
+    "^": "Closure:33;",
     call$1: [function(e) {
       return new W._ElementCssClassSet(e);
     }, "call$1", null, 2, 0, null, 2, "call"]
   },
   _MultiElementCssClassSet_readClasses_closure: {
-    "^": "Closure:29;s_0",
+    "^": "Closure:33;s_0",
     call$1: function(e) {
       return this.s_0.addAll$1(0, e.readClasses$0());
     }
   },
   _MultiElementCssClassSet_modify_closure: {
-    "^": "Closure:29;f_0",
+    "^": "Closure:33;f_0",
     call$1: function(e) {
       return e.modify$1(this.f_0);
     }
   },
   _ElementCssClassSet: {
-    "^": "CssClassSetImpl;_html$_element",
+    "^": "CssClassSetImpl;_element",
     readClasses$0: function() {
       var s, t1, trimmed;
       s = P.LinkedHashSet_LinkedHashSet(null, null, null, P.String);
-      for (t1 = J.get$className$x(this._html$_element).split(" "), t1 = new H.ListIterator(t1, t1.length, 0, null); t1.moveNext$0();) {
+      for (t1 = J.get$className$x(this._element).split(" "), t1 = new H.ListIterator(t1, t1.length, 0, null); t1.moveNext$0();) {
         trimmed = J.trim$0$s(t1.__internal$_current);
         if (trimmed.length !== 0)
           s.add$1(0, trimmed);
@@ -9244,7 +9563,7 @@ var $$ = Object.create(null);
     },
     writeClasses$1: function(s) {
       P.List_List$from(s, true, null);
-      J.set$className$x(this._html$_element, s.join$1(0, " "));
+      J.set$className$x(this._element, s.join$1(0, " "));
     }
   },
   _EventStream: {
@@ -9301,6 +9620,68 @@ var $$ = Object.create(null);
         J.removeEventListener$3$x(this._target, this._eventType, t1, this._useCapture);
     }
   },
+  _Html5NodeValidator: {
+    "^": "Object;uriPolicy<",
+    allowsElement$1: function(element) {
+      return $.get$_Html5NodeValidator__allowedElements().contains$1(0, J.get$tagName$x(element));
+    },
+    allowsAttribute$3: function(element, attributeName, value) {
+      var tagName, t1, validator;
+      tagName = J.get$tagName$x(element);
+      t1 = $.get$_Html5NodeValidator__attributeValidators();
+      validator = t1.$index(0, H.S(tagName) + "::" + attributeName);
+      if (validator == null)
+        validator = t1.$index(0, "*::" + attributeName);
+      if (validator == null)
+        return false;
+      return validator.call$4(element, attributeName, value, this);
+    },
+    _Html5NodeValidator$1$uriPolicy: function(uriPolicy) {
+      var t1, t2;
+      t1 = $.get$_Html5NodeValidator__attributeValidators();
+      if (t1.get$isEmpty(t1)) {
+        for (t2 = new H.ListIterator(C.List_1GN, 261, 0, null); t2.moveNext$0();)
+          t1.$indexSet(0, t2.__internal$_current, W._Html5NodeValidator__standardAttributeValidator$closure());
+        for (t2 = new H.ListIterator(C.List_yrN, 12, 0, null); t2.moveNext$0();)
+          t1.$indexSet(0, t2.__internal$_current, W._Html5NodeValidator__uriAttributeValidator$closure());
+      }
+    },
+    static: {"^": "_Html5NodeValidator__allowedElements,_Html5NodeValidator__standardAttributes,_Html5NodeValidator__uriAttributes,_Html5NodeValidator__attributeValidators", _Html5NodeValidator$: function(uriPolicy) {
+        var e, t1;
+        e = document.createElement("a", null);
+        t1 = new W._SameOriginUriPolicy(e, window.location);
+        t1 = new W._Html5NodeValidator(t1);
+        t1._Html5NodeValidator$1$uriPolicy(uriPolicy);
+        return t1;
+      }, _Html5NodeValidator__standardAttributeValidator: [function(element, attributeName, value, context) {
+        return true;
+      }, "call$4", "_Html5NodeValidator__standardAttributeValidator$closure", 8, 0, 25, 26, 27, 14, 28], _Html5NodeValidator__uriAttributeValidator: [function(element, attributeName, value, context) {
+        var t1, t2, t3, t4, t5;
+        t1 = context.get$uriPolicy();
+        t2 = t1._hiddenAnchor;
+        t3 = J.getInterceptor$x(t2);
+        t3.set$href(t2, value);
+        t4 = t3.get$hostname(t2);
+        t1 = t1._loc;
+        t5 = t1.hostname;
+        if (t4 == null ? t5 == null : t4 === t5) {
+          t4 = t3.get$port(t2);
+          t5 = t1.port;
+          if (t4 == null ? t5 == null : t4 === t5) {
+            t4 = t3.get$protocol(t2);
+            t1 = t1.protocol;
+            t1 = t4 == null ? t1 == null : t4 === t1;
+          } else
+            t1 = false;
+        } else
+          t1 = false;
+        if (!t1)
+          t1 = t3.get$hostname(t2) === "" && t3.get$port(t2) === "" && t3.get$protocol(t2) === ":";
+        else
+          t1 = true;
+        return t1;
+      }, "call$4", "_Html5NodeValidator__uriAttributeValidator$closure", 8, 0, 25, 26, 27, 14, 28]}
+  },
   ImmutableListMixin: {
     "^": "Object;",
     get$iterator: function(receiver) {
@@ -9312,6 +9693,104 @@ var $$ = Object.create(null);
     $isList: true,
     $asList: null,
     $isEfficientLength: true
+  },
+  NodeValidatorBuilder: {
+    "^": "Object;_validators",
+    add$1: function(_, validator) {
+      this._validators.push(validator);
+    },
+    allowsElement$1: function(element) {
+      return H.IterableMixinWorkaround_any(this._validators, new W.NodeValidatorBuilder_allowsElement_closure(element));
+    },
+    allowsAttribute$3: function(element, attributeName, value) {
+      return H.IterableMixinWorkaround_any(this._validators, new W.NodeValidatorBuilder_allowsAttribute_closure(element, attributeName, value));
+    }
+  },
+  NodeValidatorBuilder_allowsElement_closure: {
+    "^": "Closure:33;element_0",
+    call$1: function(v) {
+      return v.allowsElement$1(this.element_0);
+    }
+  },
+  NodeValidatorBuilder_allowsAttribute_closure: {
+    "^": "Closure:33;element_0,attributeName_1,value_2",
+    call$1: function(v) {
+      return v.allowsAttribute$3(this.element_0, this.attributeName_1, this.value_2);
+    }
+  },
+  _SimpleNodeValidator: {
+    "^": "Object;uriPolicy<",
+    allowsElement$1: function(element) {
+      return this.allowedElements.contains$1(0, J.get$tagName$x(element));
+    },
+    allowsAttribute$3: function(element, attributeName, value) {
+      var tagName, t1;
+      tagName = J.get$tagName$x(element);
+      t1 = this.allowedUriAttributes;
+      if (t1.contains$1(0, H.S(tagName) + "::" + attributeName))
+        return this.uriPolicy.allowsUri$1(value);
+      else if (t1.contains$1(0, "*::" + attributeName))
+        return this.uriPolicy.allowsUri$1(value);
+      else {
+        t1 = this.allowedAttributes;
+        if (t1.contains$1(0, H.S(tagName) + "::" + attributeName))
+          return true;
+        else if (t1.contains$1(0, "*::" + attributeName))
+          return true;
+        else if (t1.contains$1(0, H.S(tagName) + "::*"))
+          return true;
+        else if (t1.contains$1(0, "*::*"))
+          return true;
+      }
+      return false;
+    }
+  },
+  _TemplatingNodeValidator: {
+    "^": "_SimpleNodeValidator;_templateAttrs,allowedElements,allowedAttributes,allowedUriAttributes,uriPolicy",
+    allowsAttribute$3: function(element, attributeName, value) {
+      if (W._SimpleNodeValidator.prototype.allowsAttribute$3.call(this, element, attributeName, value))
+        return true;
+      if (attributeName === "template" && value === "")
+        return true;
+      if (J.get$attributes$x(element)._element.getAttribute("template") === "")
+        return this._templateAttrs.contains$1(0, attributeName);
+      return false;
+    },
+    static: {"^": "_TemplatingNodeValidator__TEMPLATE_ATTRS", _TemplatingNodeValidator$: function() {
+        var t1, t2, t3, t4;
+        t1 = H.setRuntimeTypeInfo(new H.MappedListIterable(C.List_wSV, new W._TemplatingNodeValidator_closure()), [null, null]);
+        t2 = P.LinkedHashSet_LinkedHashSet(null, null, null, null);
+        t2.addAll$1(0, ["TEMPLATE"]);
+        t3 = P.LinkedHashSet_LinkedHashSet(null, null, null, null);
+        t3.addAll$1(0, t1);
+        t1 = t3;
+        t3 = P.LinkedHashSet_LinkedHashSet(null, null, null, null);
+        t4 = P.LinkedHashSet_LinkedHashSet(null, null, null, P.String);
+        t4.addAll$1(0, C.List_wSV);
+        return new W._TemplatingNodeValidator(t4, t2, t1, t3, null);
+      }}
+  },
+  _TemplatingNodeValidator_closure: {
+    "^": "Closure:33;",
+    call$1: [function(attr) {
+      return "TEMPLATE::" + H.S(attr);
+    }, "call$1", null, 2, 0, null, 59, "call"]
+  },
+  _SvgNodeValidator: {
+    "^": "Object;",
+    allowsElement$1: function(element) {
+      var t1 = J.getInterceptor(element);
+      if (!!t1.$isScriptElement)
+        return false;
+      if (!!t1.$isSvgElement)
+        return true;
+      return false;
+    },
+    allowsAttribute$3: function(element, attributeName, value) {
+      if (attributeName === "is" || C.JSString_methods.startsWith$1(attributeName, "on"))
+        return false;
+      return this.allowsElement$1(element);
+    }
   },
   FixedSizeListIterator: {
     "^": "Object;_array,_length,_position,_current",
@@ -9347,6 +9826,81 @@ var $$ = Object.create(null);
         else
           return new W._DOMWindowCrossFrame(w);
       }}
+  },
+  NodeValidator: {
+    "^": "Object;"
+  },
+  _SameOriginUriPolicy: {
+    "^": "Object;_hiddenAnchor,_loc"
+  },
+  _ValidatingTreeSanitizer: {
+    "^": "Object;validator",
+    sanitizeTree$1: function(node) {
+      new W._ValidatingTreeSanitizer_sanitizeTree_walk(this).call$1(node);
+    },
+    sanitizeNode$1: function(node) {
+      var t1, attrs, t2, isAttr, keys, i, $name, t3;
+      switch (node.nodeType) {
+        case 1:
+          t1 = J.getInterceptor$x(node);
+          attrs = t1.get$attributes(node);
+          if (!this.validator.allowsElement$1(node)) {
+            window;
+            t2 = "Removing disallowed element <" + H.S(t1.get$tagName(node)) + ">";
+            if (typeof console != "undefined")
+              console.warn(t2);
+            t1.remove$0(node);
+            break;
+          }
+          t2 = attrs._element;
+          isAttr = t2.getAttribute("is");
+          if (isAttr != null)
+            if (!this.validator.allowsAttribute$3(node, "is", isAttr)) {
+              window;
+              t2 = "Removing disallowed type extension <" + H.S(t1.get$tagName(node)) + " is=\"" + isAttr + "\">";
+              if (typeof console != "undefined")
+                console.warn(t2);
+              t1.remove$0(node);
+              break;
+            }
+          keys = C.JSArray_methods.toList$0(attrs.get$keys());
+          for (i = attrs.get$keys().length - 1; i >= 0; --i) {
+            if (i >= keys.length)
+              return H.ioore(keys, i);
+            $name = keys[i];
+            if (!this.validator.allowsAttribute$3(node, J.toLowerCase$0$s($name), t2.getAttribute($name))) {
+              window;
+              t3 = "Removing disallowed attribute <" + H.S(t1.get$tagName(node)) + " " + H.S($name) + "=\"" + H.S(t2.getAttribute($name)) + "\">";
+              if (typeof console != "undefined")
+                console.warn(t3);
+              t2.getAttribute($name);
+              t2.removeAttribute($name);
+            }
+          }
+          if (!!t1.$isTemplateElement)
+            this.sanitizeTree$1(node.content);
+          break;
+        case 8:
+        case 11:
+        case 3:
+        case 4:
+          break;
+        default:
+          J.remove$0$ax(node);
+      }
+    }
+  },
+  _ValidatingTreeSanitizer_sanitizeTree_walk: {
+    "^": "Closure:60;this_0",
+    call$1: function(node) {
+      var child, nextChild;
+      this.this_0.sanitizeNode$1(node);
+      child = node.lastChild;
+      for (; child != null; child = nextChild) {
+        nextChild = child.previousSibling;
+        this.call$1(child);
+      }
+    }
   }
 }],
 ["dart.dom.indexed_db", "dart:indexed_db", , P, {
@@ -9423,6 +9977,11 @@ var $$ = Object.create(null);
     "^": "SvgElement;result=",
     "%": "SVGFETurbulenceElement"
   },
+  ScriptElement: {
+    "^": "SvgElement;",
+    $isScriptElement: true,
+    "%": "SVGScriptElement"
+  },
   SvgElement: {
     "^": "Element;",
     get$classes: function(receiver) {
@@ -9433,6 +9992,28 @@ var $$ = Object.create(null);
     get$children: function(receiver) {
       return H.setRuntimeTypeInfo(new P.FilteredElementList(receiver, new W._ChildNodeListLazy(receiver)), [W.Element]);
     },
+    set$innerHtml: function(receiver, value) {
+      receiver.textContent = null;
+      receiver.appendChild(this.createFragment$3$treeSanitizer$validator(receiver, value, null, null));
+    },
+    createFragment$3$treeSanitizer$validator: function(receiver, svg, treeSanitizer, validator) {
+      var t1, html, fragment, svgFragment, root;
+      t1 = H.setRuntimeTypeInfo([], [W.NodeValidator]);
+      validator = new W.NodeValidatorBuilder(t1);
+      t1.push(W._Html5NodeValidator$(null));
+      t1.push(W._TemplatingNodeValidator$());
+      t1.push(new W._SvgNodeValidator());
+      treeSanitizer = new W._ValidatingTreeSanitizer(validator);
+      html = "<svg version=\"1.1\">" + svg + "</svg>";
+      fragment = J.createFragment$2$treeSanitizer$x(document.body, html, treeSanitizer);
+      svgFragment = document.createDocumentFragment();
+      fragment.toString;
+      t1 = new W._ChildNodeListLazy(fragment);
+      root = t1.get$single(t1);
+      for (; t1 = root.firstChild, t1 != null;)
+        svgFragment.appendChild(t1);
+      return svgFragment;
+    },
     click$0: function(receiver) {
       throw H.wrapException(P.UnsupportedError$("Cannot invoke click SVG."));
     },
@@ -9442,8 +10023,9 @@ var $$ = Object.create(null);
     get$onMouseDown: function(receiver) {
       return H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(receiver, "mousedown", false), [null]);
     },
+    $isSvgElement: true,
     $isEventTarget: true,
-    "%": "SVGAElement|SVGAltGlyphDefElement|SVGAltGlyphElement|SVGAltGlyphItemElement|SVGAnimateElement|SVGAnimateMotionElement|SVGAnimateTransformElement|SVGAnimationElement|SVGCircleElement|SVGClipPathElement|SVGComponentTransferFunctionElement|SVGCursorElement|SVGDefsElement|SVGDescElement|SVGDiscardElement|SVGEllipseElement|SVGFEDistantLightElement|SVGFEDropShadowElement|SVGFEFuncAElement|SVGFEFuncBElement|SVGFEFuncGElement|SVGFEFuncRElement|SVGFEMergeNodeElement|SVGFEPointLightElement|SVGFESpotLightElement|SVGFilterElement|SVGFontElement|SVGFontFaceElement|SVGFontFaceFormatElement|SVGFontFaceNameElement|SVGFontFaceSrcElement|SVGFontFaceUriElement|SVGForeignObjectElement|SVGGElement|SVGGeometryElement|SVGGlyphElement|SVGGlyphRefElement|SVGGradientElement|SVGGraphicsElement|SVGHKernElement|SVGImageElement|SVGLineElement|SVGLinearGradientElement|SVGMPathElement|SVGMarkerElement|SVGMaskElement|SVGMetadataElement|SVGMissingGlyphElement|SVGPathElement|SVGPatternElement|SVGPolygonElement|SVGPolylineElement|SVGRadialGradientElement|SVGRectElement|SVGSVGElement|SVGScriptElement|SVGSetElement|SVGStopElement|SVGStyleElement|SVGSwitchElement|SVGSymbolElement|SVGTSpanElement|SVGTextContentElement|SVGTextElement|SVGTextPathElement|SVGTextPositioningElement|SVGTitleElement|SVGUseElement|SVGVKernElement|SVGViewElement;SVGElement"
+    "%": "SVGAElement|SVGAltGlyphDefElement|SVGAltGlyphElement|SVGAltGlyphItemElement|SVGAnimateElement|SVGAnimateMotionElement|SVGAnimateTransformElement|SVGAnimationElement|SVGCircleElement|SVGClipPathElement|SVGComponentTransferFunctionElement|SVGCursorElement|SVGDefsElement|SVGDescElement|SVGDiscardElement|SVGEllipseElement|SVGFEDistantLightElement|SVGFEDropShadowElement|SVGFEFuncAElement|SVGFEFuncBElement|SVGFEFuncGElement|SVGFEFuncRElement|SVGFEMergeNodeElement|SVGFEPointLightElement|SVGFESpotLightElement|SVGFilterElement|SVGFontElement|SVGFontFaceElement|SVGFontFaceFormatElement|SVGFontFaceNameElement|SVGFontFaceSrcElement|SVGFontFaceUriElement|SVGForeignObjectElement|SVGGElement|SVGGeometryElement|SVGGlyphElement|SVGGlyphRefElement|SVGGradientElement|SVGGraphicsElement|SVGHKernElement|SVGImageElement|SVGLineElement|SVGLinearGradientElement|SVGMPathElement|SVGMarkerElement|SVGMaskElement|SVGMetadataElement|SVGMissingGlyphElement|SVGPathElement|SVGPatternElement|SVGPolygonElement|SVGPolylineElement|SVGRadialGradientElement|SVGRectElement|SVGSVGElement|SVGSetElement|SVGStopElement|SVGStyleElement|SVGSwitchElement|SVGSymbolElement|SVGTSpanElement|SVGTextContentElement|SVGTextElement|SVGTextPathElement|SVGTextPositioningElement|SVGTitleElement|SVGUseElement|SVGVKernElement|SVGViewElement;SVGElement"
   },
   _AttributeClassSet: {
     "^": "CssClassSetImpl;_svg$_element",
@@ -9482,7 +10064,7 @@ var $$ = Object.create(null);
       $arguments = arguments0;
     }
     return P._convertToJS(H.Primitives_applyFunction(callback, P.List_List$from(J.map$1$ax($arguments, P._convertToDart$closure()), true, null), P.Function__toMangledNames(null)));
-  }, "call$4", "_callDartFunction$closure", 8, 0, null, 25, 26, 27, 28],
+  }, "call$4", "_callDartFunction$closure", 8, 0, null, 29, 30, 31, 32],
   _defineProperty: function(o, $name, value) {
     var exception;
     if (Object.isExtensible(o) && !Object.prototype.hasOwnProperty.call(o, $name))
@@ -9517,7 +10099,7 @@ var $$ = Object.create(null);
       else
         return P._getJsProxy(o, "_$dart_jsObject", new P._convertToJS_closure0($.get$_dartProxyCtor()));
     }
-  }, "call$1", "_convertToJS$closure", 2, 0, 29, 30],
+  }, "call$1", "_convertToJS$closure", 2, 0, 33, 34],
   _getJsProxy: function(o, propertyName, createProxy) {
     var jsProxy = P._getOwnProperty(o, propertyName);
     if (jsProxy == null) {
@@ -9545,7 +10127,7 @@ var $$ = Object.create(null);
       else
         return P._wrapToDart(o);
     }
-  }, "call$1", "_convertToDart$closure", 2, 0, 31, 30],
+  }, "call$1", "_convertToDart$closure", 2, 0, 35, 34],
   _wrapToDart: function(o) {
     if (typeof o == "function")
       return P._getDartProxy(o, $.get$_DART_CLOSURE_PROPERTY_NAME(), new P._wrapToDart_closure());
@@ -9650,7 +10232,7 @@ var $$ = Object.create(null);
     $isEfficientLength: true
   },
   _convertToJS_closure: {
-    "^": "Closure:29;",
+    "^": "Closure:33;",
     call$1: function(o) {
       var jsFunction = function(_call, f, captureThis) {
         return function() {
@@ -9662,25 +10244,25 @@ var $$ = Object.create(null);
     }
   },
   _convertToJS_closure0: {
-    "^": "Closure:29;ctor_0",
+    "^": "Closure:33;ctor_0",
     call$1: function(o) {
       return new this.ctor_0(o);
     }
   },
   _wrapToDart_closure: {
-    "^": "Closure:29;",
+    "^": "Closure:33;",
     call$1: function(o) {
       return new P.JsFunction(o);
     }
   },
   _wrapToDart_closure0: {
-    "^": "Closure:29;",
+    "^": "Closure:33;",
     call$1: function(o) {
       return H.setRuntimeTypeInfo(new P.JsArray(o), [null]);
     }
   },
   _wrapToDart_closure1: {
-    "^": "Closure:29;",
+    "^": "Closure:33;",
     call$1: function(o) {
       return new P.JsObject(o);
     }
@@ -10138,10 +10720,10 @@ var $$ = Object.create(null);
     $isEfficientLength: true
   },
   CssClassSetImpl_add_closure: {
-    "^": "Closure:29;value_0",
+    "^": "Closure:33;value_0",
     call$1: [function(s) {
       return J.add$1$ax(s, this.value_0);
-    }, "call$1", null, 2, 0, null, 55, "call"]
+    }, "call$1", null, 2, 0, null, 61, "call"]
   },
   FilteredElementList: {
     "^": "ListBase;_node,_childNodes",
@@ -10203,13 +10785,13 @@ var $$ = Object.create(null);
     }
   },
   FilteredElementList__filtered_closure: {
-    "^": "Closure:29;",
+    "^": "Closure:33;",
     call$1: function(n) {
       return !!J.getInterceptor(n).$isElement;
     }
   },
   FilteredElementList_removeRange_closure: {
-    "^": "Closure:29;",
+    "^": "Closure:33;",
     call$1: function(el) {
       return J.remove$0$ax(el);
     }
@@ -10255,6 +10837,9 @@ $$ = null;
   _ = P.Symbol;
   _.$isSymbol = TRUE;
   _.$isObject = TRUE;
+  _ = W.NodeValidator;
+  _.$isNodeValidator = TRUE;
+  _.$isObject = TRUE;
   H.RawReceivePortImpl.$isObject = TRUE;
   H._IsolateEvent.$isObject = TRUE;
   H._IsolateContext.$isObject = TRUE;
@@ -10267,6 +10852,10 @@ $$ = null;
   P.Object.$isObject = TRUE;
   _ = P.Comparable;
   _.$isComparable = TRUE;
+  _.$isObject = TRUE;
+  _ = W._Html5NodeValidator;
+  _.$is_Html5NodeValidator = TRUE;
+  _.$isNodeValidator = TRUE;
   _.$isObject = TRUE;
   _ = P._EventSink;
   _.$is_EventSink = TRUE;
@@ -10462,11 +11051,20 @@ J.contains$1$asx = function(receiver, a0) {
 J.contains$2$asx = function(receiver, a0, a1) {
   return J.getInterceptor$asx(receiver).contains$2(receiver, a0, a1);
 };
+J.createFragment$2$treeSanitizer$x = function(receiver, a0, a1) {
+  return J.getInterceptor$x(receiver).createFragment$2$treeSanitizer(receiver, a0, a1);
+};
+J.createFragment$3$treeSanitizer$validator$x = function(receiver, a0, a1, a2) {
+  return J.getInterceptor$x(receiver).createFragment$3$treeSanitizer$validator(receiver, a0, a1, a2);
+};
 J.elementAt$1$ax = function(receiver, a0) {
   return J.getInterceptor$ax(receiver).elementAt$1(receiver, a0);
 };
 J.forEach$1$ax = function(receiver, a0) {
   return J.getInterceptor$ax(receiver).forEach$1(receiver, a0);
+};
+J.get$attributes$x = function(receiver) {
+  return J.getInterceptor$x(receiver).get$attributes(receiver);
 };
 J.get$children$x = function(receiver) {
   return J.getInterceptor$x(receiver).get$children(receiver);
@@ -10489,6 +11087,12 @@ J.get$iterator$ax = function(receiver) {
 J.get$length$asx = function(receiver) {
   return J.getInterceptor$asx(receiver).get$length(receiver);
 };
+J.get$name$x = function(receiver) {
+  return J.getInterceptor$x(receiver).get$name(receiver);
+};
+J.get$nodes$x = function(receiver) {
+  return J.getInterceptor$x(receiver).get$nodes(receiver);
+};
 J.get$onClick$x = function(receiver) {
   return J.getInterceptor$x(receiver).get$onClick(receiver);
 };
@@ -10500,6 +11104,9 @@ J.get$result$x = function(receiver) {
 };
 J.get$style$x = function(receiver) {
   return J.getInterceptor$x(receiver).get$style(receiver);
+};
+J.get$tagName$x = function(receiver) {
+  return J.getInterceptor$x(receiver).get$tagName(receiver);
 };
 J.get$topLeft$x = function(receiver) {
   return J.getInterceptor$x(receiver).get$topLeft(receiver);
@@ -10537,6 +11144,9 @@ J.removeEventListener$3$x = function(receiver, a0, a1, a2) {
 J.replaceWith$1$x = function(receiver, a0) {
   return J.getInterceptor$x(receiver).replaceWith$1(receiver, a0);
 };
+J.send$1$x = function(receiver, a0) {
+  return J.getInterceptor$x(receiver).send$1(receiver, a0);
+};
 J.set$backgroundColor$x = function(receiver, value) {
   return J.getInterceptor$x(receiver).set$backgroundColor(receiver, value);
 };
@@ -10557,6 +11167,9 @@ J.set$className$x = function(receiver, value) {
 };
 J.set$href$x = function(receiver, value) {
   return J.getInterceptor$x(receiver).set$href(receiver, value);
+};
+J.set$innerHtml$x = function(receiver, value) {
+  return J.getInterceptor$x(receiver).set$innerHtml(receiver, value);
 };
 J.set$left$x = function(receiver, value) {
   return J.getInterceptor$x(receiver).set$left(receiver, value);
@@ -10743,7 +11356,10 @@ C.JS_CONST_rr7 = function(hooks) {
   hooks.prototypeForTag = prototypeForTagFixed;
 };
 C.JS_CONST_s8I = function(_, letter) { return letter.toUpperCase(); };
+C.List_1GN = H.setRuntimeTypeInfo(Isolate.makeConstantList(["*::class", "*::dir", "*::draggable", "*::hidden", "*::id", "*::inert", "*::itemprop", "*::itemref", "*::itemscope", "*::lang", "*::spellcheck", "*::title", "*::translate", "A::accesskey", "A::coords", "A::hreflang", "A::name", "A::shape", "A::tabindex", "A::target", "A::type", "AREA::accesskey", "AREA::alt", "AREA::coords", "AREA::nohref", "AREA::shape", "AREA::tabindex", "AREA::target", "AUDIO::controls", "AUDIO::loop", "AUDIO::mediagroup", "AUDIO::muted", "AUDIO::preload", "BDO::dir", "BODY::alink", "BODY::bgcolor", "BODY::link", "BODY::text", "BODY::vlink", "BR::clear", "BUTTON::accesskey", "BUTTON::disabled", "BUTTON::name", "BUTTON::tabindex", "BUTTON::type", "BUTTON::value", "CANVAS::height", "CANVAS::width", "CAPTION::align", "COL::align", "COL::char", "COL::charoff", "COL::span", "COL::valign", "COL::width", "COLGROUP::align", "COLGROUP::char", "COLGROUP::charoff", "COLGROUP::span", "COLGROUP::valign", "COLGROUP::width", "COMMAND::checked", "COMMAND::command", "COMMAND::disabled", "COMMAND::label", "COMMAND::radiogroup", "COMMAND::type", "DATA::value", "DEL::datetime", "DETAILS::open", "DIR::compact", "DIV::align", "DL::compact", "FIELDSET::disabled", "FONT::color", "FONT::face", "FONT::size", "FORM::accept", "FORM::autocomplete", "FORM::enctype", "FORM::method", "FORM::name", "FORM::novalidate", "FORM::target", "FRAME::name", "H1::align", "H2::align", "H3::align", "H4::align", "H5::align", "H6::align", "HR::align", "HR::noshade", "HR::size", "HR::width", "HTML::version", "IFRAME::align", "IFRAME::frameborder", "IFRAME::height", "IFRAME::marginheight", "IFRAME::marginwidth", "IFRAME::width", "IMG::align", "IMG::alt", "IMG::border", "IMG::height", "IMG::hspace", "IMG::ismap", "IMG::name", "IMG::usemap", "IMG::vspace", "IMG::width", "INPUT::accept", "INPUT::accesskey", "INPUT::align", "INPUT::alt", "INPUT::autocomplete", "INPUT::checked", "INPUT::disabled", "INPUT::inputmode", "INPUT::ismap", "INPUT::list", "INPUT::max", "INPUT::maxlength", "INPUT::min", "INPUT::multiple", "INPUT::name", "INPUT::placeholder", "INPUT::readonly", "INPUT::required", "INPUT::size", "INPUT::step", "INPUT::tabindex", "INPUT::type", "INPUT::usemap", "INPUT::value", "INS::datetime", "KEYGEN::disabled", "KEYGEN::keytype", "KEYGEN::name", "LABEL::accesskey", "LABEL::for", "LEGEND::accesskey", "LEGEND::align", "LI::type", "LI::value", "LINK::sizes", "MAP::name", "MENU::compact", "MENU::label", "MENU::type", "METER::high", "METER::low", "METER::max", "METER::min", "METER::value", "OBJECT::typemustmatch", "OL::compact", "OL::reversed", "OL::start", "OL::type", "OPTGROUP::disabled", "OPTGROUP::label", "OPTION::disabled", "OPTION::label", "OPTION::selected", "OPTION::value", "OUTPUT::for", "OUTPUT::name", "P::align", "PRE::width", "PROGRESS::max", "PROGRESS::min", "PROGRESS::value", "SELECT::autocomplete", "SELECT::disabled", "SELECT::multiple", "SELECT::name", "SELECT::required", "SELECT::size", "SELECT::tabindex", "SOURCE::type", "TABLE::align", "TABLE::bgcolor", "TABLE::border", "TABLE::cellpadding", "TABLE::cellspacing", "TABLE::frame", "TABLE::rules", "TABLE::summary", "TABLE::width", "TBODY::align", "TBODY::char", "TBODY::charoff", "TBODY::valign", "TD::abbr", "TD::align", "TD::axis", "TD::bgcolor", "TD::char", "TD::charoff", "TD::colspan", "TD::headers", "TD::height", "TD::nowrap", "TD::rowspan", "TD::scope", "TD::valign", "TD::width", "TEXTAREA::accesskey", "TEXTAREA::autocomplete", "TEXTAREA::cols", "TEXTAREA::disabled", "TEXTAREA::inputmode", "TEXTAREA::name", "TEXTAREA::placeholder", "TEXTAREA::readonly", "TEXTAREA::required", "TEXTAREA::rows", "TEXTAREA::tabindex", "TEXTAREA::wrap", "TFOOT::align", "TFOOT::char", "TFOOT::charoff", "TFOOT::valign", "TH::abbr", "TH::align", "TH::axis", "TH::bgcolor", "TH::char", "TH::charoff", "TH::colspan", "TH::headers", "TH::height", "TH::nowrap", "TH::rowspan", "TH::scope", "TH::valign", "TH::width", "THEAD::align", "THEAD::char", "THEAD::charoff", "THEAD::valign", "TR::align", "TR::bgcolor", "TR::char", "TR::charoff", "TR::valign", "TRACK::default", "TRACK::kind", "TRACK::label", "TRACK::srclang", "UL::compact", "UL::type", "VIDEO::controls", "VIDEO::height", "VIDEO::loop", "VIDEO::mediagroup", "VIDEO::muted", "VIDEO::preload", "VIDEO::width"]), [P.String]);
 C.List_empty = Isolate.makeConstantList([]);
+C.List_wSV = H.setRuntimeTypeInfo(Isolate.makeConstantList(["bind", "if", "ref", "repeat", "syntax"]), [P.String]);
+C.List_yrN = H.setRuntimeTypeInfo(Isolate.makeConstantList(["A::href", "AREA::href", "BLOCKQUOTE::cite", "BODY::background", "COMMAND::icon", "DEL::cite", "FORM::action", "IMG::src", "INPUT::src", "INS::cite", "Q::cite", "VIDEO::poster"]), [P.String]);
 C.Symbol_call = new H.Symbol0("call");
 init.isHunkLoaded = function(hunkHash) {
   return !!$dart_deferred_initializers[hunkHash];
@@ -10779,6 +11395,10 @@ $._lastPriorityCallback = null;
 $._isInCallbackLoop = false;
 $.Zone__current = C.C__RootZone;
 $.Expando__keyCount = 0;
+$.Element__parseDocument = null;
+$.Element__parseRange = null;
+$.Element__defaultValidator = null;
+$.Element__defaultSanitizer = null;
 $.Device__isOpera = null;
 $.Device__isIE = null;
 $.Device__isFirefox = null;
@@ -10884,6 +11504,14 @@ Isolate.$lazy($, "scheduleImmediateClosure", "_AsyncRun_scheduleImmediateClosure
 Isolate.$lazy($, "_toStringVisiting", "IterableBase__toStringVisiting", "get$IterableBase__toStringVisiting", function() {
   return [];
 });
+Isolate.$lazy($, "_allowedElements", "_Html5NodeValidator__allowedElements", "get$_Html5NodeValidator__allowedElements", function() {
+  var t1 = P.LinkedHashSet_LinkedHashSet(null, null, null, null);
+  t1.addAll$1(0, ["A", "ABBR", "ACRONYM", "ADDRESS", "AREA", "ARTICLE", "ASIDE", "AUDIO", "B", "BDI", "BDO", "BIG", "BLOCKQUOTE", "BR", "BUTTON", "CANVAS", "CAPTION", "CENTER", "CITE", "CODE", "COL", "COLGROUP", "COMMAND", "DATA", "DATALIST", "DD", "DEL", "DETAILS", "DFN", "DIR", "DIV", "DL", "DT", "EM", "FIELDSET", "FIGCAPTION", "FIGURE", "FONT", "FOOTER", "FORM", "H1", "H2", "H3", "H4", "H5", "H6", "HEADER", "HGROUP", "HR", "I", "IFRAME", "IMG", "INPUT", "INS", "KBD", "LABEL", "LEGEND", "LI", "MAP", "MARK", "MENU", "METER", "NAV", "NOBR", "OL", "OPTGROUP", "OPTION", "OUTPUT", "P", "PRE", "PROGRESS", "Q", "S", "SAMP", "SECTION", "SELECT", "SMALL", "SOURCE", "SPAN", "STRIKE", "STRONG", "SUB", "SUMMARY", "SUP", "TABLE", "TBODY", "TD", "TEXTAREA", "TFOOT", "TH", "THEAD", "TIME", "TR", "TRACK", "TT", "U", "UL", "VAR", "VIDEO", "WBR"]);
+  return t1;
+});
+Isolate.$lazy($, "_attributeValidators", "_Html5NodeValidator__attributeValidators", "get$_Html5NodeValidator__attributeValidators", function() {
+  return P.LinkedHashMap_LinkedHashMap$_empty(null, null);
+});
 Isolate.$lazy($, "context", "context", "get$context", function() {
   return P._wrapToDart(self);
 });
@@ -10926,6 +11554,10 @@ init.metadata = ["object",
 {func: "int__Comparable_Comparable", ret: P.$int, args: [P.Comparable, P.Comparable]},
 {func: "bool__Object_Object", ret: P.bool, args: [P.Object, P.Object]},
 {func: "int__Object", ret: P.$int, args: [P.Object]},
+{func: "bool__Element_String_String__Html5NodeValidator", ret: P.bool, args: [W.Element, P.String, P.String, W._Html5NodeValidator]},
+"element",
+"attributeName",
+"context",
 "callback",
 "captureThis",
 "self",
@@ -10933,6 +11565,7 @@ init.metadata = ["object",
 {func: "args1", args: [null]},
 "o",
 {func: "Object__dynamic", ret: P.Object, args: [null]},
+"invocation",
 {func: "args0"},
 {func: "args2", args: [null, null]},
 {func: "dynamic__String_dynamic", args: [P.String, null]},
@@ -10948,7 +11581,6 @@ init.metadata = ["object",
 {func: "dynamic__dynamic__dynamic", args: [null], opt: [null]},
 {func: "bool_", ret: P.bool},
 "ignored",
-"element",
 {func: "dynamic__dynamic_StackTrace", args: [null, P.StackTrace]},
 "data",
 {func: "void__dynamic_StackTrace", void: true, args: [null, P.StackTrace]},
@@ -10956,6 +11588,8 @@ init.metadata = ["object",
 "each",
 {func: "dynamic__Symbol_dynamic", args: [P.Symbol, null]},
 {func: "String__int", ret: P.String, args: [P.$int]},
+"attr",
+{func: "void__Node", void: true, args: [W.Node]},
 "s",
 ];
 $ = null;
