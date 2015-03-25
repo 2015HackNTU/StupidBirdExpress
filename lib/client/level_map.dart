@@ -229,6 +229,9 @@ class LevelMap {
           if (id != 'demo') {
             _renderCompletePage();
             querySelector('.numbers-insert').text = id;
+          } else {
+            querySelector('.cmpl-text').innerHtml = '恭喜你完成遊戲！<br/>只要寄信把這個遊戲分享給妳的朋友，就可以參加抽獎喔！';
+            querySelector('.cmpl-text').classes.remove('disappear');
           }
         }
       }
