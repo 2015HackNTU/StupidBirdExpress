@@ -68,6 +68,7 @@ const int         ERROR_DRAWN = 1;
 const int      ERROR_HIT_WALL = 2;
 const int       ERROR_NOT_FLY = 3;
 const int        ERROR_NO_EGG = 4;
+const int     ERROR_ON_GROUND = 5;
 
 ///img url
 

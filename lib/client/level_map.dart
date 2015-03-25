@@ -193,6 +193,7 @@ class LevelMap {
           case ERROR_OUT_OF_BORDER:
           case ERROR_HIT_WALL:
           case ERROR_NOT_FLY:
+          case ERROR_ON_GROUND:
             _hideImgs();
             _showImg(IMG_ORIGIN);
             break;
@@ -386,7 +387,7 @@ class LevelMap {
             return [true];
         }
         if (map[y][x] == MAP_GROUND)
-          return [false, ERROR_DRAWN, "My wings are getting dirty QAQ"];
+          return [false, ERROR_ON_GROUND, "My wings are getting dirty QAQ"];
         else if (map[y][x] == MAP_RIVER)
           return [false, ERROR_DRAWN, "Help me plz! brabrabra......"];
         else if (map[y][x] == MAP_FLIPPED_BUSH || map[y][x] == MAP_FLIPPED_STRAW)
